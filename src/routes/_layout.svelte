@@ -1,5 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
+	import 'blueprint-css/dist/blueprint.min.css';
 
 	export let segment;
 </script>
