@@ -1,41 +1,25 @@
-# sapper-template
+<div align="center">
+  <h1><code>Apollo Ink</code></h1>
+</div>
 
-The default [Sapper](https://github.com/sveltejs/sapper) template, available for Rollup and webpack.
+## Running the app 
 
+```bash
+yarn run dev
+```
+
+Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+
+By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+
+## Dev 
+
+```bash
+yarn install
+yarn run dev 
+```
 
 ## Getting started
-
-
-### Using `degit`
-
-[`degit`](https://github.com/Rich-Harris/degit) is a scaffolding tool that lets you create a directory from a branch in a repository. Use either the `rollup` or `webpack` branch in `sapper-template`:
-
-```bash
-# for Rollup
-npx degit "sveltejs/sapper-template#rollup" my-app
-# for webpack
-npx degit "sveltejs/sapper-template#webpack" my-app
-```
-
-
-### Using GitHub templates
-
-Alternatively, you can use GitHub's template feature with the [sapper-template-rollup](https://github.com/sveltejs/sapper-template-rollup) or [sapper-template-webpack](https://github.com/sveltejs/sapper-template-webpack) repositories.
-
-
-### Running the project
-
-However you get the code, you can install dependencies and run the project in development mode with:
-
-```bash
-cd my-app
-npm install # or yarn
-npm run dev
-```
-
-Open up [localhost:3000](http://localhost:3000) and start clicking around.
-
-Consult [sapper.svelte.dev](https://sapper.svelte.dev) for help getting started.
 
 
 ## Structure
