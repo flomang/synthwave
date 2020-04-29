@@ -1,5 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
+	import Footer from '../components/Footer.svelte';
 	import 'blueprint-css/dist/blueprint.min.css';
 
 	export let segment;
@@ -16,8 +17,12 @@
 	}
 </style>
 
+<h1>Apollo Ink Printing</h1>
+<p>Custom Screen Printing, Arts & Branding. Est-2006</p>
 <Nav {segment}/>
 
 <main>
 	<slot></slot>
 </main>
+
+<Footer />
