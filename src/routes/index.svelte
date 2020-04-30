@@ -1,5 +1,6 @@
 <script>
   import Fab, { Label, Icon } from "@smui/fab";
+  import { goto } from '@sapper/app';
 
   let superText = "";
 </script>
@@ -70,13 +71,13 @@
 </p>
 
 <div>
-  <Fab color="primary" on:click={() => alert('here')} extended>
+  <Fab color="primary" on:click={() => goto('/masks')} extended>
     <Label>Face Masks</Label>
   </Fab>
-  <Fab color="primary" on:click={() => alert('here')} extended>
+  <Fab color="primary" on:click={() => goto('/apparel')} extended>
     <Label>Apparel</Label>
   </Fab>
-  <Fab color="primary" on:click={() => alert('here')} extended>
+  <Fab color="primary" on:click={() => goto('/contact')} extended>
     <Label>Make Contact</Label>
   </Fab>
 </div>
