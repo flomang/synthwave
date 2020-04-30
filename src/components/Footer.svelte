@@ -15,17 +15,19 @@
 </style>
 
 <div bp="grid">
-  <div bp="4 padding-left padding-top">
-    <h3>Our Location</h3>
-    <p>
-      We are located in Boulder, Colorado. Please call to set a time to see
-      samples and to meet the team.
-    </p>
-    <p>1945 33rd Street Boulder, CO 80301</p>
-    <p>Ph: 720.366.0662</p>
+  <div bp="3 offset-4 padding-left padding-top">
+    <h2>Our Location</h2>
+    <div>
+      <p bp="margin-bottom--none">
+        We are located in Boulder, Colorado. Please call to setup a time to see
+        samples and to meet the team.
+      </p>
+      <p bp="margin--none"><b>1945 33rd St., Boulder, CO 80301</b></p>
+      <p bp="margin--none">Phone: (720) 366-0662</p>
+    </div>
   </div>
-  <div bp="8 padding-left padding-top">
-    <h3>Reviews</h3>
+  <div bp="4 padding-left padding-top">
+    <h2>Reviews</h2>
   </div>
 </div>
 
