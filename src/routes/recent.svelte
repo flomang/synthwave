@@ -13,10 +13,10 @@
     return map(new Array(20), function(item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
       return gridHelp.item({
-        x: (i * 2) % col,
-        y: Math.floor(i / 6) * y,
+        x: 2,
+        y: 2,
         w: 2,
-        h: y,
+        h: 2,
         id: id()
       });
     });
@@ -55,6 +55,12 @@
   .link a {
     margin-left: 10px;
   }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
 </style>
 
 <svelte:head>
@@ -62,7 +68,7 @@
 </svelte:head>
 
 <Grid {breakpoints} bind:items {cols} let:item rowHeight={100} gap={10}>
-  <div class="content" style="background: #ccc; border: 1px solid black;">
-    {item.id}
+  <div class="content" style="background: #ccc; border: 0px solid black;">
+    <img src="capty.webp" />
   </div>
 </Grid>

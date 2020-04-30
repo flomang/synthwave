@@ -168,7 +168,7 @@
     </div>
     <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
 		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>Mission Control</a></li>
-		<li><a aria-current='{segment === "recent_work" ? "page" : undefined}' href='recent_work'>Recent Work</a></li>
+		<li><a aria-current='{segment === "recent" ? "page" : undefined}' href='recent'>Recent Work</a></li>
 		<li><a aria-current='{segment === "apparel" ? "page" : undefined}' href='apparel'>Apparel</a></li>
 		<li><a aria-current='{segment === "prints" ? "page" : undefined}' href='prints'>Prints</a></li>
 		<li><a aria-current='{segment === "clients" ? "page" : undefined}' href='clients'>Clients</a></li>
