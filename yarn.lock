@@ -828,6 +828,20 @@
     "@material/feature-targeting" "^3.1.0"
     "@material/theme" "^3.1.0"
 
+"@material/fab@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@material/fab/-/fab-3.2.0.tgz#193289ddeee6e4ed6ad37809c3fc85bbfd2c462f"
+  integrity sha512-a/uPYDgIFZi2PpAV4Rqqnu9AKK2fA6ydSAVJE64Hs6isJ+UQUzGBvimOHy/DHtFmLxZJKuyakJd1Cq2jDlgXtg==
+  dependencies:
+    "@material/animation" "^3.1.0"
+    "@material/elevation" "^3.1.0"
+    "@material/feature-targeting" "^3.1.0"
+    "@material/ripple" "^3.2.0"
+    "@material/rtl" "^3.2.0"
+    "@material/shape" "^3.1.0"
+    "@material/theme" "^3.1.0"
+    "@material/typography" "^3.1.0"
+
 "@material/feature-targeting@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@material/feature-targeting/-/feature-targeting-3.1.0.tgz#a6f6cacd1e0c9b60dc82f2f3bb2de8cfd472252b"
@@ -1049,6 +1063,16 @@
     "@material/data-table" "^3.2.0"
     "@smui/checkbox" "^1.0.0-beta.21"
     "@smui/common" "^1.0.0-beta.21"
+
+"@smui/fab@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@smui/fab/-/fab-1.0.0-beta.21.tgz#6d028c7a144f97b50801c1d93dab62aa0eb9f663"
+  integrity sha512-zM6J/Gzz54gi8xe3tg9og9/ZNp6Eg+uikQBxN9KwTmljCEL+NmnPJevG2X/SvDoR/PlACAj7p2nljsSKyn0Fyw==
+  dependencies:
+    "@material/fab" "^3.2.0"
+    "@material/feature-targeting" "^3.1.0"
+    "@smui/common" "^1.0.0-beta.21"
+    "@smui/ripple" "^1.0.0-beta.21"
 
 "@smui/floating-label@^1.0.0-beta.21":
   version "1.0.0-beta.21"

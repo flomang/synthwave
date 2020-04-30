@@ -28,6 +28,7 @@
     "@rollup/plugin-replace": "^2.2.0",
     "@smui/button": "^1.0.0-beta.21",
     "@smui/data-table": "^1.0.0-beta.21",
+    "@smui/fab": "^1.0.0-beta.21",
     "@smui/form-field": "^1.0.0-beta.21",
     "@smui/slider": "^1.0.0-beta.21",
     "@smui/switch": "^1.0.0-beta.21",
