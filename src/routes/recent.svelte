@@ -1,23 +1,64 @@
 <script>
   import Grid from "svelte-grid";
   import gridHelp from "svelte-grid/build/helper/index.mjs";
+  import Card, {
+    Content,
+    PrimaryAction,
+    Media,
+    MediaContent,
+    Actions,
+    ActionButtons,
+    ActionIcons
+  } from "@smui/card";
+
   import map from "lodash.map";
 
+  //let img = new Image();
+  //img.src = "capty.webp";
+  //let imgHeight = img.height;
+  //let imgWidth = img.width;
+  //alert("image height = " + imgHeight + ", image width = " + imgWidth);
+  let itms = [
+    "1.webp",
+    "2.webp",
+    "3.webp",
+    "4.webp",
+    "5.webp",
+    "6.webp",
+    "7.webp",
+    "8.webp",
+    "9.jpg",
+    "10.jpg",
+    "11.jpg",
+    "12.webp",
+    "13.webp",
+    "14.webp",
+    "15.webp",
+    "16.webp",
+    "17.jpg",
+    "18.webp",
+    "19.webp",
+    "20.webp",
+    "21.webp",
+    "22.webp",
+    "23.webp",
+    "24.jpg"
+  ];
   const id = () =>
     "_" +
     Math.random()
       .toString(36)
       .substr(2, 9);
-
   function generateLayout(col) {
-    return map(new Array(20), function(item, i) {
+    return map(itms, function(item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
       return gridHelp.item({
-        x: 2,
-        y: 2,
+        x: (i * 2) % col,
+        y: Math.floor(i / 6) * y,
         w: 2,
-        h: 2,
-        id: id()
+        h: y,
+        id: id(),
+        image: item,
       });
     });
   }
@@ -36,22 +77,17 @@
   .content {
     width: 100%;
     height: 100%;
-    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: large;
+    position: relative;
+    overflow: hidden;
   }
-  /* :global(.svlt-grid-shadow) {
-    background: pink;
-  }
-  :global(.svlt-grid-container) {
-    background: #eee;
-  } */
   .link {
     display: flex;
     padding-bottom: 20px;
   }
+
   .link a {
     margin-left: 10px;
   }
@@ -59,7 +95,6 @@
   img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: cover;
   }
 </style>
 
@@ -68,7 +103,7 @@
 </svelte:head>
 
 <Grid {breakpoints} bind:items {cols} let:item rowHeight={100} gap={10}>
-  <div class="content" style="background: #ccc; border: 0px solid black;">
-    <img src="capty.webp" />
+  <div class="content" style="background: #ccc; border: 1px solid black;">
+    <img alt="" src={item.image}/>
   </div>
 </Grid>
