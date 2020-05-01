@@ -1,4 +1,5 @@
 <script>
+  import map from "lodash.map";
   import Grid from "svelte-grid";
   import gridHelp from "svelte-grid/build/helper/index.mjs";
   import Card, {
@@ -11,14 +12,7 @@
     ActionIcons
   } from "@smui/card";
 
-  import map from "lodash.map";
-
-  //let img = new Image();
-  //img.src = "capty.webp";
-  //let imgHeight = img.height;
-  //let imgWidth = img.width;
-  //alert("image height = " + imgHeight + ", image width = " + imgWidth);
-  let itms = [
+  let images = [
     "1.webp",
     "2.webp",
     "3.webp",
@@ -49,28 +43,34 @@
     Math.random()
       .toString(36)
       .substr(2, 9);
+
   function generateLayout(col) {
-    return map(itms, function(item, i) {
+    return map(images, function(item, i) {
       const y = Math.ceil(Math.random() * 4) + 1;
+
       return gridHelp.item({
         x: (i * 2) % col,
         y: Math.floor(i / 6) * y,
         w: 2,
-        h: y,
-        id: id(),
+        h: 2,
+        id: i,
         image: item,
+        draggable: false,
+        resizable: false,
       });
     });
   }
-  const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
-  let adjustAfterRemove = false;
   let cols = 10;
   // Just generate messy layout
   let layout = generateLayout(cols);
   // Helper function which normalize. you need to pass items and columns
   let items = gridHelp.resizeItems(layout, cols);
   // Apply breakpoints
-  let breakpoints = [[1100, 5], [800, 4], [530, 1]];
+  let breakpoints = [
+    [1100, 5],
+    [800, 4],
+    [530, 1],
+  ];
 </script>
 
 <style>
@@ -102,8 +102,8 @@
   <title>Recent Work</title>
 </svelte:head>
 
-<Grid {breakpoints} bind:items {cols} let:item rowHeight={100} gap={10}>
+<Grid breakpoints={breakpoints} bind:items {cols} let:item gap={10}>
   <div class="content" style="background: #ccc; border: 1px solid black;">
-    <img alt="" src={item.image}/>
+    <img alt="" src={item.image} />
   </div>
 </Grid>
