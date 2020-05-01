@@ -78,20 +78,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
   }
-  .link {
-    display: flex;
-    padding-bottom: 20px;
-  }
-
-  .link a {
-    margin-left: 10px;
-  }
-
   img {
     max-width: 100%;
     max-height: 100%;
@@ -103,7 +90,7 @@
 </svelte:head>
 
 <Grid breakpoints={breakpoints} bind:items {cols} let:item gap={10}>
-  <div class="content" style="background: #ccc; border: 1px solid black;">
+  <div class="content">
     <img alt="" src={item.image} />
   </div>
 </Grid>
