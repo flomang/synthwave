@@ -56,7 +56,7 @@
         id: i,
         image: item,
         draggable: false,
-        resizable: false,
+        resizable: false
       });
     });
   }
@@ -66,15 +66,14 @@
   // Helper function which normalize. you need to pass items and columns
   let items = gridHelp.resizeItems(layout, cols);
   // Apply breakpoints
-  let breakpoints = [
-    [1100, 5],
-    [800, 4],
-    [530, 1],
-  ];
+  let breakpoints = [[1100, 5], [800, 4], [530, 1]];
 </script>
 
 <style>
   .content {
+    background-color: #fff;
+  }
+  .grid {
     width: 100%;
     height: 100%;
     display: flex;
@@ -89,8 +88,10 @@
   <title>Recent Work</title>
 </svelte:head>
 
-<Grid breakpoints={breakpoints} bind:items {cols} let:item gap={10}>
-  <div class="content">
-    <img alt="" src={item.image} />
-  </div>
-</Grid>
+<div class="content">
+  <Grid {breakpoints} bind:items {cols} let:item gap={10}>
+    <div class="grid">
+      <img alt="" src={item.image} />
+    </div>
+  </Grid>
+</div>
