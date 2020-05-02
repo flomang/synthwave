@@ -2,15 +2,8 @@
   import map from "lodash.map";
   import Grid from "svelte-grid";
   import gridHelp from "svelte-grid/build/helper/index.mjs";
-  import Card, {
-    Content,
-    PrimaryAction,
-    Media,
-    MediaContent,
-    Actions,
-    ActionButtons,
-    ActionIcons
-  } from "@smui/card";
+  import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import Button, { Label } from "@smui/button";
 
   let images = [
     "1.webp",
@@ -67,6 +60,19 @@
   let items = gridHelp.resizeItems(layout, cols);
   // Apply breakpoints
   let breakpoints = [[1100, 5], [800, 4], [530, 1]];
+
+  let dialog;
+  let selectedImage = "";
+  function openSelection(image) {
+    selectedImage = image;
+    dialog.open();
+  }
+
+  function closeHandler(e) {
+    if (e.detail.action === "accept") {
+      selected = selection;
+    }
+  }
 </script>
 
 <style>
@@ -91,7 +97,22 @@
 <div class="content">
   <Grid {breakpoints} bind:items {cols} let:item gap={10}>
     <div class="grid">
-      <img alt="" src={item.image} />
+      <img on:click={() => openSelection(item.image)} alt="" src={item.image} />
     </div>
   </Grid>
 </div>
+
+<Dialog
+  bind:this={dialog}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-content"
+  on:MDCDialog:closed={closeHandler}>
+  <Content id="dialog-content">
+    <img alt="" src={selectedImage} />
+    <Actions>
+      <Button on:click={(e) => (closeHandler(e))}>
+        <Label>Close</Label>
+      </Button>
+    </Actions>
+  </Content>
+</Dialog>
