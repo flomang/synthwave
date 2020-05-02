@@ -73,14 +73,16 @@
       <p bp="margin--none">Phone: (720) 366-0662</p>
     </div>
   </div>
-  <div class="reviews" bp="padding--lg ">
+  <div bp="padding--lg ">
     <h2>Reviews</h2>
+    <div class="reviews">
     {#if visible}
       <div>
         <p bp="margin--none" transition:fade>{review.text}</p>
         <p bp="margin--none" transition:fade class="left">- {review.reviewer}</p>
       </div>
     {/if}
+    </div>
   </div>
 </div>
 
