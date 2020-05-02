@@ -167,16 +167,44 @@
       <div class="middle-line" />
     </div>
     <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
-		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>Mission Control</a></li>
-		<li><a aria-current='{segment === "recent" ? "page" : undefined}' href='recent'>Recent Work</a></li>
-		<li><a aria-current='{segment === "apparel" ? "page" : undefined}' href='apparel'>Apparel</a></li>
-		<li><a aria-current='{segment === "prints" ? "page" : undefined}' href='prints'>Prints</a></li>
-		<li><a aria-current='{segment === "masks" ? "page" : undefined}' href='masks'>Face Masks</a></li>
-		<li><a aria-current='{segment === "contact" ? "page" : undefined}' href='contact'>Contact</a></li>
-
-		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
-		     the blog data when we hover over the link or tap it on a touchscreen -->
-		<li><a rel=prefetch aria-current='{segment === "blog" ? "page" : undefined}' href='blog'>Blog</a></li>
+      <li>
+        <a aria-current={segment === undefined ? 'page' : undefined} href=".">
+          Mission Control
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'recent' ? 'page' : undefined}
+          href="recent">
+          Recent Work
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'apparel' ? 'page' : undefined}
+          href="apparel">
+          Apparel
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'prints' ? 'page' : undefined}
+          href="prints">
+          Prints
+        </a>
+      </li>
+      <li>
+        <a aria-current={segment === 'masks' ? 'page' : undefined} href="masks">
+          Face Masks
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'contact' ? 'page' : undefined}
+          href="contact">
+          Contact
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
