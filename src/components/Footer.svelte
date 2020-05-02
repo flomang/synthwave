@@ -15,7 +15,7 @@
 </style>
 
 <div bp="grid">
-  <div bp="5 offset-1 padding-left padding-top">
+  <div bp="5 offset-1 padding">
     <h2>Our Location</h2>
     <div>
       <p bp="margin-bottom--none">
