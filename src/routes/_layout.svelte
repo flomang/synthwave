@@ -15,7 +15,7 @@
   }
 </style>
 
-<div bp="padding-left padding-top padding-right">
+<div bp="padding-top--lg padding-left--lg padding-right--lg">
   <h1 bp="margin-bottom--none">Apollo Ink Printing</h1>
   <p bp="margin-top--none">Custom Screen Printing, Arts & Branding. Est-2006</p>
 </div>
