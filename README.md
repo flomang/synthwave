@@ -1,6 +1,10 @@
 <div align="center">
-  <h1><code>Apollo Ink</code></h1>
+  <h1><code>Synthwave</code></h1>
 </div>
+
+<p>"What is this? ...how can we expect children to read if they can't even fit inside the building."</p>
+Built using the lastest javascript framework - Svelte. Svelte - sapper is used for the routing. All else is just
+random stuffs.
 
 ## Running the app 
 
@@ -18,9 +22,6 @@ By default, the server will only respond to requests from localhost. To allow co
 yarn install
 yarn run dev 
 ```
-
-## Getting started
-
 
 ## Structure
 

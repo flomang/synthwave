@@ -45,7 +45,7 @@
 </style>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>Synthwave</title>
 </svelte:head>
 
 <div class="content" bp="padding">
