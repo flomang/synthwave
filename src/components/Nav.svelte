@@ -175,6 +175,13 @@
       <li>
         <a
           aria-current={segment === 'recent' ? 'page' : undefined}
+          href="pixijs">
+          Pixi 
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'recent' ? 'page' : undefined}
           href="recent">
           Recent Work
         </a>

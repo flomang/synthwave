@@ -23,9 +23,8 @@
 </style>
 
 <div bp="padding-top--lg padding-left--lg padding-right--lg">
-  <h1 bp="margin-bottom--none">Apollo Ink Printing</h1>
-  <img alt="" src="apollo-man.png" />
-  <p bp="margin-top--none">Custom Screen Printing, Arts & Branding. Est-2006</p>
+  <h1 bp="margin-bottom--none">Synthwave</h1>
+  <p bp="margin-top--none">A montage of random things</p>
 </div>
 
 <Nav {segment} />

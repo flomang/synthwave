@@ -4,7 +4,11 @@
 
 <p>"What is this? ...how can we expect children to read if they can't even fit inside the building."</p>
 Built using the lastest javascript framework - Svelte. Svelte - sapper is used for the routing. All else is just
-random stuffs.
+random stuffs. I have a vision - I just can't see it yet! 
+
+Libraries used:
+* Svelte - sapper
+* Blueprint CSS
 
 ## Running the app 
 
@@ -89,8 +93,3 @@ Because of that, it's essential that the bundler doesn't treat the package as an
 ```bash
 npm install -D @sveltejs/svelte-virtual-list
 ```
-
-
-## Bugs and feedback
-
-Sapper is in early development, and may have the odd rough edge here and there. Please be vocal over on the [Sapper issue tracker](https://github.com/sveltejs/sapper/issues).
