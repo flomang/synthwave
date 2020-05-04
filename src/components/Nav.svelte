@@ -188,21 +188,9 @@
       </li>
       <li>
         <a
-          aria-current={segment === 'apparel' ? 'page' : undefined}
-          href="apparel">
-          Apparel
-        </a>
-      </li>
-      <li>
-        <a
           aria-current={segment === 'prints' ? 'page' : undefined}
           href="prints">
           Prints
-        </a>
-      </li>
-      <li>
-        <a aria-current={segment === 'masks' ? 'page' : undefined} href="masks">
-          Face Masks
         </a>
       </li>
       <li>

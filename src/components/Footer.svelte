@@ -3,49 +3,78 @@
 
   let answer;
 
-  let reviews = [
+  let poem = [
     {
-      text:
-        "Apollo Ink is an awesome print shop! I’ve worked with them a couple times to print jerseys for my hockey team. They gave me good initial estimates and it turned out to be an even better deal at the end.",
-      reviewer: "Charles Stewart"
+      verses: [
+        "Do not go gentle into that good night,",
+        "Old age should burn and rave at close of day;",
+        "Rage, rage against the dying of the light."
+      ],
+      poet: "Dylan Thomas"
     },
     {
-      text:
-        "Apollo Ink is where its at. The personal customer service and top quality prints has been the reason why Dromas Apparel has continued to partner with Apollo.",
-      reviewer: "Jacob Kulchin"
+      verses: [
+        "Though wise men at their end know dark is right,",
+        "Because their words had forked no lightning",
+        "They Do not go gentle into that good night."
+      ],
+      poet: "Dylan Thomas"
     },
     {
-      text:
-        "We use Apollo for all of the print work for our dive trip apparel at Ocean First Divers. If you’ve been on a trip with us recently, chances are the shirt you love so much came from Apollo Ink.",
-      reviewer: "Chad Koll"
+      verses: [
+        "Good men, the last wave by, crying how bright",
+        "Their frail deeds might have danced in a green bay,",
+        " Rage, rage against the dying of the light."
+      ],
+      poet: "Dylan Thomas"
     },
     {
-      text:
-        "I placed an order with Apollo ink. It took only a week for them to source the shirts and return to me my finished product. No complaints here.",
-      reviewer: "Jim Borchardt"
+      verses: [
+        "Wild men who caught and sang the sun in flight,",
+        "And learn, too late, they grieved it on its way",
+        "Do not go gentle into that good night."
+      ],
+      poet: "Dylan Thomas"
+    },
+    {
+      verses: [
+        "Grave men, near death, who see with blinding sight",
+        "Blind eyes could blaze like meteors and be gay,",
+        "Rage, rage against the dying of the light."
+      ],
+      poet: "Dylan Thomas"
+    },
+    {
+      verses: [
+        "And you, my father, there on that sad height,",
+        "Curse, bless, me now with your fierce tears, I pray.",
+        "Do not go gentle into that good night.",
+        "Rage, rage against the dying of the light."
+      ],
+      poet: "Dylan Thomas"
     }
   ];
-  let review = reviews[0];
+  let stanza = poem[0];
   let i = 0;
   let visible = true;
   function cycle() {
     ++i;
-    i = i % 3;
-    review = reviews[i];
+    i = i % poem.length;
+    stanza = poem[i];
     visible = false;
     setTimeout(show, 500);
   }
   function show() {
     visible = true;
   }
-  setInterval(cycle, 6000);
+  setInterval(cycle, 10000);
 </script>
 
 <style>
   footer {
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: rgba(0, 0, 0, 0.8);
     height: 45px;
     line-height: 45px;
     font-size: 13px;
@@ -61,31 +90,26 @@
 
 <div bp="grid 3">
   <div bp="offset-2 padding--lg">
-    <h2>Our Location</h2>
+    <h3>If you live properly the dreams will come to you.</h3>
     <div>
       <p bp="margin-bottom--none">
-        We are located in Boulder, Colorado. Please call to setup a time to see
-        samples and to meet the team.
+        One thousand worthy men! A god! Be kind to everyone. One thousand worthy 
+        men. One who speaks does not know. Go all the way!
       </p>
-      <p bp="margin--none">
-        <b>1945 33rd St., Boulder, CO 80301</b>
-      </p>
-      <p bp="margin--none">Phone: (720) 366-0662</p>
     </div>
   </div>
   <div bp="padding--lg ">
-    <h2>Reviews</h2>
     <div class="reviews">
       {#if visible}
         <div>
-          <p bp="margin--none" transition:fade>{review.text}</p>
-          <p bp="margin--none" transition:fade class="left">
-            - {review.reviewer}
-          </p>
+          {#each stanza.verses as verse, i}
+            <p bp="margin--none" transition:fade>{verse}</p>
+          {/each}
+          <p bp="margin--none" transition:fade class="left">- {stanza.poet}</p>
         </div>
       {/if}
     </div>
   </div>
 </div>
 
-<footer>© 2020 Apollo Ink Printing</footer>
+<footer>© 2020 Flowy Inc.</footer>

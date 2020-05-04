@@ -22,11 +22,6 @@
   }
 </style>
 
-<div bp="padding-top--lg padding-left--lg padding-right--lg">
-  <h1 bp="margin-bottom--none">Synthwave</h1>
-  <p bp="margin-top--none">A montage of random things</p>
-</div>
-
 <Nav {segment} />
 
 <main>
