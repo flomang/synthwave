@@ -47,6 +47,7 @@ export default {
         css: true
       }),
       resolve({
+        preferBuiltins: false,
         browser: true,
         dedupe
       }),
