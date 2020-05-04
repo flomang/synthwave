@@ -74,7 +74,7 @@
   footer {
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #090f15;
     height: 45px;
     line-height: 45px;
     font-size: 13px;

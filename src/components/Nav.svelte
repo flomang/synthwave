@@ -26,7 +26,7 @@
 
 <style>
   nav {
-    background-color:rgba(0, 0, 0, 0.8);
+    background-color: #090f15;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     height: 45px;
   }
@@ -110,7 +110,7 @@
   }
 
   .navbar-list.mobile {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #090f15;
     position: fixed;
     display: block;
     height: calc(100% - 45px);
