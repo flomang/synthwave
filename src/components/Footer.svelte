@@ -90,11 +90,11 @@
 
 <div bp="grid 3">
   <div bp="offset-2 padding--lg">
-    <h3>If you live properly the dreams will come to you.</h3>
+    <h3>If you live properly, the dreams will come to you.</h3>
     <div>
       <p bp="margin-bottom--none">
-        One thousand worthy men! A god! Be kind to everyone. One thousand worthy 
-        men. One who speaks does not know. Go all the way!
+        One thousand worthy souls! A god! Be kind to everyone. One who speaks
+        does not know. 
       </p>
     </div>
   </div>
