@@ -1,5 +1,7 @@
 <script>
   import { onMount } from "svelte";
+  import IconButton, { Icon } from "@smui/icon-button";
+  import Button, { Label } from "@smui/button";
 
   export let segment;
   // Show mobile icon and display menu
@@ -157,6 +159,12 @@
       display: inline-flex;
     }
   }
+
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    color: #fff;
+  }
 </style>
 
 <nav>
@@ -169,36 +177,46 @@
     <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
       <li>
         <a aria-current={segment === undefined ? 'page' : undefined} href=".">
-          All Bets 
+          All Bets
         </a>
       </li>
       <li>
-        <a
-          aria-current={segment === 'open' ? 'page' : undefined}
-          href="open">
-          Open Bet 
+        <a aria-current={segment === 'open' ? 'page' : undefined} href="open">
+          Open Bet
         </a>
       </li>
       <li>
-        <a
-          aria-current={segment === 'play' ? 'page' : undefined}
-          href="play">
+        <a aria-current={segment === 'play' ? 'page' : undefined} href="play">
           In Play
         </a>
       </li>
       <li>
-        <a
-          aria-current={segment === 'messages' ? 'page' : undefined}
-          href="messages">
-          Messages
-        </a>
+        <div bp="margin--sm">
+          <Button
+            color="primary"
+            on:click={() => alert('balance')}
+            variant="raised">
+            <Label>2000 BTC</Label>
+          </Button>
+        </div>
       </li>
       <li>
-        <a
-          aria-current={segment === 'profile' ? 'page' : undefined}
-          href="profile">
-          Profile 
-        </a>
+        <div class="nav-icon">
+          <IconButton
+            class="material-icons"
+            on:click={() => alert('goto messages')}>
+            message
+          </IconButton>
+        </div>
+      </li>
+      <li>
+        <div class="nav-icon">
+          <IconButton
+            class="material-icons"
+            on:click={() => alert('goto profile')}>
+            person
+          </IconButton>
+        </div>
       </li>
     </ul>
   </div>

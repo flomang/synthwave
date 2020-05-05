@@ -32,6 +32,7 @@
     "@smui/dialog": "^1.0.0-beta.21",
     "@smui/fab": "^1.0.0-beta.21",
     "@smui/form-field": "^1.0.0-beta.21",
+    "@smui/icon-button": "^1.0.0-beta.21",
     "@smui/select": "^1.0.0-beta.21",
     "@smui/slider": "^1.0.0-beta.21",
     "@smui/switch": "^1.0.0-beta.21",
