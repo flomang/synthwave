@@ -21,9 +21,7 @@
 
 <div class="content" bp="padding">
   <h1>Open Bet</h1>
-  <p>
-    What are you betting on?
-  </p>
+  <p>What are you betting on?</p>
   <div>
     <div bp="margin-bottom--lg">
       <div class="margins">
@@ -45,10 +43,14 @@
         input$aria-describedby="helper-text-outlined-a" />
     </div>
 
-    <Button color="primary" on:click={() => alert("submit") } variant="raised">
+    <Button color="primary" on:click={() => alert('submit')} variant="raised">
       <Label>Submit</Label>
     </Button>
 
   </div>
-
+  <p>
+    The rules are simple. Be fair and grade your own bets. If you can't agree on
+    the outcome, you both loose. In the event that you both disagree, your wager
+    will be donated to a charitable organization of our choosing.
+  </p>
 </div>

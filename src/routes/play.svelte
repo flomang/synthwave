@@ -7,44 +7,22 @@
   let items = [
     {
       user: "Gravy's Couch Book",
-      description: "Labron fouls out of game 6 against the Miami Heat",
-      amount: "0.00000300 btc"
+      description: "Warriors loose game 6 by more than 10",
+      amount: "0.00000300 btc",
+      expires: "April 6, 2020 10:00 PM MST"
     },
     {
       user: "Flowy's Juicer",
-      description: "Tiger Woods -13 +/-2 Masters",
-      amount: "0.00005000 btc"
+      description: "Manchester United (Upcake22) (E)",
+      amount: "0.00005000 btc",
+      expires: "May 9, 2020 4:00 PM MST"
     },
     {
       user: "Magic Couch",
-      description: "John Jones eye poke",
-      amount: "0.00005000 btc"
+      description: "John Jones vs Cormier looses round 3 in points but wins match by tko",
+      amount: "0.00005000 btc",
+      expires: "June 10, 2020 8:00 PM MST"
     },
-    {
-      user: "Magic Couch",
-      description: "Draymond Green kicks someone in the nuts this game",
-      amount: "0.00005000 btc"
-    },
-    {
-      user: "Davies",
-      description: "Tigers world series",
-      amount: "0.00005000 btc"
-    },
-    {
-      user: "lion's den",
-      description: "Amanda Nunes TKO round 1",
-      amount: "0.00008890 btc"
-    },
-    {
-      user: "Wyatt Hotel",
-      description: "Fabricio Werdum KO, TKO, or Submission",
-      amount: "0.00000900 btc"
-    },
-    {
-      user: "tokio",
-      description: "Racing Esports draw",
-      amount: "0.00000300 btc"
-    }
   ];
 </script>
 
@@ -96,19 +74,12 @@
     <div><h3>Bookie</h3></div>
     <div><h3>Description</h3></div>
     <div><h3>Amount</h3></div>
-    <div></div>
+    <div><h3>Expires</h3></div>
     {#each items as item}
       <div>{item.user}</div>
       <div>{item.description}</div>
       <div>{item.amount}</div>
-      <div>
-        <Button
-          color="primary"
-          on:click={() => alert('submit')}
-          variant="raised">
-          <Label>Bet</Label>
-        </Button>
-      </div>
+      <div>{item.expires}</div>
     {/each}
   </div>
 </div>

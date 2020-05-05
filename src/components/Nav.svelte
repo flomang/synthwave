@@ -179,6 +179,27 @@
           Open Bet 
         </a>
       </li>
+      <li>
+        <a
+          aria-current={segment === 'play' ? 'page' : undefined}
+          href="play">
+          In Play
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'messages' ? 'page' : undefined}
+          href="messages">
+          Messages
+        </a>
+      </li>
+      <li>
+        <a
+          aria-current={segment === 'profile' ? 'page' : undefined}
+          href="profile">
+          Profile 
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
