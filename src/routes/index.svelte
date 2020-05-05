@@ -45,7 +45,7 @@
 </style>
 
 <svelte:head>
-  <title>Synthwave</title>
+  <title>All Bets</title>
 </svelte:head>
 
 <div class="content" bp="padding">

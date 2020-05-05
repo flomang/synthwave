@@ -169,28 +169,14 @@
     <ul class={`navbar-list${showMobileMenu ? ' mobile' : ''}`}>
       <li>
         <a aria-current={segment === undefined ? 'page' : undefined} href=".">
-          Mission Control
+          All Bets 
         </a>
       </li>
       <li>
         <a
-          aria-current={segment === 'pixi' ? 'page' : undefined}
-          href="pixijs">
-          Pixi 
-        </a>
-      </li>
-      <li>
-        <a
-          aria-current={segment === 'prints' ? 'page' : undefined}
-          href="prints">
-          Prints
-        </a>
-      </li>
-      <li>
-        <a
-          aria-current={segment === 'contact' ? 'page' : undefined}
-          href="contact">
-          Contact
+          aria-current={segment === 'open' ? 'page' : undefined}
+          href="open">
+          Open Bet 
         </a>
       </li>
     </ul>
