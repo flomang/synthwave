@@ -7,6 +7,7 @@
 
   let description = "";
   let amount = "";
+  let expiration = "";
 </script>
 
 <style>
@@ -39,6 +40,14 @@
         variant="outlined"
         bind:value={amount}
         label="Amount"
+        input$aria-controls="helper-text-outlined-a"
+        input$aria-describedby="helper-text-outlined-a" />
+    </div>
+    <div bp="grid 6 margin-bottom--lg">
+      <Textfield
+        variant="outlined"
+        bind:value={expiration}
+        label="Expiration Date"
         input$aria-controls="helper-text-outlined-a"
         input$aria-describedby="helper-text-outlined-a" />
     </div>

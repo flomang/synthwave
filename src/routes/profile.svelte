@@ -1,4 +1,6 @@
 <script>
+  import { Label } from "@smui/fab";
+  import Button from "@smui/button";
 </script>
 
 <style>
@@ -18,4 +20,9 @@
 
 <div class="content" bp="padding">
   <div>Profile</div>
+  <div>
+    <Button color="primary" on:click={() => alert('logout')} variant="raised">
+      <Label>Logout</Label>
+    </Button>
+  </div>
 </div>
