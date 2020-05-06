@@ -75,8 +75,8 @@
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     background-color: #090f15;
-    height: 45px;
-    line-height: 45px;
+    height: 46px;
+    line-height: 46px;
     font-size: 13px;
     text-align: center;
   }
