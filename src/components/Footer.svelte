@@ -83,23 +83,22 @@
   .left {
     text-align: right;
   }
-  .reviews {
-    font-size: 12px;
+  .quotes {
+    font-size: 9px;
   }
+  .brand {
+    text-align: center;
+    font-size: 70px;
+  }
+
 </style>
 
-<div bp="grid 3">
-  <div bp="offset-2 padding--lg">
-    <h3>If you live properly, the dreams will come to you.</h3>
-    <div>
-      <p bp="margin-bottom--none">
-        One thousand worthy souls! A god! Be kind to everyone. One who speaks
-        does not know. 
-      </p>
-    </div>
+<div bp="grid 1">
+  <div bp="6" class="brand">
+    Guice
   </div>
-  <div bp="padding--lg ">
-    <div class="reviews">
+  <div bp="4 padding-top--lg padding-bottom--lg">
+    <div class="quotes">
       {#if visible}
         <div>
           {#each stanza.verses as verse, i}

@@ -57,22 +57,27 @@
       <div on:click={() => goto('/open')}>Open Bet</div>
     </div>
   </div>
-  <div bp="4@sm 4@md 5@lg offset-7@sm offset-8@md offset-9@lg">
+  <div bp="4@sm 4@md 5@lg offset-7xs offset-8@sm offset-8@md offset-9@lg">
     <div bp="grid 1 gap-none">
-      <div bp="1@sm 4@md 4@lg offset-1@md offset-3@lg" class="outline available" on:click={() => goto('/balance')}>
+      <div bp="1@sm 4@md offset-3@lg" class="outline available" on:click={() => goto('/balance')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">10.1983230</span>
       </div>
-      <div bp="1@sm 4@md 4@lg" class="outline play" on:click={() => goto('/play')}>
+      <div bp="1@sm 4@md" class="outline play" on:click={() => goto('/play')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">0.00031233</span>
       </div>
-      <div>
+      <div bp="show@xs show@sm hide@md hide@lg"> 
+        <IconButton class="material-icons" on:click={() => goto('/messages')}>
+          fastfood
+        </IconButton>
+      </div>
+      <div bp="show@md show@lg hide@sm">
         <IconButton class="material-icons" on:click={() => goto('/messages')}>
           message
         </IconButton>
       </div>
-      <div>
+      <div bp="show@md show@lg hide@sm">
         <IconButton class="material-icons" on:click={() => goto('/profile')}>
           person
         </IconButton>
