@@ -8,6 +8,7 @@
     color: #fff;
     background-color: #090f15;
     height: 46px;
+    padding-left: 20px;
   }
 
   div {
@@ -21,21 +22,22 @@
   }
 
   .outline {
-    margin-top: 3px;
-    margin-bottom: 3px;
-    margin-right: 3px;
-    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 36px;
     border-radius: 6px;
+    max-width: 120px;
   }
   .btc-symbol {
     width: 24px;
     height: 24px;
     position: relative;
-    top: 6px;
+    top: 3px;
   }
   .balance {
     position: relative;
     left: -3px;
+    top: -3px;
   }
   .available {
     background: rgba(0, 255, 0, 0.3);
@@ -45,44 +47,35 @@
   }
   .nav-icon {
     margin-right: 9px;
-    margin-left: 9px;
   }
 </style>
 
-<nav bp="grid 4">
-  <div>
+<nav bp="grid 1">
+  <div bp="4">
     <div bp="grid 6">
-      <div on:click={() => goto(".")}>Market</div>
-      <div on:click={() => goto("/open")}>Open Bet</div>
+      <div on:click={() => goto('.')}>Market</div>
+      <div on:click={() => goto('/open')}>Open Bet</div>
     </div>
   </div>
-  <div bp="offset-3">
+  <div bp="4@sm 4@md 5@lg offset-7@sm offset-8@md offset-9@lg">
     <div bp="grid 1 gap-none">
-      <div bp="4" class="outline available" on:click={() => goto("/balance")}>
+      <div bp="1@sm 4@md 4@lg offset-1@md offset-3@lg" class="outline available" on:click={() => goto('/balance')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">10.1983230</span>
       </div>
-      <div bp="4" class="outline play" on:click={() => goto("/play")}>
+      <div bp="1@sm 4@md 4@lg" class="outline play" on:click={() => goto('/play')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">0.00031233</span>
       </div>
-      <div bp="offset-10">
-        <div class="nav-icon">
-          <IconButton
-            class="material-icons"
-            on:click={() => goto("/messages")}>
-            message
-          </IconButton>
-        </div>
+      <div>
+        <IconButton class="material-icons" on:click={() => goto('/messages')}>
+          message
+        </IconButton>
       </div>
       <div>
-        <div class="nav-icon">
-          <IconButton
-            class="material-icons"
-            on:click={() => goto("/profile")}>
-            person
-          </IconButton>
-        </div>
+        <IconButton class="material-icons" on:click={() => goto('/profile')}>
+          person
+        </IconButton>
       </div>
     </div>
   </div>
