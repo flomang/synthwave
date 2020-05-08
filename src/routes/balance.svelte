@@ -1,103 +1,128 @@
 <script>
   import Fab, { Label, Icon } from "@smui/fab";
   import Button, { Group, GroupItem } from "@smui/button";
-  import { goto } from "@sapper/app";
+  import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
+  import Checkbox from "@smui/checkbox";
+  import { goto } from "@sapper/app"
 
-  let superText = "";
-  let items = [
+  let statement = [
     {
       date: "2020-01-01",
-      address: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
-      amount: "0.00300000 btc",
-      type: "deposit"
+      description: "From: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      type: "deposit",
+      amount: "0.00300000",
+      balance: "1.00000000"
     },
     {
       date: "2020-02-03",
-      address: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
-      amount: "0.00000299 btc",
-      type: "widthdraw"
+      description: "To: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      amount: "0.00000299",
+      type: "widthdraw",
+      balance: "0.000009980"
     },
     {
       date: "2020-02-10",
-      address: "Helmet",
-      amount: "0.000093000 btc",
-      type: "win"
+      description: "From: Helmet Sports",
+      amount: "1.000093000",
+      type: "win",
+      balance: "1.000009980"
     },
     {
       date: "2020-03-04",
-      address: "Magic Couch",
-      amount: "0.000020000 btc",
-      type: "loss"
+      description: "To: Magic Couch",
+      type: "loss",
+      amount: "0.000020000",
+      balance: "0.000009980"
     }
   ];
 </script>
 
 <style>
-  h1,
-  figure,
-  p,
   div {
     text-align: center;
     margin: 0 auto;
   }
 
-  h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-  }
-
-  figure {
-    margin: 0 0 1em 0;
-  }
-
-  img {
-    width: 100%;
-    margin: 0 0 1em 0;
-  }
-
-  p {
-    margin: 1em auto;
-  }
   .content {
     background-color: #fff;
   }
-
-  @media (min-width: 480px) {
-    h1 {
-      font-size: 4em;
-    }
+  
+  .left {
+    text-align: left;
   }
+
 </style>
 
 <svelte:head>
-  <title>History</title>
+  <title>Activity</title>
 </svelte:head>
 
 <div class="content" bp="padding">
-  <h3>Balance</h3>
-  <div bp="grid 3">
-    <div>
-      <h3>Date</h3>
-    </div>
-    <div>
-      <h3>Type</h3>
-    </div>
-    <div>
-      <h3>From</h3>
-    </div>
-    <div>
-      <h3>Amount</h3>
-    </div>
+  <h3>activity</h3>
+  <div class="left" bp="full-width hide@sm hide@md show@lg">
+    <DataTable>
+      <Head>
+        <Row>
+          <Cell>Date</Cell>
+          <Cell>Description</Cell>
+          <Cell>Type</Cell>
+          <Cell>Amount</Cell>
+          <Cell>Balance</Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each statement as txn}
+          <Row>
+            <Cell>{txn.date}</Cell>
+            <Cell>{txn.description}</Cell>
+            <Cell>{txn.type}</Cell>
+            <Cell>{txn.amount}</Cell>
+            <Cell>{txn.balance}</Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
   </div>
-
-  <div bp="grid 3">
-    {#each items as item}
-        <div>{item.date}</div>
-        <div>{item.type}</div>
-        <div>{item.address}</div>
-        <div>{item.amount}</div>
-    {/each}
+  <div class="left" bp="full-width hide@sm show@md hide@lg">
+    <DataTable>
+      <Head>
+        <Row>
+          <Cell>Date</Cell>
+          <Cell>Type</Cell>
+          <Cell>Amount</Cell>
+          <Cell>Balance</Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each statement as txn}
+          <Row>
+            <Cell>{txn.date}</Cell>
+            <Cell>{txn.type}</Cell>
+            <Cell>{txn.amount}</Cell>
+            <Cell>{txn.balance}</Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
+  </div>
+  <div class="left" bp="full-width show@sm hide@md hide@lg">
+    <DataTable>
+      <Head>
+        <Row>
+          <Cell>Date</Cell>
+          <Cell>Type</Cell>
+          <Cell>Balance</Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each statement as txn}
+          <Row>
+            <Cell>{txn.date}</Cell>
+            <Cell>{txn.type}</Cell>
+            <Cell>{txn.balance}</Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
   </div>
 </div>
