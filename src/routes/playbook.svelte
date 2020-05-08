@@ -3,32 +3,55 @@
   import Button, { Group, GroupItem } from "@smui/button";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
   import Checkbox from "@smui/checkbox";
-  import { goto } from "@sapper/app";
 
   let superText = "";
-  let stakes = [
+  let bets = [
     {
+      id: 1,
       user: "PasteBook",
       description: "Warriors loose game 6 by more than 10",
       amount: "0.00000300 btc",
-      countdown: "03:10:22:04"
+      countdown: "03:10:22:04",
+      status: "in play"
     },
     {
+      id: 2,
       user: "Juicer Bunny",
       description: "Manchester United (Upcake22) (E)",
       amount: "0.00005000 btc",
-      countdown: "00:01:27:22"
+      countdown: "00:01:27:22",
+      status: "in play"
     },
     {
+      id: 3,
       user: "Magic Couch",
       description:
         "John Jones vs Cormier looses round 3 in points but wins match by tko",
       amount: "0.00005000 btc",
-      countdown: "00:00:03:43"
+      countdown: "00:00:03:43",
+      status: "in play"
+    },
+    {
+      id: 4,
+      user: "...",
+      description:
+        "Cormier looses round 3 in points but gets knocked out in round 4",
+      amount: "0.00005000 btc",
+      countdown: "00:00:05:00",
+      status: "pending"
+    },
+    {
+      id: 5,
+      user: "...",
+      description:
+        "Cormier looses round 3 in points but gets knocked out in round 4",
+      amount: "0.00005000 btc",
+      countdown: "00:00:03:30",
+      status: "fishing for taker!"
     }
   ];
 
-  let selected = [stakes[2]];
+  let selected = [bets[2]];
 </script>
 
 <style>
@@ -40,11 +63,10 @@
   .content {
     background-color: #fff;
   }
-  
+
   .left {
     text-align: left;
   }
-
 </style>
 
 <svelte:head>
@@ -67,23 +89,39 @@
           </Cell>
           <Cell>Bookie</Cell>
           <Cell>Wager</Cell>
-          <Cell>Stakes</Cell>
+          <Cell>Stake</Cell>
           <Cell>Countdown</Cell>
+          <Cell>Status</Cell>
         </Row>
       </Head>
       <Body>
-        {#each stakes as stake (stake.user)}
+        {#each bets as bet (bet.id)}
           <Row>
             <Cell checkbox>
-              <Checkbox
-                bind:group={selected}
-                value={stake}
-                valueKey={stake.user} />
+              <Checkbox bind:group={selected} value={bet} valueKey={bet.user} />
             </Cell>
-            <Cell>{stake.user}</Cell>
-            <Cell>{stake.description}</Cell>
-            <Cell>{stake.amount}</Cell>
-            <Cell>{stake.countdown}</Cell>
+            <Cell>{bet.user}</Cell>
+            <Cell>{bet.description}</Cell>
+            <Cell>{bet.amount}</Cell>
+            <Cell>{bet.countdown}</Cell>
+            {#if bet.status != 'pending'}
+              <Cell>{bet.status}</Cell>
+            {:else}
+              <Cell>
+                <Button
+                  color="primary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>roll dice</Label>
+                </Button>
+                <Button
+                  color="secondary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>bounce</Label>
+                </Button>
+              </Cell>
+            {/if}
           </Row>
         {/each}
       </Body>
@@ -97,22 +135,38 @@
             <Checkbox />
           </Cell>
           <Cell>Bookie</Cell>
-          <Cell>In Play</Cell>
+          <Cell>Stake</Cell>
           <Cell>Countdown</Cell>
+          <Cell>Status</Cell>
         </Row>
       </Head>
       <Body>
-        {#each stakes as stake (stake.user)}
+        {#each bets as bet (bet.id)}
           <Row>
             <Cell checkbox>
-              <Checkbox
-                bind:group={selected}
-                value={stake}
-                valueKey={stake.user} />
+              <Checkbox bind:group={selected} value={bet} valueKey={bet.user} />
             </Cell>
-            <Cell>{stake.user}</Cell>
-            <Cell>{stake.amount}</Cell>
-            <Cell>{stake.countdown}</Cell>
+            <Cell>{bet.user}</Cell>
+            <Cell>{bet.amount}</Cell>
+            <Cell>{bet.countdown}</Cell>
+            {#if bet.status != 'pending'}
+              <Cell>{bet.status}</Cell>
+            {:else}
+              <Cell>
+                <Button
+                  color="primary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>roll dice</Label>
+                </Button>
+                <Button
+                  color="secondary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>bounce</Label>
+                </Button>
+              </Cell>
+            {/if}
           </Row>
         {/each}
       </Body>
@@ -125,24 +179,35 @@
           <Cell checkbox>
             <Checkbox />
           </Cell>
-          <Cell>Bookie</Cell>
-          <Cell>In Play</Cell>
-          <Cell>Countdown</Cell>
-
+          <Cell>Stake</Cell>
+          <Cell>Status</Cell>
         </Row>
       </Head>
       <Body>
-        {#each stakes as stake (stake.user)}
+        {#each bets as bet (bet.id)}
           <Row>
             <Cell checkbox>
-              <Checkbox
-                bind:group={selected}
-                value={stake}
-                valueKey={stake.user} />
+              <Checkbox bind:group={selected} value={bet} valueKey={bet.user} />
             </Cell>
-            <Cell>{stake.user}</Cell>
-            <Cell>{stake.amount}</Cell>
-            <Cell>{stake.countdown}</Cell>
+            <Cell>{bet.amount}</Cell>
+            {#if bet.status != 'pending'}
+              <Cell>{bet.status}</Cell>
+            {:else}
+              <Cell>
+                <Button
+                  color="primary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>roll dice</Label>
+                </Button>
+                <Button
+                  color="secondary"
+                  on:click={() => alert('logout')}
+                  variant="raised">
+                  <Label>bounce</Label>
+                </Button>
+              </Cell>
+            {/if}
           </Row>
         {/each}
       </Body>

@@ -1,6 +1,8 @@
 <script>
   import IconButton, { Icon } from "@smui/icon-button";
   import { goto } from "@sapper/app";
+  // not used 
+  export let segment;
 </script>
 
 <style>
