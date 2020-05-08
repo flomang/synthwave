@@ -111,6 +111,7 @@
         <Row>
           <Cell>Date</Cell>
           <Cell>Type</Cell>
+          <Cell>Amount</Cell>
           <Cell>Balance</Cell>
         </Row>
       </Head>
@@ -119,6 +120,7 @@
           <Row>
             <Cell>{txn.date}</Cell>
             <Cell>{txn.type}</Cell>
+            <Cell>{txn.amount}</Cell>
             <Cell>{txn.balance}</Cell>
           </Row>
         {/each}

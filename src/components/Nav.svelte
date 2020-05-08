@@ -54,7 +54,6 @@
   <div bp="4">
     <div bp="grid 6">
       <div on:click={() => goto('.')}>shoppe</div>
-      <div on:click={() => goto('/open')}>book</div>
     </div>
   </div>
   <div bp="8">
@@ -63,7 +62,7 @@
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">10.1983230</span>
       </div>
-      <div bp="1@sm 2@md" class="outline play" on:click={() => goto('/play')}>
+      <div bp="1@sm 2@md" class="outline play" on:click={() => goto('/playbook')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">0.00031233</span>
       </div>

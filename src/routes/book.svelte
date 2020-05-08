@@ -92,7 +92,7 @@
             <Checkbox />
           </Cell>
           <Cell>Bookie</Cell>
-          <Cell>Stakes</Cell>
+          <Cell>In Play</Cell>
           <Cell>Countdown</Cell>
         </Row>
       </Head>
@@ -121,6 +121,7 @@
             <Checkbox />
           </Cell>
           <Cell>Bookie</Cell>
+          <Cell>In Play</Cell>
           <Cell>Countdown</Cell>
         </Row>
       </Head>
@@ -134,6 +135,7 @@
                 valueKey={stake.user} />
             </Cell>
             <Cell>{stake.user}</Cell>
+            <Cell>{stake.amount}</Cell>
             <Cell>{stake.countdown}</Cell>
           </Row>
         {/each}
