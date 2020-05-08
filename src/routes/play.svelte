@@ -6,23 +6,24 @@
   let superText = "";
   let items = [
     {
-      user: "Gravy's Couch Book",
+      user: "PasteBook",
       description: "Warriors loose game 6 by more than 10",
       amount: "0.00000300 btc",
       expires: "April 6, 2020 10:00 PM MST"
     },
     {
-      user: "Flowy's Juicer",
+      user: "Juicer Bunny",
       description: "Manchester United (Upcake22) (E)",
       amount: "0.00005000 btc",
       expires: "May 9, 2020 4:00 PM MST"
     },
     {
       user: "Magic Couch",
-      description: "John Jones vs Cormier looses round 3 in points but wins match by tko",
+      description:
+        "John Jones vs Cormier looses round 3 in points but wins match by tko",
       amount: "0.00005000 btc",
       expires: "June 10, 2020 8:00 PM MST"
-    },
+    }
   ];
 </script>
 
@@ -70,11 +71,20 @@
 </svelte:head>
 
 <div class="content" bp="padding">
+  <h3>In Play</h3>
   <div bp="grid 3">
-    <div><h3>Bookie</h3></div>
-    <div><h3>Description</h3></div>
-    <div><h3>Amount</h3></div>
-    <div><h3>Expires</h3></div>
+    <div>
+      <h3>Bookie</h3>
+    </div>
+    <div>
+      <h3>Description</h3>
+    </div>
+    <div>
+      <h3>Amount</h3>
+    </div>
+    <div>
+      <h3>Expires</h3>
+    </div>
     {#each items as item}
       <div>{item.user}</div>
       <div>{item.description}</div>

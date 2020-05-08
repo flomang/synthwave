@@ -53,17 +53,17 @@
 <nav bp="grid 1">
   <div bp="4">
     <div bp="grid 6">
-      <div on:click={() => goto('.')}>Market</div>
-      <div on:click={() => goto('/open')}>Open Bet</div>
+      <div on:click={() => goto('.')}>shoppe</div>
+      <div on:click={() => goto('/open')}>book</div>
     </div>
   </div>
-  <div bp="4@sm 4@md 5@lg offset-7xs offset-8@sm offset-8@md offset-9@lg">
+  <div bp="8">
     <div bp="grid 1 gap-none">
-      <div bp="1@sm 4@md offset-3@lg" class="outline available" on:click={() => goto('/balance')}>
+      <div bp="1@sm 2@md offset-10@sm offset-7@md offset-7@lg" class="outline available" on:click={() => goto('/balance')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">10.1983230</span>
       </div>
-      <div bp="1@sm 4@md" class="outline play" on:click={() => goto('/play')}>
+      <div bp="1@sm 2@md" class="outline play" on:click={() => goto('/play')}>
         <img class="btc-symbol" alt="" src="btc_symbol.png" />
         <span class="balance">0.00031233</span>
       </div>

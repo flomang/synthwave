@@ -95,7 +95,7 @@
 
 <div bp="grid 1">
   <div bp="6" class="brand">
-    Guice
+    joos 
   </div>
   <div bp="4 padding-top--lg padding-bottom--lg">
     <div class="quotes">

@@ -6,23 +6,29 @@
   let superText = "";
   let items = [
     {
-      user: "Gravy's Couch Warriors",
-      description: "Warriors loose game 6 by more than 10",
-      amount: "0.00000300 btc",
-      expires: "April 6, 2020 10:00 PM MST"
+      date: "2020-01-01",
+      address: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      amount: "0.00300000 btc",
+      type: "deposit"
     },
     {
-      user: "Flowy's Juicer",
-      description: "Manchester United (Upcake22) (E)",
-      amount: "0.00005000 btc",
-      expires: "May 9, 2020 4:00 PM MST"
+      date: "2020-02-03",
+      address: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+      amount: "0.00000299 btc",
+      type: "widthdraw"
     },
     {
-      user: "Magic Couch",
-      description: "John Jones vs Cormier looses round 3 in points but wins match by tko",
-      amount: "0.00005000 btc",
-      expires: "June 10, 2020 8:00 PM MST"
+      date: "2020-02-10",
+      address: "Helmet",
+      amount: "0.000093000 btc",
+      type: "win"
     },
+    {
+      date: "2020-03-04",
+      address: "Magic Couch",
+      amount: "0.000020000 btc",
+      type: "loss"
+    }
   ];
 </script>
 
@@ -70,16 +76,28 @@
 </svelte:head>
 
 <div class="content" bp="padding">
+  <h3>Balance</h3>
   <div bp="grid 3">
-    <div><h3>Bookie</h3></div>
-    <div><h3>Description</h3></div>
-    <div><h3>Amount</h3></div>
-    <div><h3>Expires</h3></div>
+    <div>
+      <h3>Date</h3>
+    </div>
+    <div>
+      <h3>Type</h3>
+    </div>
+    <div>
+      <h3>From</h3>
+    </div>
+    <div>
+      <h3>Amount</h3>
+    </div>
+  </div>
+
+  <div bp="grid 3">
     {#each items as item}
-      <div>{item.user}</div>
-      <div>{item.description}</div>
-      <div>{item.amount}</div>
-      <div>{item.expires}</div>
+        <div>{item.date}</div>
+        <div>{item.type}</div>
+        <div>{item.address}</div>
+        <div>{item.amount}</div>
     {/each}
   </div>
 </div>
