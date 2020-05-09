@@ -1,6 +1,7 @@
 <script>
   import IconButton, { Icon } from "@smui/icon-button";
   import { goto } from "@sapper/app";
+  export let segment = null;
 </script>
 
 <style>
@@ -50,7 +51,7 @@
   }
 </style>
 
-<nav bp="grid 1">
+<nav class={segment} bp="grid 1">
   <div bp="4">
     <div bp="grid 6">
       <div on:click={() => goto('/space')}>space</div>

@@ -19,14 +19,15 @@ export class Hud {
         app.stage.addChild(ring);
 
         let increment = Math.PI / 10;
-        for (let i = 0; i < 20; i++) {
+        let coinCount = 3;
+        for (let i = 0; i < coinCount; i++) {
             const btcd = PIXI.Sprite.from("btc.png");
+            btcd.tint = 0x7ac6fa;
             btcd.width = 10;
             btcd.height = 10;
             btcd.anchor.set(0.5);
             btcd.x = w * Math.cos(increment * i);
             btcd.y = h * Math.sin(increment * i);
-            btcd.tint = 0x7ac6fa;
             ring.addChild(btcd);
         }
 
@@ -37,7 +38,7 @@ export class Hud {
     }
 
     render(delta) {
-        this.ring.rotation += 0.05;
+        this.ring.rotation += 0.1;
 
         const container = this.container;
         if (container.scale.x > -1 && this.flip) {
