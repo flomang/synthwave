@@ -37,6 +37,10 @@ export class Ship {
     this.thruster.y = Math.sin(this.container.rotation + RADIAN_OFFSET);
 
     this.particles = [];
+    this.torpedos = [];
+    this.ammoLimit = 3;
+    this.recharged = true;
+    this.rechargeTime = 500;
   }
 
   edges() {
@@ -67,6 +71,41 @@ export class Ship {
         this.particles.splice(i, 1);
       }
     }
+    this.torpedos.forEach(function (torpedo, i) {
+      torpedo.render();
+      if (torpedo.offScreen(this.app.screen.width, this.app.screen.height)) {
+        this.app.stage.removeChild(torpedo.sprite);
+        this.torpedos.splice(i, 1);
+      }
+    }.bind(this));
+  }
+
+  fire() {
+    if (this.torpedos.length >= this.ammoLimit) {
+      return;
+    }
+
+    if (!this.recharged) {
+      return;
+    }
+
+    let pellet = new Particle({
+      x: this.container.x + this.heading.x * 6,
+      y: this.container.y + this.heading.y * 6,
+      width: 2,
+      height: 2,
+      velocityX: this.heading.x * 5,
+      velocityY: this.heading.y * 5,
+      projectile: true
+    });
+
+    this.app.stage.addChild(pellet.sprite);
+    this.torpedos.push(pellet);
+
+    this.recharged = false;
+    setTimeout(function () {
+        this.recharged = true;
+    }.bind(this), this.rechargeTime);
   }
 
   thrust() {

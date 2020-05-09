@@ -31,7 +31,6 @@ export class PixiSpace {
         });
 
         const starField = new StarField({app: app, count: 20000}); 
-        const torpedos = [];
 
         //Start the game loop
         app.ticker.add(delta => loop(delta));
@@ -48,9 +47,7 @@ export class PixiSpace {
                 player.thrust();
             }
             if (Keyboard.isKeyDown("KeyF")) {
-                var torpedo = player.torpedo();
-                app.stage.addChild(torpedo.sprite);
-                torpedos.push(torpedo);
+                player.fire();
             }
             if (Keyboard.isKeyDown("Space")) {
                 starField.warp();
@@ -64,13 +61,6 @@ export class PixiSpace {
             player.render(delta);
             hud.render(delta);
             starField.render(delta);
-
-            torpedos.forEach(function (torpedo) {
-                torpedo.render();
-                if (torpedo.offScreen(app.screen.width, app.screen.height)) {
-                    app.stage.removeChild(torpedo.sprite);
-                }
-            });
         }
     }
 }
