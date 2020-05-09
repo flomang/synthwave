@@ -70,7 +70,7 @@
 </style>
 
 <svelte:head>
-  <title>All Bets</title>
+  <title>Playbook</title>
 </svelte:head>
 
 <div class="content" bp="padding">

@@ -14,7 +14,6 @@ export class Ship {
 
     const sprite = PIXI.Sprite.from(img);
     // set the anchor point so the texture is centerd on the sprite
-    sprite.tint = 0x7ac6fa; 
     sprite.x = 0;
     sprite.y = 0;
     sprite.anchor.set(0.5);

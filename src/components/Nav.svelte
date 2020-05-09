@@ -55,7 +55,7 @@
 <nav bp="grid 1">
   <div bp="4">
     <div bp="grid 6">
-      <div on:click={() => goto('.')}>shoppe</div>
+      <div on:click={() => goto('/space')}>space</div>
     </div>
   </div>
   <div bp="8">
