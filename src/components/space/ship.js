@@ -29,6 +29,7 @@ export class Ship {
     container.y = y;
     container.addChild(this.sprite);
     this.container = container;
+    this.app.stage.addChild(container);
 
     this.heading.x = Math.cos(this.container.rotation - RADIAN_OFFSET);
     this.heading.y = Math.sin(this.container.rotation - RADIAN_OFFSET);

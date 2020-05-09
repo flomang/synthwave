@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import Keyboard from "pixi.js-keyboard";
 import { Ship } from "./ship.js";
+import { Hud } from "./hud.js";
 
 export class PixiSpace {
     constructor({ canvas: canvasElement }) {
@@ -18,34 +19,15 @@ export class PixiSpace {
             x: app.screen.width / 2,
             y: app.screen.height / 2
         });
-        app.stage.addChild(player.container);
 
-        const btc = PIXI.Sprite.from("btc.png");
-        btc.anchor.set(0.5);
-        btc.width = 40;
-        btc.height = 40;
-        const container = new PIXI.Container();
-        container.addChild(btc);
-        container.x = app.screen.width / 2;
-        container.y = app.screen.height / 2;
-        app.stage.addChild(container);
-
-        const ring = new PIXI.Container();
-        ring.x = app.screen.width / 2;
-        ring.y = app.screen.height / 2;
-        app.stage.addChild(ring);
-
-        let increment = Math.PI / 10;
-        for (let i = 0; i < 20; i++) {
-            const btcd = PIXI.Sprite.from("btc.png");
-            btcd.width = 10;
-            btcd.height = 10;
-            btcd.anchor.set(0.5);
-            btcd.x = 40 * Math.cos(increment * i);
-            btcd.y = 40 * Math.sin(increment * i);
-            btcd.tint = 0x7ac6fa;
-            ring.addChild(btcd);
-        }
+        const padding = 10;
+        const hud = new Hud({
+            app:app,
+            x: app.screen.width - 30 - padding,
+            y: app.screen.height - 30 - padding,
+            w: 30,
+            h: 30
+        });
 
         const starTexture = PIXI.Texture.from("star.png");
         const baseSpeed = 0.025;
@@ -54,7 +36,6 @@ export class PixiSpace {
         const starStretch = 5;
         const fov = 20;
         let cameraZ = 0;
-        let flip = true;
         let speed = 0;
         let warpSpeed = 0;
 
@@ -123,20 +104,8 @@ export class PixiSpace {
 
         function loop(delta) {
             input(delta);
-            ring.rotation += 0.05;
             player.render(delta);
-
-            if (container.scale.x > -1 && flip) {
-                container.scale.x -= 0.05;
-                if (container.scale.x <= -1) {
-                    flip = false;
-                }
-            } else if (container.scale.x < 1 && !flip) {
-                container.scale.x += 0.05;
-                if (container.scale.x >= 1) {
-                    flip = true;
-                }
-            }
+            hud.render(delta);
 
             // Simple easing. This should be changed to proper easing function when used for real.
             speed += (warpSpeed - speed) / 20;
