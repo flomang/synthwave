@@ -18,6 +18,7 @@ export class PixiSpace {
             x: app.screen.width / 2,
             y: app.screen.height / 2
         });
+        app.stage.addChild(player.container);
 
         const btc = PIXI.Sprite.from("btc.png");
         btc.anchor.set(0.5);
@@ -27,6 +28,7 @@ export class PixiSpace {
         container.addChild(btc);
         container.x = app.screen.width / 2;
         container.y = app.screen.height / 2;
+        app.stage.addChild(container);
 
         const ring = new PIXI.Container();
         ring.x = app.screen.width / 2;
@@ -46,18 +48,20 @@ export class PixiSpace {
         }
 
         const starTexture = PIXI.Texture.from("star.png");
-
-        const starAmount = 1000;
-        let cameraZ = 0;
-        const fov = 20;
         const baseSpeed = 0.025;
+        const starAmount = 1000;
+        const starBaseSize = 0.05;
+        const starStretch = 5;
+        const fov = 20;
+        let cameraZ = 0;
+        let flip = true;
         let speed = 0;
         let warpSpeed = 0;
-        const starStretch = 5;
-        const starBaseSize = 0.05;
 
-        const stars = [];
         const torpedos = [];
+
+        // init stars
+        const stars = [];
         for (let i = 0; i < starAmount; i++) {
             const star = {
                 sprite: new PIXI.Sprite(starTexture),
@@ -73,6 +77,11 @@ export class PixiSpace {
             app.stage.addChild(star.sprite);
             stars.push(star);
         }
+
+        //Start the game loop
+        app.ticker.add(delta => loop(delta));
+
+        //  SETUP FUNCTIONS HERE
 
         function randomizeStar(star, initial) {
             star.z = initial
@@ -111,19 +120,8 @@ export class PixiSpace {
 
             Keyboard.update();
         }
-        setup();
 
-        function setup() {
-            app.stage.addChild(container);
-            app.stage.addChild(player.container);
-
-            //Start the game loop
-            app.ticker.add(delta => gameLoop(delta));
-        }
-
-        let flip = true;
-
-        function gameLoop(delta) {
+        function loop(delta) {
             input(delta);
             ring.rotation += 0.05;
             player.render(delta);
@@ -178,11 +176,6 @@ export class PixiSpace {
                     app.stage.removeChild(torpedo.sprite);
                 }
             });
-
         }
-
-        function init() { }
-
-        function loop() { }
     }
 }
