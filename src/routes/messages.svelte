@@ -21,16 +21,7 @@
 
   const eliza = new Eliza();
 
-  let comments = [
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "", text: "" },
-    { author: "eliza", text: eliza.getInitial() }
-  ];
+  let comments = [{ author: "eliza", text: eliza.getInitial() }];
 
   function handleKeydown(event) {
     if (event.key === "Enter") {
@@ -77,24 +68,29 @@
     border-style: solid;
     border-width: 1px;
     border-color: #e3e3e3;
+    position: relative;
   }
   .trollbox-header {
     background-color: #fff;
-    height: 40px;
+    height: 50px;
     line-height: 40px;
     padding-left: 30px;
   }
   .trollbox-input {
     background-color: #fff;
-    height: 70px;
+    height: 100px;
     padding-left: 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 
   .scrollable {
-    flex: 1 1 auto;
     margin: 0 0 0.5em 0;
     padding: 20px;
     overflow-y: auto;
+    height: 550px;
+    flex-direction: column-reverse;
   }
 
   article {
