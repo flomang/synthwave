@@ -1,6 +1,8 @@
 <script>
   import Eliza from "elizabot";
   import { beforeUpdate, afterUpdate } from "svelte";
+  import Fab, { Label } from "@smui/fab";
+  import IconButton, { Icon } from "@smui/icon-button";
   import Textfield, { Input, Textarea } from "@smui/textfield";
   import HelperText from "@smui/textfield/helper-text/index";
 
@@ -90,8 +92,8 @@
 
   .scrollable {
     flex: 1 1 auto;
-    border-top: 1px solid #eee;
     margin: 0 0 0.5em 0;
+    padding: 20px;
     overflow-y: auto;
   }
 
@@ -100,7 +102,8 @@
   }
 
   .user {
-    text-align: t;
+    float: left;
+    text-align: left;
   }
 
   span {
@@ -109,6 +112,8 @@
   }
 
   .eliza span {
+    float: left;
+    text-align: left;
   }
 
   .user span {
@@ -119,6 +124,9 @@
     background-color: #fff;
     text-align: center;
     margin: 0 auto;
+  }
+  .chat-text {
+    display: float;
   }
 </style>
 
@@ -131,9 +139,12 @@
     <div class="trollbox-header">Trollbox</div>
     <div class="scrollable" bind:this={div}>
       {#each comments as comment}
-        <article class={comment.author}>
+        <div style="display: flex; align-items: center;">
+          <IconButton>
+            <Icon class="material-icons">person</Icon>
+          </IconButton>
           <span>{comment.text}</span>
-        </article>
+        </div>
       {/each}
     </div>
     <div class="trollbox-input">
