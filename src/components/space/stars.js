@@ -20,7 +20,6 @@ export class StarField {
             sprite.alpha = 0.3;
             sprite.tint = Math.random() * 0xffffff;
             container.addChild(sprite);
-            container.
 
             //container.on('pointerover', onButtonOver)
             //    .on('pointerout', onButtonOut);

@@ -9,6 +9,7 @@
   let div;
   let autoscroll;
   let valueStandardA = "";
+  let profileName = "Stache less"
 
   beforeUpdate(() => {
     autoscroll =
@@ -61,7 +62,7 @@
   .trollbox {
     display: flex;
     flex-direction: column;
-    max-width: 30%;
+    max-width: 100%;
     text-align: left;
     height: 700px;
     background-color: #f9f9f9;
@@ -78,18 +79,26 @@
   }
   .trollbox-input {
     background-color: #fff;
-    height: 100px;
-    padding-left: 30px;
+    height: 200px;
     position: absolute;
     bottom: 0;
     width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    align-items: left;
+  }
+
+  .trollbox-textfield {
+    height: 100px;
+    width: 600px;
   }
 
   .scrollable {
     margin: 0 0 0.5em 0;
     padding: 20px;
     overflow-y: auto;
-    height: 550px;
+    height: 450px;
     flex-direction: column-reverse;
   }
 
@@ -124,6 +133,22 @@
   .chat-text {
     display: float;
   }
+
+  .input-container{
+        width: 100%;
+  }
+  .input-container p {
+    position: relative;
+    top: 16px;
+  }
+
+  .avatar-icon {
+    position: relative;
+    top: 16px;
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+  }
 </style>
 
 <svelte:head>
@@ -144,13 +169,17 @@
       {/each}
     </div>
     <div class="trollbox-input">
-      <Textfield
-        bind:value={valueStandardA}
-        on:keydown={handleKeydown}
-        label="Say something..."
-        input$aria-controls="helper-text-standard-a"
-        input$aria-describedby="helper-text-standard-a" />
-      <HelperText id="helper-text-standard-a" />
+      <img class="avatar-icon" alt="" src="btc.png" />
+      <div class="input-container">
+        <p bp="margin-top--none">{profileName}</p>
+        <Textfield
+          fullwidth
+          bind:value={valueStandardA}
+          on:keydown={handleKeydown}
+          label="Say something..."
+          input$aria-controls="helper-text-standard-a"
+          input$aria-describedby="helper-text-standard-a" />
+      </div>
     </div>
   </div>
 </div>
