@@ -9,7 +9,7 @@
   let div;
   let autoscroll;
   let valueStandardA = "";
-  let profileName = "Stache Less";
+  let profileName = "Troll King";
 
   beforeUpdate(() => {
     autoscroll =
@@ -40,25 +40,15 @@
       event.target.value = "";
 
       const reply = eliza.transform(text);
-
       setTimeout(() => {
-        comments = comments.concat({
-          author: "eliza",
-          text: "...",
-          image: "great-success.png",
-          placeholder: true
-        });
-
-        setTimeout(() => {
-          comments = comments
-            .filter(comment => !comment.placeholder)
-            .concat({
-              author: "eliza",
-              text: reply,
-              image: "great-success.png"
-            });
-        }, 500 + Math.random() * 500);
-      }, 200 + Math.random() * 200);
+        comments = comments
+          .filter(comment => !comment.placeholder)
+          .concat({
+            author: "eliza",
+            text: reply,
+            image: "great-success.png"
+          });
+      }, 500 + Math.random() * 500);
     }
   }
 </script>
@@ -77,9 +67,11 @@
     position: relative;
   }
   .trollbox-header {
+    color: #888;
+    font-weight: bold;
     background-color: #fff;
     height: 50px;
-    line-height: 40px;
+    line-height: 50px;
     padding-left: 30px;
   }
   .trollbox-input {
@@ -92,6 +84,9 @@
     padding-right: 30px;
     display: flex;
     align-items: left;
+  }
+  .trollbox-footer {
+    text-align: center;
   }
 
   .trollbox-textfield {
@@ -197,6 +192,16 @@
           label="Say something..."
           input$aria-controls="helper-text-standard-a"
           input$aria-describedby="helper-text-standard-a" />
+        <img
+          class="avatar-image"
+          on:click={() => alert('make bet')}
+          alt=""
+          src="btc-btn.png" />
+        <img
+          class="avatar-image"
+          on:click={() => alert('insert emojiis')}
+          alt=""
+          src="mood.png" />
       </div>
     </div>
   </div>
