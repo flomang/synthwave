@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 export class StarField {
-    constructor({ app: app, count: count  }) {
+    constructor({ app: app, count: count }) {
         const starTexture = PIXI.Texture.from("star.png");
         this.app = app;
         this.cameraZ = 0;
@@ -11,21 +11,51 @@ export class StarField {
         // init stars
         const stars = [];
         for (let i = 0; i < count; i++) {
+            const container = new PIXI.Container();
+            const sprite = new PIXI.Sprite(starTexture);
+            sprite.cursor = 'hover';
+            //sprite.interactive = true;
+            sprite.anchor.x = 0.5;
+            sprite.anchor.y = 0.7;
+            sprite.alpha = 0.3;
+            sprite.tint = Math.random() * 0xffffff;
+            container.addChild(sprite);
+            container.
+
+            //container.on('pointerover', onButtonOver)
+            //    .on('pointerout', onButtonOut);
+
+            app.stage.addChild(container);
+
             const star = {
-                sprite: new PIXI.Sprite(starTexture),
+                container: container,
+                sprite: sprite,
                 z: 0,
                 x: 0,
                 y: 0
             };
-            star.sprite.anchor.x = 0.5;
-            star.sprite.anchor.y = 0.7;
-            star.sprite.alpha = 0.7;
-            star.sprite.tint = Math.random() * 0xffffff;
             this.randomizeStar(star, true);
-            app.stage.addChild(star.sprite);
             stars.push(star);
         }
         this.stars = stars;
+
+        function onButtonOver() {
+            this.isOver = true;
+            this.alpha = 1;
+            if (this.isdown) {
+                return;
+            }
+            //this.texture = textureButtonOver;
+        }
+
+        function onButtonOut() {
+            this.isOver = false;
+            this.alpha = 0.3;
+            if (this.isdown) {
+                return;
+            }
+            //this.texture = textureButton;
+        }
     }
 
     randomizeStar(star, initial) {
@@ -44,7 +74,7 @@ export class StarField {
         this.warpSpeed = 1;
         setTimeout(function () {
             this.warpSpeed = 0;
-        }.bind(this), 5000);
+        }.bind(this), 3000);
     }
 
     render(delta) {
@@ -61,16 +91,16 @@ export class StarField {
 
             // Map star 3d position to 2d with really simple projection
             const z = star.z - this.cameraZ;
-            star.sprite.x =
+            star.container.x =
                 star.x * (fov / z) * app.renderer.screen.width +
                 app.renderer.screen.width / 2;
-            star.sprite.y =
+            star.container.y =
                 star.y * (fov / z) * app.renderer.screen.width +
                 app.renderer.screen.height / 2;
 
             // Calculate star scale & rotation.
-            const dxCenter = star.sprite.x - app.renderer.screen.width / 2;
-            const dyCenter = star.sprite.y - app.renderer.screen.height / 2;
+            const dxCenter = star.container.x - app.renderer.screen.width / 2;
+            const dyCenter = star.container.y - app.renderer.screen.height / 2;
             const distanceCenter = Math.sqrt(
                 dxCenter * dxCenter + dyCenter * dyCenter
             );
