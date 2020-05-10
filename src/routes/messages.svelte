@@ -9,7 +9,7 @@
   let div;
   let autoscroll;
   let valueStandardA = "";
-  let profileName = "Stache less"
+  let profileName = "Stache Less";
 
   beforeUpdate(() => {
     autoscroll =
@@ -22,7 +22,9 @@
 
   const eliza = new Eliza();
 
-  let comments = [{ author: "eliza", text: eliza.getInitial() }];
+  let comments = [
+    { author: "eliza", text: eliza.getInitial(), image: "great-success.png" }
+  ];
 
   function handleKeydown(event) {
     if (event.key === "Enter") {
@@ -30,7 +32,8 @@
       if (!text) return;
 
       comments = comments.concat({
-        author: "user",
+        author: profileName,
+        image: "btc.png",
         text
       });
 
@@ -42,6 +45,7 @@
         comments = comments.concat({
           author: "eliza",
           text: "...",
+          image: "great-success.png",
           placeholder: true
         });
 
@@ -50,7 +54,8 @@
             .filter(comment => !comment.placeholder)
             .concat({
               author: "eliza",
-              text: reply
+              text: reply,
+              image: "great-success.png"
             });
         }, 500 + Math.random() * 500);
       }, 200 + Math.random() * 200);
@@ -96,7 +101,7 @@
 
   .scrollable {
     margin: 0 0 0.5em 0;
-    padding: 20px;
+    padding: 30px;
     overflow-y: auto;
     height: 450px;
     flex-direction: column-reverse;
@@ -134,20 +139,34 @@
     display: float;
   }
 
-  .input-container{
-        width: 100%;
+  .input-container {
+    width: 100%;
+    margin-left: 12px;
   }
   .input-container p {
     position: relative;
     top: 16px;
+    width: 100%;
   }
 
   .avatar-icon {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: 10px;
+  }
+
+  .avatar-image {
     position: relative;
     top: 16px;
-    height: 24px;
-    width: 24px;
+    height: 30px;
+    width: 30px;
     margin-right: 10px;
+  }
+  .comment-author {
+    color: #888;
+    font-weight: bold;
+    padding-right: 3px;
   }
 </style>
 
@@ -160,18 +179,17 @@
     <div class="trollbox-header">Trollbox</div>
     <div class="scrollable" bind:this={div}>
       {#each comments as comment}
-        <div style="display: flex; align-items: center;">
-          <IconButton>
-            <Icon class="material-icons">person</Icon>
-          </IconButton>
-          <span>{comment.text}</span>
+        <div>
+          <img class="avatar-icon" alt="" src={comment.image} />
+          <span class="comment-author">{comment.author}</span>
+          <span bp="padding-left--none">{comment.text}</span>
         </div>
       {/each}
     </div>
     <div class="trollbox-input">
-      <img class="avatar-icon" alt="" src="btc.png" />
+      <img class="avatar-image" alt="" src="btc.png" />
       <div class="input-container">
-        <p bp="margin-top--none">{profileName}</p>
+        <p bp="margin-top--none" class="comment-author">{profileName}</p>
         <Textfield
           fullwidth
           bind:value={valueStandardA}
