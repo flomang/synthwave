@@ -7,8 +7,8 @@
   let scrollableDiv;
   let autoscroll;
   let textInput = "";
-  const profileName = "Joker";
-  const profileImage = "joker-card.png";
+  const profileName = "ace";
+  const profileImage = "aces.png";
   let comments = [];
 
   let users = [
@@ -19,7 +19,10 @@
     { username: "Satoshi Bum", profileImage: "btc.png" },
     { username: "porky pig", profileImage: "porky.png" },
     { username: "pillboi", profileImage: "pill.png" },
-    { username: "doge bot", profileImage: "doge.png" }
+    { username: "doge bot", profileImage: "doge.png" },
+    { username: "joker", profileImage: "joker-card.png" },
+    { username: "luv child", profileImage: "hearts.png" },
+    { username: "cannibis420", profileImage: "cannabis-512.png" }
   ];
 
   // add random comments
@@ -208,7 +211,7 @@
           class="trollbox-input-btn"
           on:click={() => alert('insert emojiis')}
           alt=""
-          src="joker.png" />
+          src="emojii-joker.png" />
       </div>
     </div>
   </div>
