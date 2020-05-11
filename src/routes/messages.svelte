@@ -9,7 +9,21 @@
   let div;
   let autoscroll;
   let valueStandardA = "";
-  let profileName = "Troll King";
+  const eliza = new Eliza();
+
+  let comments = [
+    { text: eliza.getInitial(), username: "eliza", profileImage: "great-success.png" }
+  ];
+
+  let users = [
+    { username: "eliza", profileImage: "great-success.png" },
+    { username: "Troll King", profileImage: "troll-king.png" },
+    { username: "Jack", profileImage: "joker-cartoon.png" },
+    { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
+    { username: "Satoshi Bum", profileImage: "btc.png" },
+  ]
+  let profileName = "Joker";
+  let profileImage = "joker.png";
 
   beforeUpdate(() => {
     autoscroll =
@@ -20,11 +34,6 @@
     if (autoscroll) div.scrollTo(0, div.scrollHeight);
   });
 
-  const eliza = new Eliza();
-
-  let comments = [
-    { author: "eliza", text: eliza.getInitial(), image: "great-success.png" }
-  ];
 
   function handleKeydown(event) {
     if (event.key === "Enter") {
@@ -32,21 +41,22 @@
       if (!text) return;
 
       comments = comments.concat({
-        author: profileName,
-        image: "btc.png",
+        username: profileName,
+        profileImage: profileImage,
         text
       });
 
       event.target.value = "";
 
       const reply = eliza.transform(text);
+      const user = users[Math.floor(Math.random() * users.length)];
       setTimeout(() => {
         comments = comments
           .filter(comment => !comment.placeholder)
           .concat({
-            author: "eliza",
+            username: user.username,
             text: reply,
-            image: "great-success.png"
+            profileImage: user.profileImage 
           });
       }, 500 + Math.random() * 500);
     }
@@ -175,14 +185,14 @@
     <div class="scrollable" bind:this={div}>
       {#each comments as comment}
         <div>
-          <img class="avatar-icon" alt="" src={comment.image} />
-          <span class="comment-author">{comment.author}</span>
+          <img class="avatar-icon" alt="" src={comment.profileImage} />
+          <span class="comment-author">{comment.username}</span>
           <span bp="padding-left--none">{comment.text}</span>
         </div>
       {/each}
     </div>
     <div class="trollbox-input">
-      <img class="avatar-image" alt="" src="btc.png" />
+      <img class="avatar-image" alt="" src={profileImage} />
       <div class="input-container">
         <p bp="margin-top--none" class="comment-author">{profileName}</p>
         <Textfield
