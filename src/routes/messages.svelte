@@ -7,8 +7,8 @@
   let scrollableDiv;
   let autoscroll;
   let textInput = "";
-  let profileName = "Joker";
-  let profileImage = "joker-card.png";
+  const profileName = "Joker";
+  const profileImage = "joker-card.png";
   let comments = [];
 
   let users = [
@@ -115,14 +115,13 @@
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
-    display: flex;
     align-items: left;
+    display: flex;
   }
 
   .trollbox-input-container {
     width: 100%;
-    margin-left: 12px;
-    padding-top: 16px;
+    padding-top: 25px;
   }
 
   .trollbox-input-container p {
@@ -134,7 +133,7 @@
     height: 30px;
     width: 30px;
     margin-top: 20px;
-    margin-right: 10px;
+    margin-right: 1em;
   }
 
   .trollbox-input-btn {
@@ -144,17 +143,26 @@
     margin-top: 16px;
   }
 
+  .comment-container {
+    display: flex;
+  }
+
   .comment-avatar {
     height: 30px;
     width: 30px;
     position: relative;
-    top: 10px;
+    top: -3px;
+    margin-right: 1em;
   }
 
   .comment-username {
     color: #888;
     font-weight: bold;
-    padding: 0em 0.3em 0em 1em;
+    padding-right: 0.3em;
+  }
+
+  .comment-text {
+    padding-bottom: 1em;
   }
 </style>
 
@@ -167,17 +175,23 @@
     <div class="trollbox-header">Trollbox</div>
     <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}
-        <div>
-          <img class="comment-avatar" alt="" src={comment.profileImage} />
-          <span class="comment-username">{comment.username}</span>
-          <span>{comment.text}</span>
+        <div class="comment-container">
+          <div>
+            <img class="comment-avatar" alt="" src={comment.profileImage} />
+          </div>
+          <div class="comment-text">
+            <span class="comment-username">{comment.username}</span>
+            <span>{comment.text}</span>
+          </div>
         </div>
       {/each}
     </div>
     <div class="trollbox-input">
-      <img class="trollbox-input-profile" alt="" src={profileImage} />
+      <div>
+        <img class="trollbox-input-profile" alt="" src={profileImage} />
+      </div>
       <div class="trollbox-input-container">
-        <p bp="margin--none" class="comment-avatar">{profileName}</p>
+        <p bp="margin--none">{profileName}</p>
         <Textfield
           fullwidth
           bind:value={textInput}
