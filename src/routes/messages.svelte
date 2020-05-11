@@ -191,7 +191,7 @@
         <img class="trollbox-input-profile" alt="" src={profileImage} />
       </div>
       <div class="trollbox-input-container">
-        <p bp="margin--none">{profileName}</p>
+        <span class="comment-username">{profileName}</span>
         <Textfield
           fullwidth
           bind:value={textInput}
