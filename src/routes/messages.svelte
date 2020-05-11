@@ -18,12 +18,15 @@
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
     { username: "Troll King", profileImage: "troll-king.png" },
-    { username: "Jack", profileImage: "joker-cartoon.png" },
+    { username: "jack", profileImage: "joker-cartoon.png" },
     { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
     { username: "Satoshi Bum", profileImage: "btc.png" },
+    { username: "porky pig", profileImage: "porky.png" },
+    { username: "pillboi", profileImage: "pill.png" },
+    { username: "doge bot", profileImage: "doge.png" },
   ]
   let profileName = "Joker";
-  let profileImage = "joker.png";
+  let profileImage = "joker-card.png";
 
   beforeUpdate(() => {
     autoscroll =
@@ -171,7 +174,7 @@
   .comment-author {
     color: #888;
     font-weight: bold;
-    padding-right: 3px;
+    padding-right: 6px;
   }
 </style>
 
@@ -211,7 +214,7 @@
           class="avatar-image"
           on:click={() => alert('insert emojiis')}
           alt=""
-          src="mood.png" />
+          src="joker.png" />
       </div>
     </div>
   </div>
