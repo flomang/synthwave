@@ -1,19 +1,15 @@
 <script>
   import Eliza from "elizabot";
   import { beforeUpdate, afterUpdate } from "svelte";
-  import Fab, { Label } from "@smui/fab";
-  import IconButton, { Icon } from "@smui/icon-button";
   import Textfield, { Input, Textarea } from "@smui/textfield";
-  import HelperText from "@smui/textfield/helper-text/index";
 
-  let div;
-  let autoscroll;
-  let valueStandardA = "";
   const eliza = new Eliza();
-
-  let comments = [
-    { text: eliza.getInitial(), username: "eliza", profileImage: "great-success.png" }
-  ];
+  let scrollableDiv;
+  let autoscroll;
+  let textInput = "";
+  let profileName = "Joker";
+  let profileImage = "joker-card.png";
+  let comments = [];
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -23,22 +19,34 @@
     { username: "Satoshi Bum", profileImage: "btc.png" },
     { username: "porky pig", profileImage: "porky.png" },
     { username: "pillboi", profileImage: "pill.png" },
-    { username: "doge bot", profileImage: "doge.png" },
-  ]
-  let profileName = "Joker";
-  let profileImage = "joker-card.png";
+    { username: "doge bot", profileImage: "doge.png" }
+  ];
+
+  // add random comments
+  let seed = eliza.getInitial();
+  for (let i = 0; i < 10; ++i) {
+    const user = users[Math.floor(Math.random() * users.length)];
+    comments = comments
+      .filter(comment => !comment.placeholder)
+      .concat({
+        username: user.username,
+        text: eliza.transform(seed),
+        profileImage: user.profileImage
+      });
+  }
 
   beforeUpdate(() => {
     autoscroll =
-      div && div.offsetHeight + div.scrollTop > div.scrollHeight - 20;
+      scrollableDiv &&
+      scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
+        scrollableDiv.scrollHeight - 10;
   });
 
   afterUpdate(() => {
-    if (autoscroll) div.scrollTo(0, div.scrollHeight);
+    if (autoscroll) scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
   });
 
-
-  function handleKeydown(event) {
+  let handleKeydown = event => {
     if (event.key === "Enter") {
       const text = event.target.value;
       if (!text) return;
@@ -51,19 +59,19 @@
 
       event.target.value = "";
 
-      const reply = eliza.transform(text);
-      const user = users[Math.floor(Math.random() * users.length)];
       setTimeout(() => {
+        const reply = eliza.transform(text);
+        const user = users[Math.floor(Math.random() * users.length)];
         comments = comments
           .filter(comment => !comment.placeholder)
           .concat({
             username: user.username,
             text: reply,
-            profileImage: user.profileImage 
+            profileImage: user.profileImage
           });
       }, 500 + Math.random() * 500);
     }
-  }
+  };
 </script>
 
 <style>
@@ -79,6 +87,7 @@
     border-color: #e3e3e3;
     position: relative;
   }
+
   .trollbox-header {
     color: #888;
     font-weight: bold;
@@ -87,6 +96,17 @@
     line-height: 50px;
     padding-left: 30px;
   }
+
+  .trollbox-scrollable {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    margin: 0 0 0.5em 0;
+    padding-left: 30px;
+    overflow-y: auto;
+    height: 450px;
+  }
+
   .trollbox-input {
     background-color: #fff;
     height: 200px;
@@ -98,83 +118,43 @@
     display: flex;
     align-items: left;
   }
-  .trollbox-footer {
-    text-align: center;
-  }
 
-  .trollbox-textfield {
-    height: 100px;
-    width: 600px;
-  }
-
-  .scrollable {
-    margin: 0 0 0.5em 0;
-    padding: 30px;
-    overflow-y: auto;
-    height: 450px;
-    flex-direction: column-reverse;
-  }
-
-  article {
-    margin: 0.5em 0;
-  }
-
-  .user {
-    float: left;
-    text-align: left;
-  }
-
-  span {
-    padding: 0.5em 1em;
-    display: inline-block;
-  }
-
-  .eliza span {
-    float: left;
-    text-align: left;
-  }
-
-  .user span {
-    word-break: break-all;
-  }
-
-  .content {
-    background-color: #fff;
-    text-align: center;
-    margin: 0 auto;
-  }
-  .chat-text {
-    display: float;
-  }
-
-  .input-container {
+  .trollbox-input-container {
     width: 100%;
     margin-left: 12px;
+    padding-top: 16px;
   }
-  .input-container p {
+
+  .trollbox-input-container p {
     position: relative;
-    top: 16px;
     width: 100%;
   }
 
-  .avatar-icon {
+  .trollbox-input-profile {
+    height: 30px;
+    width: 30px;
+    margin-top: 20px;
+    margin-right: 10px;
+  }
+
+  .trollbox-input-btn {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 16px;
+  }
+
+  .comment-avatar {
     height: 30px;
     width: 30px;
     position: relative;
     top: 10px;
   }
 
-  .avatar-image {
-    position: relative;
-    top: 16px;
-    height: 30px;
-    width: 30px;
-    margin-right: 10px;
-  }
-  .comment-author {
+  .comment-username {
     color: #888;
     font-weight: bold;
-    padding-right: 6px;
+    padding: 0em 0.3em 0em 1em;
   }
 </style>
 
@@ -182,36 +162,36 @@
   <title>trollbox</title>
 </svelte:head>
 
-<div class="content" bp="padding--lg">
+<div class="content">
   <div class="trollbox">
     <div class="trollbox-header">Trollbox</div>
-    <div class="scrollable" bind:this={div}>
+    <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}
         <div>
-          <img class="avatar-icon" alt="" src={comment.profileImage} />
-          <span class="comment-author">{comment.username}</span>
-          <span bp="padding-left--none">{comment.text}</span>
+          <img class="comment-avatar" alt="" src={comment.profileImage} />
+          <span class="comment-username">{comment.username}</span>
+          <span>{comment.text}</span>
         </div>
       {/each}
     </div>
     <div class="trollbox-input">
-      <img class="avatar-image" alt="" src={profileImage} />
-      <div class="input-container">
-        <p bp="margin-top--none" class="comment-author">{profileName}</p>
+      <img class="trollbox-input-profile" alt="" src={profileImage} />
+      <div class="trollbox-input-container">
+        <p bp="margin--none" class="comment-avatar">{profileName}</p>
         <Textfield
           fullwidth
-          bind:value={valueStandardA}
+          bind:value={textInput}
           on:keydown={handleKeydown}
           label="Say something..."
           input$aria-controls="helper-text-standard-a"
           input$aria-describedby="helper-text-standard-a" />
         <img
-          class="avatar-image"
+          class="trollbox-input-btn"
           on:click={() => alert('make bet')}
           alt=""
           src="btc-btn.png" />
         <img
-          class="avatar-image"
+          class="trollbox-input-btn"
           on:click={() => alert('insert emojiis')}
           alt=""
           src="joker.png" />
