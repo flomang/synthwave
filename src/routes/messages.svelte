@@ -2,6 +2,8 @@
   import Eliza from "elizabot";
   import { beforeUpdate, afterUpdate } from "svelte";
   import Textfield, { Input, Textarea } from "@smui/textfield";
+  import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import Button, { Label } from "@smui/button";
 
   const eliza = new Eliza();
   let scrollableDiv;
@@ -9,7 +11,11 @@
   let textInput = "";
   const profileName = "ace";
   const profileImage = "aces.png";
+  let dialog;
   let comments = [];
+  let description = "";
+  let amount = "";
+  let expiration = "";
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -36,6 +42,16 @@
         text: eliza.transform(seed),
         profileImage: user.profileImage
       });
+  }
+
+  function closeHandler(e) {
+    console.log(e.detail.action);
+    if (e.detail.action == "submit") {
+      //  console.log("submit the bet");
+    }
+    description = "";
+    amount = "";
+    expiration = "";
   }
 
   beforeUpdate(() => {
@@ -167,11 +183,68 @@
   .comment-text {
     padding-bottom: 1em;
   }
+
+  .dice-img {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: 10px;
+    margin-right: 0.5em;
+  }
 </style>
 
 <svelte:head>
   <title>trollbox</title>
 </svelte:head>
+
+<Dialog
+  bind:this={dialog}
+  on:MDCDialog:closed={closeHandler}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-content">
+  <Title id="dialog-title">
+    <span><img class="dice-img" alt="" src="dice.png"/>Roll the dice!</span>
+  </Title>
+  <Content id="dialog-content">
+    <div bp="padding-top--lg">
+      <div bp="margin-bottom--lg">
+        <div class="margins">
+          <Textfield
+            fullwidth
+            textarea
+            bind:value={description}
+            label="Description"
+            input$aria-controls="helper-text-fullwidth-textarea"
+            input$aria-describedby="helper-text-fullwidth-textarea" />
+        </div>
+      </div>
+      <div bp="grid 6 margin-bottom--lg">
+        <Textfield
+          variant="outlined"
+          bind:value={amount}
+          label="Amount"
+          input$aria-controls="helper-text-outlined-a"
+          input$aria-describedby="helper-text-outlined-a" />
+      </div>
+      <div bp="grid 6 margin-bottom--lg">
+        <Textfield
+          variant="outlined"
+          bind:value={expiration}
+          label="Expiration Date"
+          input$aria-controls="helper-text-outlined-a"
+          input$aria-describedby="helper-text-outlined-a" />
+      </div>
+    </div>
+  </Content>
+  <Actions>
+    <Button>
+      <Label>Cancel</Label>
+    </Button>
+    <Button action="submit">
+      <Label>Submit</Label>
+    </Button>
+  </Actions>
+</Dialog>
 
 <div class="content">
   <div class="trollbox">
@@ -204,7 +277,7 @@
           input$aria-describedby="helper-text-standard-a" />
         <img
           class="trollbox-input-btn"
-          on:click={() => alert('make bet')}
+          on:click={() => dialog.open()}
           alt=""
           src="btc-btn.png" />
         <img
