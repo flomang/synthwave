@@ -3,6 +3,7 @@
   import { beforeUpdate, afterUpdate } from "svelte";
   import Textfield, { Input, Textarea } from "@smui/textfield";
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import HelperText from "@smui/textfield/helper-text/index";
   import Button, { Label } from "@smui/button";
 
   const eliza = new Eliza();
@@ -188,8 +189,8 @@
     height: 30px;
     width: 30px;
     position: relative;
-    top: 10px;
-    margin-right: 0.5em;
+    top: 9px;
+    margin-right: 0.3em;
   }
 </style>
 
@@ -203,11 +204,14 @@
   aria-labelledby="dialog-title"
   aria-describedby="dialog-content">
   <Title id="dialog-title">
-    <span><img class="dice-img" alt="" src="dice.png"/>Roll the dice!</span>
+    <span>
+      <img class="dice-img" alt="" src="dice.png" />
+      What are you betting on?
+    </span>
   </Title>
   <Content id="dialog-content">
-    <div bp="padding-top--lg">
-      <div bp="margin-bottom--lg">
+    <div bp="padding-top--sm">
+      <div bp="margin-bottom--sm">
         <div class="margins">
           <Textfield
             fullwidth
@@ -216,23 +220,32 @@
             label="Description"
             input$aria-controls="helper-text-fullwidth-textarea"
             input$aria-describedby="helper-text-fullwidth-textarea" />
+          <HelperText id="helper-text-manual-d">describe your bet</HelperText>
         </div>
       </div>
-      <div bp="grid 6 margin-bottom--lg">
-        <Textfield
-          variant="outlined"
-          bind:value={amount}
-          label="Amount"
-          input$aria-controls="helper-text-outlined-a"
-          input$aria-describedby="helper-text-outlined-a" />
+      <div bp="grid 6 margin-bottom--sm">
+        <div>
+          <Textfield
+            variant="outlined"
+            bind:value={amount}
+            label="Amount in Sats"
+            input$aria-controls="helper-text-outlined-a"
+            input$aria-describedby="helper-text-outlined-a" />
+          <HelperText id="helper-text-manual-d">satoshi</HelperText>
+        </div>
       </div>
-      <div bp="grid 6 margin-bottom--lg">
-        <Textfield
-          variant="outlined"
-          bind:value={expiration}
-          label="Expiration Date"
-          input$aria-controls="helper-text-outlined-a"
-          input$aria-describedby="helper-text-outlined-a" />
+      <div bp="grid 6 margin-bottom--sm">
+        <div>
+          <Textfield
+            variant="outlined"
+            bind:value={expiration}
+            label="Timer 00:00:00"
+            input$aria-controls="helper-text-outlined-a"
+            input$aria-describedby="helper-text-outlined-a" />
+          <HelperText id="helper-text-manual-d">
+            DAYS:HOURS:MINUTES
+          </HelperText>
+        </div>
       </div>
     </div>
   </Content>
@@ -241,7 +254,7 @@
       <Label>Cancel</Label>
     </Button>
     <Button action="submit">
-      <Label>Submit</Label>
+      <Label>Roll Dice!</Label>
     </Button>
   </Actions>
 </Dialog>
