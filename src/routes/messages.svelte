@@ -17,6 +17,7 @@
   let description = "";
   let amount = "";
   let expiration = "";
+  let disabled = true;
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -46,8 +47,35 @@
       });
   }
 
-  function closeHandler(e) {
-    console.log(e.detail.action);
+  let inputDescription = event => {
+    if (event.key == "Backspace" && event.target.value.length == 1) {
+      disabled = true;
+    } else if (amount == "" || expiration == "") {
+      disabled = true;
+    } else {
+      disabled = false;
+    }
+  };
+  let inputAmount = event => {
+    if (event.key == "Backspace" && event.target.value.length == 1) {
+      disabled = true;
+    } else if (description == "" || expiration == "") {
+      disabled = true;
+    } else {
+      disabled = false;
+    }
+  };
+  let inputExpiration = event => {
+    if (event.key == "Backspace" && event.target.value.length == 1) {
+      disabled = true;
+    } else if (description == "" || amount == "") {
+      disabled = true;
+    } else {
+      disabled = false;
+    }
+  };
+
+  let closeHandler = e => {
     if (e.detail.action == "submit") {
       //  console.log("submit the bet");
       comments = comments.concat({
@@ -62,7 +90,7 @@
     description = "";
     amount = "";
     expiration = "";
-  }
+  };
 
   beforeUpdate(() => {
     autoscroll =
@@ -239,7 +267,6 @@
     top: 9px;
     margin-right: 0.3em;
   }
-
 </style>
 
 <svelte:head>
@@ -265,6 +292,7 @@
             fullwidth
             textarea
             bind:value={description}
+            on:keydown={inputDescription}
             label="Description"
             input$aria-controls="helper-text-fullwidth-textarea"
             input$aria-describedby="helper-text-fullwidth-textarea" />
@@ -276,6 +304,7 @@
           <Textfield
             variant="outlined"
             bind:value={amount}
+            on:keydown={inputAmount}
             label="Amount in Sats"
             input$aria-controls="helper-text-outlined-a"
             input$aria-describedby="helper-text-outlined-a" />
@@ -287,6 +316,7 @@
           <Textfield
             variant="outlined"
             bind:value={expiration}
+            on:keydown={inputExpiration}
             label="Timer 00:00:00"
             input$aria-controls="helper-text-outlined-a"
             input$aria-describedby="helper-text-outlined-a" />
@@ -299,7 +329,7 @@
     <Button>
       <Label>Cancel</Label>
     </Button>
-    <Button action="submit">
+    <Button action="submit" {disabled}>
       <Label>Roll Dice!</Label>
     </Button>
   </Actions>
