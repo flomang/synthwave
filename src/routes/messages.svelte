@@ -5,6 +5,7 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import HelperText from "@smui/textfield/helper-text/index";
   import Button, { Label } from "@smui/button";
+  import { fade, fly } from "svelte/transition";
 
   const eliza = new Eliza();
   let scrollableDiv;
@@ -18,6 +19,7 @@
   let amount = "";
   let expiration = "";
   let disabled = true;
+  let scrollWidth = 5000;
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -32,6 +34,8 @@
     { username: "luv child", profileImage: "hearts.png" },
     { username: "cannibis420", profileImage: "cannabis-512.png" }
   ];
+
+  let openBets = [{ betID: 1, amount: 311 }];
 
   // add random comments
   let seed = eliza.getInitial();
@@ -85,6 +89,10 @@
         amount: amount,
         timer: expiration,
         type: "bet"
+      });
+      openBets = openBets.concat({
+        bet: 3,
+        amount: amount
       });
     }
     description = "";
@@ -154,6 +162,22 @@
     height: 50px;
     line-height: 50px;
     padding-left: 30px;
+    display: flex;
+  }
+
+  .trollbox-header-title {
+    margin-right: 1em;
+  }
+
+  .trollbox-header-pill {
+    border-color: rgba(24, 150, 110, 0.7);
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: rgba(24, 150, 110, 0.05);
+    padding: 0em 1em;
+    color: rgba(24, 150, 110, 0.7);
+    font-weight: bold;
   }
 
   .trollbox-scrollable {
@@ -337,7 +361,17 @@
 
 <div class="content">
   <div class="trollbox">
-    <div class="trollbox-header">Trollbox</div>
+    <div class="trollbox-header">
+      <spam class="trollbox-header-title">Trollbox</spam>
+      {#each openBets as bet}
+        <div
+          class="trollbox-header-pill"
+          in:fly={{ x: scrollWidth, duration: 2000 }}
+          out:fade>
+          {bet.amount}
+        </div>
+      {/each}
+    </div>
     <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}
         <div class="comment-container">
