@@ -6,6 +6,7 @@
   import HelperText from "@smui/textfield/helper-text/index";
   import Button, { Label } from "@smui/button";
   import { fade, fly } from "svelte/transition";
+  import { onMount } from "svelte";
 
   const eliza = new Eliza();
   let scrollableDiv;
@@ -19,7 +20,15 @@
   let amount = "";
   let expiration = "";
   let disabled = true;
-  let scrollWidth = 5000;
+  let scrollWidth = 0;
+
+  let pixiComponent;
+  //  pixi.js is a client side library. We only load this onMount
+  // i.e. when the client browser loads this page
+  onMount(async () => {
+    const module = await import("../components/trollbox/index.svelte");
+    pixiComponent = module.default;
+  });
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -35,7 +44,18 @@
     { username: "cannibis420", profileImage: "cannabis-512.png" }
   ];
 
-  let openBets = [{ betID: 1, amount: 311 }];
+  let openBets = [
+    { betID: 1, amount: 311 },
+    { betID: 1, amount: 5011 },
+    { betID: 1, amount: 311 },
+    { betID: 1, amount: 5011 },
+    { betID: 1, amount: 311 },
+    { betID: 1, amount: 5011 },
+    { betID: 1, amount: 311 },
+    { betID: 1, amount: 5011 },
+    { betID: 1, amount: 311 },
+    { betID: 1, amount: 5011 }
+  ];
 
   // add random comments
   let seed = eliza.getInitial();
@@ -161,7 +181,6 @@
     background-color: #fff;
     height: 50px;
     line-height: 50px;
-    padding-left: 30px;
     display: flex;
   }
 
@@ -362,15 +381,7 @@
 <div class="content">
   <div class="trollbox">
     <div class="trollbox-header">
-      <spam class="trollbox-header-title">Trollbox</spam>
-      {#each openBets as bet}
-        <div
-          class="trollbox-header-pill"
-          in:fly={{ x: scrollWidth, duration: 2000 }}
-          out:fade>
-          {bet.amount}
-        </div>
-      {/each}
+      <svelte:component this={pixiComponent} />
     </div>
     <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}
