@@ -45,16 +45,10 @@
   ];
 
   let openBets = [
-    { betID: 1, amount: 311 },
-    { betID: 1, amount: 5011 },
-    { betID: 1, amount: 311 },
-    { betID: 1, amount: 5011 },
-    { betID: 1, amount: 311 },
-    { betID: 1, amount: 5011 },
-    { betID: 1, amount: 311 },
-    { betID: 1, amount: 5011 },
-    { betID: 1, amount: 311 },
-    { betID: 1, amount: 5011 }
+    { profileImage: "doge.png", amount: 420 },
+    { profileImage: "hearts.png", amount: 350 },
+    { profileImage: "pill.png", amount: 1020 },
+    { profileImage: "joker-cartoon.png", amount: 1020 },
   ];
 
   // add random comments
@@ -111,7 +105,7 @@
         type: "bet"
       });
       openBets = openBets.concat({
-        bet: 3,
+        profileImage: profileImage,
         amount: amount
       });
     }
@@ -381,7 +375,7 @@
 <div class="content">
   <div class="trollbox">
     <div class="trollbox-header">
-      <svelte:component this={pixiComponent} />
+      <svelte:component bets={openBets} this={pixiComponent} />
     </div>
     <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}

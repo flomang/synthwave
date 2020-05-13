@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 export class Ticker {
-    constructor({ canvas: canvasElement }) {
+    constructor({ canvas: canvasElement, bets: bets }) {
         let app;
         app = new PIXI.Application({
             autoResize: true,
@@ -10,29 +10,24 @@ export class Ticker {
             height: 50,
             resolution: 1,
         });
+        this.app = app;
 
+        let symbols = [];
+        this.symbols = symbols;
 
-        const sprite = PIXI.Sprite.from("porky.png");
-        sprite.width = 30;
-        sprite.height = 30;
-        sprite.x = app.screen.width/2;
-        sprite.y = app.screen.height/2;
-        sprite.anchor.set(0.5);
-        app.stage.addChild(sprite);
+        for (let index = 0; index < bets.length; index++) {
+            const bet = bets[index];
+            const sprite = PIXI.Sprite.from(bet.profileImage);
+            sprite.width = 30;
+            sprite.height = 30;
+            sprite.anchor.set(0.5);
+            sprite.x = app.screen.width + (100 * index);
+            sprite.y = app.screen.height / 2;
+            app.stage.addChild(sprite);
+            symbols.push(sprite);
+        }
 
         window.addEventListener('resize', resize);
-
-        //const style = new PIXI.TextStyle({
-        //    fontFamily: 'Roboto',
-        //    fontSize: 16,
-        //});
-
-        //const basicText = new PIXI.Text('Basic text in pixi', style);
-        //basicText.x = app.screen.width/2;
-        //basicText.y = app.screen.height/2;
-        //basicText.anchor.set(0.5);
-        
-        //app.stage.addChild(basicText);
 
         //Start the game loop
         app.ticker.add(delta => loop(delta));
@@ -41,21 +36,30 @@ export class Ticker {
         function resize() {
             // Get the p
             const parent = app.view.parentNode;
-           
+
             // Resize the renderer
             app.renderer.resize(parent.clientWidth, parent.clientHeight);
-          
-          // You can use the 'screen' property as the renderer visible
-          // area, this is more useful than view.width/height because
-          // it handles resolution
-          //rect.position.set(app.screen.width, app.screen.height);
         }
 
         function loop(delta) {
-            sprite.x -= 3;
-            if (sprite.x < -sprite.width) {
-                sprite.x = app.screen.width;
-            }
+            symbols.forEach(sprite => {
+                sprite.x -= 3;
+                if (sprite.x < -sprite.width) {
+                    sprite.x = app.screen.width;
+                }
+            });
         }
+    }
+
+    addBet(bet) {
+        let last = this.symbols[this.symbols.length-1];
+        const sprite = PIXI.Sprite.from(bet.profileImage);
+        sprite.width = 30;
+        sprite.height = 30;
+        sprite.anchor.set(0.5);
+        sprite.x = last.x + 100;
+        sprite.y = this.app.screen.height / 2;
+        this.app.stage.addChild(sprite);
+        this.symbols.push(sprite);
     }
 }
