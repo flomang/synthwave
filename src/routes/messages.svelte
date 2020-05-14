@@ -5,7 +5,7 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import HelperText from "@smui/textfield/helper-text/index";
   import Button, { Label } from "@smui/button";
-  import { fade, fly } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
 
   const eliza = new Eliza();
@@ -44,11 +44,22 @@
     { username: "cannibis420", profileImage: "cannabis-512.png" }
   ];
 
-  let openBets = [
-    { profileImage: "doge.png", amount: 420 },
-    { profileImage: "hearts.png", amount: 350 },
-    { profileImage: "pill.png", amount: 1020 },
-    { profileImage: "joker-cartoon.png", amount: 1020 },
+  let bets = [
+    {
+      username: "dodge bot",
+      profileImage: "doge.png",
+      description: "Mike Tyson is a modern day ass kicker!",
+      amount: 420,
+      timer: "90:00:01"
+    },
+    {
+      username: "ace",
+      profileImage: "aces.png",
+      description:
+        "I am going to go all the way with this. It will become the largest casino in the world. I AM a warrior. I do not quit. 1000 worthy souls. I will be kind to everyone. I am humble, calm, and in control at all times.",
+      amount: 300000000000,
+      timer: "90:00:01"
+    }
   ];
 
   // add random comments
@@ -104,9 +115,12 @@
         timer: expiration,
         type: "bet"
       });
-      openBets = openBets.concat({
+      bets = bets.concat({
+        username: profileName,
         profileImage: profileImage,
-        amount: amount
+        description: description,
+        amount: amount,
+        timer: expiration
       });
     }
     description = "";
@@ -159,7 +173,7 @@
   .trollbox {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    width: 50%;
     text-align: left;
     height: 700px;
     background-color: #f9f9f9;
@@ -175,10 +189,10 @@
     background-color: #fff;
     height: 50px;
     line-height: 50px;
-    display: flex;
   }
 
   .trollbox-header-title {
+    margin-left: 1em;
     margin-right: 1em;
   }
 
@@ -237,6 +251,32 @@
     width: 30px;
     margin-right: 10px;
     margin-top: 16px;
+  }
+
+  .bet-container {
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(24, 150, 110, 0.3);
+    border-radius: 4px;
+    background-color: rgba(24, 150, 110, 0.05);
+    width: 100%;
+    position: relative;
+  }
+  .bet-avatar {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: -3px;
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+  }
+  .bet-slip {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    width: 100%;
+    position: relative;
   }
 
   .comment-container {
@@ -303,6 +343,20 @@
     position: relative;
     top: 9px;
     margin-right: 0.3em;
+  }
+
+  .content {
+    display: flex;
+  }
+  .bets {
+    width: 50%;
+    max-width: 50%;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e3e3e3;
+    position: relative;
   }
 </style>
 
@@ -373,9 +427,26 @@
 </Dialog>
 
 <div class="content">
+  <div class="bets">
+    {#each bets as bet}
+      <div class="bet-container" transition:fade>
+        <div>
+          <img class="bet-avatar" alt="" src={bet.profileImage} />
+        </div>
+        <div class="bet-slip">
+          <span class="comment-bet-username">{bet.username}</span>
+          <span class="comment-bet-amount">
+            <img class="dice-img-bet-slip" alt="" src="dice.png" />
+            Bet: {bet.amount} sats
+          </span>
+          <div class="comment-bet-description">{bet.description}</div>
+        </div>
+      </div>
+    {/each}
+  </div>
   <div class="trollbox">
     <div class="trollbox-header">
-      <svelte:component bets={openBets} this={pixiComponent} />
+      <div class="trollbox-header-title">Trollbox</div>
     </div>
     <div class="trollbox-scrollable" bind:this={scrollableDiv}>
       {#each comments as comment}
