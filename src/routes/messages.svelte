@@ -1,5 +1,6 @@
 <script>
   import Eliza from "elizabot";
+  import orderBy from "lodash/orderBy";
   import { beforeUpdate, afterUpdate } from "svelte";
   import Textfield, { Input, Textarea } from "@smui/textfield";
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
@@ -46,6 +47,7 @@
 
   let bets = [
     {
+      id: 1,
       username: "dodge bot",
       profileImage: "doge.png",
       description: "Mike Tyson is a modern day ass kicker!",
@@ -53,6 +55,7 @@
       timer: "90:00:01"
     },
     {
+      id: 2,
       username: "ace",
       profileImage: "aces.png",
       description:
@@ -61,6 +64,8 @@
       timer: "90:00:01"
     }
   ];
+
+  bets = orderBy(bets, ['amount'], ['desc']);
 
   // add random comments
   let seed = eliza.getInitial();
@@ -116,12 +121,15 @@
         type: "bet"
       });
       bets = bets.concat({
+        id: bets.length + 1,
         username: profileName,
         profileImage: profileImage,
         description: description,
         amount: amount,
         timer: expiration
       });
+      bets = orderBy(bets, ['amount'], ['desc']);
+c
     }
     description = "";
     amount = "";
@@ -428,7 +436,7 @@
 
 <div class="content">
   <div class="bets">
-    {#each bets as bet}
+    {#each bets as bet (bet.id)}
       <div class="bet-container" transition:fade>
         <div>
           <img class="bet-avatar" alt="" src={bet.profileImage} />
