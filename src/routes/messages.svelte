@@ -129,7 +129,6 @@
         timer: expiration
       });
       bets = orderBy(bets, ['amount'], ['desc']);
-c
     }
     description = "";
     amount = "";
