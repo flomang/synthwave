@@ -336,7 +336,7 @@
       <Label>Cancel</Label>
     </Button>
     <Button action="submit" {disabled}>
-      <Label>Roll Dice!</Label>
+      <Label>Post it!</Label>
     </Button>
   </Actions>
 </Dialog>
