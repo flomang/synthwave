@@ -74,7 +74,7 @@
   footer {
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: #090f15;
+    background-color: #081e3e;
     height: 46px;
     line-height: 46px;
     font-size: 13px;
@@ -89,6 +89,7 @@
   .brand {
     text-align: center;
     font-size: 70px;
+    color: #081e3e;
   }
 
 </style>

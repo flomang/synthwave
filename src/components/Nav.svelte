@@ -7,7 +7,7 @@
 <style>
   nav {
     color: #fff;
-    background-color: #090f15;
+    background-color: #081e3e;
     height: 46px;
     padding-left: 20px;
   }
@@ -15,7 +15,7 @@
   div {
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: #090f15;
+    background-color: #081e3e;
     height: 46px;
     line-height: 46px;
     font-size: 13px;
@@ -41,10 +41,10 @@
     top: -3px;
   }
   .available {
-    background: rgba(0, 255, 0, 0.3);
+    background: rgba(114, 179, 126, 0.6);
   }
   .play {
-    background: rgba(255, 0, 0, 0.6);
+    background: rgba(255, 0, 0, 0.3);
   }
   .nav-icon {
     margin-right: 9px;

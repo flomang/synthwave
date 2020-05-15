@@ -44,9 +44,9 @@
     display: flex;
     border-style: solid;
     border-width: 1px;
-    border-color: rgba(24, 150, 110, 0.3);
+    border-color: #437875;
     border-radius: 4px;
-    background-color: rgba(24, 150, 110, 0.05);
+    background-color: rgba(230, 241, 140, 0.05);
     width: 100%;
     position: relative;
   }
