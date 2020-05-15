@@ -8,25 +8,24 @@
 
   export let bets = [];
   let dialog;
-  let bet;
+  let bet = null;
 
   // add random comments
   beforeUpdate(() => {
     bets = orderBy(bets, ["amount"], ["desc"]);
   });
 
-  let openConfirm = (b) => {
+  let openConfirm = b => {
     bet = b;
     dialog.open();
-  }
+  };
 
   let confirm = () => {
     remove(bets, function(b) {
       return b.id == bet.id;
     });
     bet = null;
-  }
-
+  };
 </script>
 
 <style>
@@ -102,6 +101,22 @@
     top: 9px;
     margin-right: 0.3em;
   }
+
+  .bet-username {
+    color: #888;
+    font-weight: bold;
+    padding-right: 0.3em;
+  }
+
+  .confirm-bet-avatar {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: -10px;
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+  }
 </style>
 
 <Dialog
@@ -114,7 +129,22 @@
       Take this bet?
     </span>
   </Title>
-  <Content id="dialog-content" />
+  <Content id="dialog-content">
+    {#if bet != null}
+      <div class="bet-container" transition:fade>
+        <div>
+          <img class="bet-avatar" alt="" src={bet.profileImage} />
+        </div>
+        <div class="bet-slip">
+          <span class="comment-bet-username">{bet.username}</span>
+          <span class="comment-bet-amount">
+            Bet: {bet.amount} sats
+          </span>
+          <div class="comment-bet-description">{bet.description}</div>
+        </div>
+      </div>
+    {/if}
+  </Content>
   <Actions>
     <Button>
       <Label>Cancel</Label>
