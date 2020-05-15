@@ -54,7 +54,7 @@
 <nav class={segment} bp="grid 1">
   <div bp="4">
     <div bp="grid 6">
-      <div on:click={() => goto('/space')}>space</div>
+      <div on:click={() => goto('/space')}>jokii</div>
     </div>
   </div>
   <div bp="8">

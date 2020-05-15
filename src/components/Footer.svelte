@@ -88,7 +88,7 @@
   }
   .brand {
     text-align: center;
-    font-size: 70px;
+    font-size: 80px;
     color: #081e3e;
   }
 
@@ -98,7 +98,7 @@
   <div bp="6" class="brand">
     jokii
   </div>
-  <div bp="4 padding-top--lg padding-bottom--lg">
+  <div bp="3 padding-top--lg padding-bottom--lg">
     <div class="quotes">
       {#if visible}
         <div>
