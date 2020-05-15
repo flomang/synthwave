@@ -23,6 +23,7 @@
   ];
 
   function addBet(bet) {
+    bet.id = bets.length+1;
     bets = bets.concat(bet);
   }
 </script>

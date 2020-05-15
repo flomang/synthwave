@@ -62,7 +62,6 @@
       });
 
       let newBet = {
-        id: bets.length + 1,
         username: profileName,
         profileImage: profileImage,
         description: description,
