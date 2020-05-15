@@ -1,14 +1,32 @@
 <script>
+  import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import Button, { Label } from "@smui/button";
   import { beforeUpdate, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
   import orderBy from "lodash/orderBy";
+  import remove from "lodash/remove";
 
   export let bets = [];
+  let dialog;
+  let bet;
 
   // add random comments
   beforeUpdate(() => {
     bets = orderBy(bets, ["amount"], ["desc"]);
   });
+
+  let openConfirm = (b) => {
+    bet = b;
+    dialog.open();
+  }
+
+  let confirm = () => {
+    remove(bets, function(b) {
+      return b.id == bet.id;
+    });
+    bet = null;
+  }
+
 </script>
 
 <style>
@@ -76,7 +94,36 @@
     padding-left: 1em;
     color: rgba(24, 150, 110, 0.7);
   }
+
+  .dice-img {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: 9px;
+    margin-right: 0.3em;
+  }
 </style>
+
+<Dialog
+  bind:this={dialog}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-content">
+  <Title id="dialog-title">
+    <span>
+      <img class="dice-img" alt="" src="dice.png" />
+      Take this bet?
+    </span>
+  </Title>
+  <Content id="dialog-content" />
+  <Actions>
+    <Button>
+      <Label>Cancel</Label>
+    </Button>
+    <Button on:click={confirm} action="submit">
+      <Label>Take it!</Label>
+    </Button>
+  </Actions>
+</Dialog>
 
 <div class="bets">
   {#each bets as bet (bet.id)}
@@ -87,7 +134,11 @@
       <div class="bet-slip">
         <span class="comment-bet-username">{bet.username}</span>
         <span class="comment-bet-amount">
-          <img class="dice-img-bet-slip" alt="" src="dice.png" />
+          <img
+            on:click={() => openConfirm(bet)}
+            class="dice-img-bet-slip"
+            alt=""
+            src="dice.png" />
           Bet: {bet.amount} sats
         </span>
         <div class="comment-bet-description">{bet.description}</div>

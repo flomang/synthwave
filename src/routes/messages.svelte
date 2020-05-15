@@ -13,8 +13,8 @@
     },
     {
       id: 2,
-      username: "ace",
-      profileImage: "aces.png",
+      username: "porky pig",
+      profileImage: "porky.png",
       description:
         "I am going to go all the way with this. It will become the largest casino in the world. I AM a warrior. I do not quit. 1000 worthy souls. I will be kind to everyone. I am humble, calm, and in control at all times.",
       amount: 300000000000,
