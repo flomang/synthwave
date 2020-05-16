@@ -4,6 +4,7 @@
   import { beforeUpdate, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
   import orderBy from "lodash/orderBy";
+  import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
   import TrollBox from "../components/TrollBox.svelte";
 
@@ -32,7 +33,8 @@
 
   // add random comments
   beforeUpdate(() => {
-    bets = orderBy(bets, ["amount"], ["desc"]);
+    //bets = orderBy(bets, ['amount'], ['desc']);
+    bets = sortBy(bets, [function(b) { return parseInt(b.amount) }]).reverse();
   });
 
   let openConfirm = b => {
