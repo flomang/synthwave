@@ -9,7 +9,7 @@
 
   let bets = [
     {
-      userID: "dodge bot",
+      id: 1,
       username: "dodge bot",
       profileImage: "doge.png",
       description: "Mike Tyson is a modern day ass kicker!",
@@ -17,7 +17,7 @@
       timer: "90:00:01"
     },
     {
-      userID: "porky pig",
+      id: 2,
       username: "porky pig",
       profileImage: "porky.png",
       description:
@@ -28,6 +28,7 @@
   ];
   let dialog;
   let bet = null;
+  let nextID = 3;
 
   // add random comments
   beforeUpdate(() => {
@@ -41,13 +42,15 @@
 
   let confirm = () => {
     remove(bets, function(b) {
-      return b.userID == bet.userID;
+      return b.id == bet.id;
     });
     bet = null;
   };
 
   let addBet = (bet) => {
+    bet.id = nextID;
     bets = bets.concat(bet);
+    nextID++;
   }
 </script>
 
@@ -185,7 +188,7 @@
 
 <div class="content">
   <div class="bets">
-    {#each bets as bet (bet.userID)}
+    {#each bets as bet (bet.id)}
       <div class="bet-container" transition:fade>
         <div>
           <img class="bet-avatar" alt="" src={bet.profileImage} />
