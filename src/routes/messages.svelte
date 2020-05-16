@@ -34,7 +34,11 @@
   // add random comments
   beforeUpdate(() => {
     //bets = orderBy(bets, ['amount'], ['desc']);
-    bets = sortBy(bets, [function(b) { return parseInt(b.amount) }]).reverse();
+    bets = sortBy(bets, [
+      function(b) {
+        return parseInt(b.amount);
+      }
+    ]).reverse();
   });
 
   let openConfirm = b => {
@@ -49,10 +53,60 @@
     bet = null;
   };
 
-  let addBet = (bet) => {
+  let addBet = bet => {
     bet.id = nextID;
     bets = bets.concat(bet);
     nextID++;
+  };
+
+  let time = 0;
+  let duration;
+  let paused = true;
+
+  let showControls = true;
+  let showControlsTimeout;
+
+  function handleMousemove(e) {
+    // Make the controls visible, but fade out after
+    // 2.5 seconds of inactivity
+    clearTimeout(showControlsTimeout);
+    showControlsTimeout = setTimeout(() => (showControls = false), 2500);
+    showControls = true;
+
+    if (!(e.buttons & 1)) return; // mouse not down
+    if (!duration) return; // video not loaded yet
+
+    const { left, right } = this.getBoundingClientRect();
+    time = (duration * (e.clientX - left)) / (right - left);
+  }
+
+  function handleMousedown(e) {
+    // we can't rely on the built-in click event, because it fires
+    // after a drag — we have to listen for clicks ourselves
+
+    function handleMouseup() {
+      if (paused) e.target.play();
+      else e.target.pause();
+      cancel();
+    }
+
+    function cancel() {
+      e.target.removeEventListener("mouseup", handleMouseup);
+    }
+
+    e.target.addEventListener("mouseup", handleMouseup);
+
+    setTimeout(cancel, 200);
+  }
+
+  function format(seconds) {
+    if (isNaN(seconds)) return "...";
+
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) seconds = "0" + seconds;
+
+    return `${minutes}:${seconds}`;
   }
 </script>
 
@@ -61,8 +115,7 @@
     display: flex;
   }
   .bets {
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
     text-align: left;
     background-color: #f9f9f9;
     border-style: solid;
@@ -148,6 +201,62 @@
     margin-top: 0.5em;
     margin-right: 0.5em;
   }
+
+  .video-stream {
+    position: relative;
+  }
+
+  .controls {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    transition: opacity 1s;
+  }
+
+  .info {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .controls .info span {
+    padding: 0.2em 0.5em;
+    color: white;
+    text-shadow: 0 0 8px black;
+    font-size: 1.4em;
+    opacity: 0.7;
+  }
+
+  .time {
+    width: 3em;
+  }
+
+  .time:last-child {
+    text-align: right;
+  }
+
+  progress {
+    display: block;
+    width: 100%;
+    height: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  progress::-webkit-progress-value {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  video {
+    width: 100%;
+  }
+  .channel-content {
+    width: 50%;
+  }
 </style>
 
 <svelte:head>
@@ -189,26 +298,49 @@
 </Dialog>
 
 <div class="content">
-  <div class="bets">
-    {#each bets as bet (bet.id)}
-      <div class="bet-container" transition:fade>
-        <div>
-          <img class="bet-avatar" alt="" src={bet.profileImage} />
-        </div>
-        <div class="bet-slip">
-          <span class="comment-bet-username">{bet.username}</span>
-          <span class="comment-bet-amount">
-            <img
-              on:click={() => openConfirm(bet)}
-              class="dice-img-bet-slip"
-              alt=""
-              src="dice.png" />
-            Bet: {bet.amount} sats
+  <div class="channel-content">
+    <div class="video-stream">
+      <video
+        src="example.mp4"
+        on:mousemove={handleMousemove}
+        on:mousedown={handleMousedown}
+        bind:currentTime={time}
+        bind:duration
+        bind:paused />
+
+      <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
+        <progress value={time / duration || 0} />
+
+        <div class="info">
+          <span class="time">{format(time)}</span>
+          <span>
+            click anywhere to {paused ? 'play' : 'pause'} / drag to seek
           </span>
-          <div class="comment-bet-description">{bet.description}</div>
+          <span class="time">{format(duration)}</span>
         </div>
       </div>
-    {/each}
+    </div>
+    <div class="bets">
+      {#each bets as bet (bet.id)}
+        <div class="bet-container" transition:fade>
+          <div>
+            <img class="bet-avatar" alt="" src={bet.profileImage} />
+          </div>
+          <div class="bet-slip">
+            <span class="comment-bet-username">{bet.username}</span>
+            <span class="comment-bet-amount">
+              <img
+                on:click={() => openConfirm(bet)}
+                class="dice-img-bet-slip"
+                alt=""
+                src="dice.png" />
+              Bet: {bet.amount} sats
+            </span>
+            <div class="comment-bet-description">{bet.description}</div>
+          </div>
+        </div>
+      {/each}
+    </div>
   </div>
   <TrollBox handleAddBet={addBet} />
 </div>
