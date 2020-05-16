@@ -62,6 +62,7 @@
       });
 
       let newBet = {
+        userID: profileName,
         username: profileName,
         profileImage: profileImage,
         description: description,
@@ -343,7 +344,7 @@
 
 <div class="trollbox">
   <div class="trollbox-header">
-    <div class="trollbox-header-title">Trollbox</div>
+    <div class="trollbox-header-title">trollfest</div>
   </div>
   <div class="trollbox-scrollable" bind:this={scrollableDiv}>
     {#each comments as comment}
