@@ -16,7 +16,7 @@
   let autoscroll;
   let dialog;
   let description = "";
-  let amount = "";
+  let amount = 0;
   let expiration = "";
   let disabled = true;
   let scrollWidth = 0;
@@ -49,36 +49,30 @@
       });
   }
 
-  let closeHandler = e => {
-    if (e.detail.action == "submit") {
-      if (amount == "" || description == "") {
-        e.preventDefault();
-      } else {
-        //  console.log("submit the bet");
-        comments = comments.concat({
-          username: profileName,
-          profileImage: profileImage,
-          description: description,
-          amount: amount,
-          timer: expiration,
-          type: "bet"
-        });
+  let closeHandler = event => {
+    if (event.detail.action == "submit") {
+      //  console.log("submit the bet");
+      comments = comments.concat({
+        username: profileName,
+        profileImage: profileImage,
+        description: description,
+        amount: amount,
+        timer: expiration,
+        type: "bet"
+      });
 
-        let newBet = {
-          username: profileName,
-          profileImage: profileImage,
-          description: description,
-          amount: amount,
-          timer: expiration
-        };
-        handleAddBet(newBet);
-      }
-    } else {
-      description = "";
-      amount = "";
+      let newBet = {
+        username: profileName,
+        profileImage: profileImage,
+        description: description,
+        amount: amount,
+        timer: expiration
+      };
+      handleAddBet(newBet);
     }
 
-    e.preventDefault();
+    amount = NaN;
+    description = "";
   };
 
   let handleKeydown = event => {
@@ -110,16 +104,17 @@
     }
   };
 
-  let handleNewBet = event => {
-    if (amount == "" || description == "") {
-      disabled = true;
-    }
-  };
+  let handleOpenDialog = event => {
+    disabled = true;
+    dialog.open();
+  }
 
-  let inputAmount = event => {
-    if (event.key == ".") {
-      event.preventDefault();
-    } 
+  let handleInput = event => {
+    if (isNaN(amount) || description == "") {
+       disabled = true;
+    } else if (!isNaN(amount) && description != "") {
+       disabled = false;
+    }
   };
 
   beforeUpdate(() => {
@@ -287,6 +282,7 @@
           <Textfield
             fullwidth
             textarea
+            on:keyup={handleInput}
             bind:value={description}
             label="Description"
             input$aria-controls="helper-text-fullwidth-textarea"
@@ -299,7 +295,7 @@
           <Textfield
             variant="outlined"
             bind:value={amount}
-            on:keypress={inputAmount}
+            on:keyup={handleInput}
             label="Amount in Sats"
             type="number"
             input$aria-controls="helper-text-outlined-a"
@@ -313,7 +309,7 @@
     <Button>
       <Label>Cancel</Label>
     </Button>
-    <Button action="submit">
+    <Button action="submit" {disabled}>
       <Label>Post it!</Label>
     </Button>
   </Actions>
@@ -362,7 +358,7 @@
         input$aria-describedby="helper-text-standard-a" />
       <img
         class="trollbox-input-btn"
-        on:click={() => dialog.open()}
+        on:click={handleOpenDialog}
         alt=""
         src="btc-btn.png" />
       <img
