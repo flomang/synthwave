@@ -51,28 +51,34 @@
 
   let closeHandler = e => {
     if (e.detail.action == "submit") {
-      //  console.log("submit the bet");
-      comments = comments.concat({
-        username: profileName,
-        profileImage: profileImage,
-        description: description,
-        amount: amount,
-        timer: expiration,
-        type: "bet"
-      });
+      if (amount == "" || description == "") {
+        e.preventDefault();
+      } else {
+        //  console.log("submit the bet");
+        comments = comments.concat({
+          username: profileName,
+          profileImage: profileImage,
+          description: description,
+          amount: amount,
+          timer: expiration,
+          type: "bet"
+        });
 
-      let newBet = {
-        username: profileName,
-        profileImage: profileImage,
-        description: description,
-        amount: amount,
-        timer: expiration
-      };
-      handleAddBet(newBet);
+        let newBet = {
+          username: profileName,
+          profileImage: profileImage,
+          description: description,
+          amount: amount,
+          timer: expiration
+        };
+        handleAddBet(newBet);
+      }
+    } else {
+      description = "";
+      amount = "";
     }
-    description = "";
-    amount = "";
-    expiration = "";
+
+    e.preventDefault();
   };
 
   let handleKeydown = event => {
@@ -104,31 +110,9 @@
     }
   };
 
-  let inputDescription = event => {
-    if (event.key == "Backspace" && event.target.value.length == 1) {
+  let handleNewBet = event => {
+    if (amount == "" || description == "") {
       disabled = true;
-    } else if (amount == "" || expiration == "") {
-      disabled = true;
-    } else {
-      disabled = false;
-    }
-  };
-  let inputAmount = event => {
-    if (event.key == "Backspace" && event.target.value.length == 1) {
-      disabled = true;
-    } else if (description == "" || expiration == "") {
-      disabled = true;
-    } else {
-      disabled = false;
-    }
-  };
-  let inputExpiration = event => {
-    if (event.key == "Backspace" && event.target.value.length == 1) {
-      disabled = true;
-    } else if (description == "" || amount == "") {
-      disabled = true;
-    } else {
-      disabled = false;
     }
   };
 
@@ -298,7 +282,6 @@
             fullwidth
             textarea
             bind:value={description}
-            on:keydown={inputDescription}
             label="Description"
             input$aria-controls="helper-text-fullwidth-textarea"
             input$aria-describedby="helper-text-fullwidth-textarea" />
@@ -310,23 +293,11 @@
           <Textfield
             variant="outlined"
             bind:value={amount}
-            on:keydown={inputAmount}
             label="Amount in Sats"
+            type="number"
             input$aria-controls="helper-text-outlined-a"
             input$aria-describedby="helper-text-outlined-a" />
           <HelperText id="helper-text-manual-d">satoshi</HelperText>
-        </div>
-      </div>
-      <div bp="grid 6 margin-bottom--sm">
-        <div>
-          <Textfield
-            variant="outlined"
-            bind:value={expiration}
-            on:keydown={inputExpiration}
-            label="Timer 00:00:00"
-            input$aria-controls="helper-text-outlined-a"
-            input$aria-describedby="helper-text-outlined-a" />
-          <HelperText id="helper-text-manual-d">DAYS:HOURS:MINUTES</HelperText>
         </div>
       </div>
     </div>
@@ -335,7 +306,7 @@
     <Button>
       <Label>Cancel</Label>
     </Button>
-    <Button action="submit" {disabled}>
+    <Button action="submit">
       <Label>Post it!</Label>
     </Button>
   </Actions>
