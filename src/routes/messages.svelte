@@ -59,7 +59,7 @@
       return b.id == bet.id;
     });
     bets = bets;
-  }
+  };
 
   let addBet = bet => {
     bet.id = nextID;
@@ -125,7 +125,7 @@
   .bets {
     width: 100%;
     text-align: left;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-style: solid;
     border-width: 1px;
     border-color: #e3e3e3;
@@ -138,7 +138,6 @@
     border-width: 1px;
     border-color: #437875;
     border-radius: 4px;
-    background-color: rgba(230, 241, 140, 0.05);
     width: 100%;
     position: relative;
   }
@@ -161,7 +160,7 @@
   }
 
   .comment-bet-username {
-    color: rgba(24, 150, 110, 0.7);
+    color: #888;
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -183,7 +182,6 @@
 
   .comment-bet-description {
     padding-left: 1em;
-    color: rgba(24, 150, 110, 0.7);
   }
 
   .dice-img {
@@ -341,14 +339,14 @@
                 <Button
                   color="primary"
                   on:click={() => removeBet(bet)}
-                  variant="raised">
+                  variant="outlined">
                   <Label>Bounce</Label>
                 </Button>
               {:else}
                 <Button
                   color="secondary"
                   on:click={() => openConfirm(bet)}
-                  variant="raised">
+                  variant="outlined">
                   <Label>Take it!</Label>
                 </Button>
               {/if}
