@@ -30,6 +30,7 @@
   let dialog;
   let bet = null;
   let nextID = 3;
+  const profileImage = "aces.png";
 
   // add random comments
   beforeUpdate(() => {
@@ -52,6 +53,13 @@
     });
     bet = null;
   };
+
+  let removeBet = bet => {
+    remove(bets, function(b) {
+      return b.id == bet.id;
+    });
+    bets = bets;
+  }
 
   let addBet = bet => {
     bet.id = nextID;
@@ -329,11 +337,21 @@
           <div class="bet-slip">
             <span class="comment-bet-username">{bet.username}</span>
             <span class="comment-bet-amount">
-              <img
-                on:click={() => openConfirm(bet)}
-                class="dice-img-bet-slip"
-                alt=""
-                src="dice.png" />
+              {#if bet.profileImage == profileImage}
+                <Button
+                  color="primary"
+                  on:click={() => removeBet(bet)}
+                  variant="raised">
+                  <Label>Bounce</Label>
+                </Button>
+              {:else}
+                <Button
+                  color="primary"
+                  on:click={() => openConfirm(bet)}
+                  variant="raised">
+                  <Label>Take it!</Label>
+                </Button>
+              {/if}
               Bet: {bet.amount} sats
             </span>
             <div class="comment-bet-description">{bet.description}</div>
