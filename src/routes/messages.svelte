@@ -346,7 +346,7 @@
                 </Button>
               {:else}
                 <Button
-                  color="primary"
+                  color="secondary"
                   on:click={() => openConfirm(bet)}
                   variant="raised">
                   <Label>Take it!</Label>
