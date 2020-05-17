@@ -116,6 +116,12 @@
     }
   };
 
+  let inputAmount = event => {
+    if (event.key == ".") {
+      event.preventDefault();
+    } 
+  };
+
   beforeUpdate(() => {
     autoscroll =
       scrollableDiv &&
@@ -293,6 +299,7 @@
           <Textfield
             variant="outlined"
             bind:value={amount}
+            on:keypress={inputAmount}
             label="Amount in Sats"
             type="number"
             input$aria-controls="helper-text-outlined-a"
