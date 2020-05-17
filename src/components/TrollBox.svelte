@@ -16,7 +16,7 @@
   let autoscroll;
   let dialog;
   let description = "";
-  let amount = 0;
+  let amount = "";
   let expiration = "";
   let disabled = true;
   let scrollWidth = 0;
@@ -114,6 +114,10 @@
        disabled = true;
     } else if (!isNaN(amount) && description != "") {
        disabled = false;
+    }  
+
+    if (isNaN(amount) || amount < 100) {
+       disabled = true;
     }
   };
 
@@ -296,7 +300,7 @@
             variant="outlined"
             bind:value={amount}
             on:keyup={handleInput}
-            label="Amount in Sats"
+            label="100 minimum"
             type="number"
             input$aria-controls="helper-text-outlined-a"
             input$aria-describedby="helper-text-outlined-a" />
