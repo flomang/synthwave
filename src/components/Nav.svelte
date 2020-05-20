@@ -23,11 +23,10 @@
   }
 
   .outline {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 36px;
-    border-radius: 6px;
-    max-width: 120px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    height: 40px;
+    border-radius: 3px;
   }
   .btc-symbol {
     width: 24px;
@@ -41,10 +40,12 @@
     top: -3px;
   }
   .available {
-    background: rgba(114, 179, 126, 0.6);
+    font-weight: bold;
+    background-color: rgba(180, 230, 0, 0.3);
   }
   .play {
-    background: rgba(255, 0, 0, 0.3);
+    font-weight: bold;
+    background-color: rgba(255, 0, 0, 0.3);
   }
   .nav-icon {
     margin-right: 9px;

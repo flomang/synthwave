@@ -107,17 +107,17 @@
   let handleOpenDialog = event => {
     disabled = true;
     dialog.open();
-  }
+  };
 
   let handleInput = event => {
     if (isNaN(amount) || description == "") {
-       disabled = true;
+      disabled = true;
     } else if (!isNaN(amount) && description != "") {
-       disabled = false;
-    }  
+      disabled = false;
+    }
 
     if (isNaN(amount) || amount < 100) {
-       disabled = true;
+      disabled = true;
     }
   };
 
@@ -214,12 +214,12 @@
   }
 
   .comment-username {
-    color: #888;
+    color: #081e3e;
     font-weight: bold;
     padding-right: 0.3em;
   }
   .comment-bet-username {
-    color: rgba(24, 150, 110, 0.7);
+    color: #081e3e;
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -229,12 +229,8 @@
   }
 
   .comment-bet {
-    margin-bottom: 1em;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba(24, 150, 110, 0.3);
-    border-radius: 4px;
     background-color: rgba(24, 150, 110, 0.05);
+    margin-bottom: 0.5em;
     width: 100%;
     position: relative;
   }
@@ -242,13 +238,12 @@
   .comment-bet-amount {
     float: right;
     padding-right: 0.3em;
-    color: rgba(24, 150, 110, 0.7);
+    color: #081e3e;
     font-weight: bold;
   }
 
   .comment-bet-description {
     padding-left: 1em;
-    color: rgba(24, 150, 110, 0.7);
   }
 
   .dice-img {
@@ -332,10 +327,7 @@
         {#if comment.type == 'bet'}
           <div class="comment-bet">
             <span class="comment-bet-username">{comment.username}</span>
-            <span class="comment-bet-amount">
-              <img class="dice-img-bet-slip" alt="" src="dice.png" />
-              Bet: {comment.amount} sats
-            </span>
+            <span class="comment-bet-amount">Bet: {comment.amount} sats</span>
             <div class="comment-bet-description">{comment.description}</div>
           </div>
         {:else}

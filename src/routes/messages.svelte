@@ -136,8 +136,7 @@
     display: flex;
     border-style: solid;
     border-width: 1px;
-    border-color: #437875;
-    border-radius: 4px;
+    border-color: #e3e3e3;
     width: 100%;
     position: relative;
   }
@@ -160,7 +159,7 @@
   }
 
   .comment-bet-username {
-    color: #888;
+    color: #081e3e;
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -168,7 +167,7 @@
   .comment-bet-amount {
     float: right;
     padding-right: 0.3em;
-    color: rgba(24, 150, 110, 0.7);
+    color: #081e3e;
     font-weight: bold;
   }
 
@@ -335,22 +334,22 @@
           <div class="bet-slip">
             <span class="comment-bet-username">{bet.username}</span>
             <span class="comment-bet-amount">
-              {#if bet.profileImage == profileImage}
+              Bet: {bet.amount} sats
+              {#if bet.profileImage != profileImage}
                 <Button
                   color="primary"
-                  on:click={() => removeBet(bet)}
-                  variant="outlined">
-                  <Label>Bounce</Label>
-                </Button>
-              {:else}
-                <Button
-                  color="secondary"
                   on:click={() => openConfirm(bet)}
                   variant="outlined">
                   <Label>Take it!</Label>
                 </Button>
+              {:else}
+                <Button
+                  color="secondary"
+                  on:click={() => removeBet(bet)}
+                  variant="outlined">
+                  <Label>Bounce</Label>
+                </Button>
               {/if}
-              Bet: {bet.amount} sats
             </span>
             <div class="comment-bet-description">{bet.description}</div>
           </div>
