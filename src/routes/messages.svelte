@@ -140,6 +140,11 @@
     width: 100%;
     position: relative;
   }
+  .bet-take-container {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
 
   .bet-avatar {
     height: 30px;
@@ -181,6 +186,7 @@
 
   .comment-bet-description {
     padding-left: 1em;
+    color: #000;
   }
 
   .dice-img {
@@ -265,7 +271,7 @@
 </style>
 
 <svelte:head>
-  <title>trollbox</title>
+  <title>trollfeast</title>
 </svelte:head>
 
 <Dialog
@@ -280,14 +286,14 @@
   </Title>
   <Content id="dialog-content">
     {#if bet != null}
-      <div class="bet-container" transition:fade>
+      <div class="bet-take-container" transition:fade>
         <div>
           <img class="bet-avatar" alt="" src={bet.profileImage} />
         </div>
         <div class="bet-slip">
           <span class="comment-bet-username">{bet.username}</span>
           <span class="comment-bet-amount">Bet: {bet.amount} sats</span>
-          <div class="comment-bet-description">{bet.description}</div>
+          <div bp="margin-top--lg" class="comment-bet-description">{bet.description}</div>
         </div>
       </div>
     {/if}
