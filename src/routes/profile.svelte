@@ -1,6 +1,14 @@
 <script>
   import { Label } from "@smui/fab";
   import Button from "@smui/button";
+  import { jwt } from "../stores/stores.js";
+  import { goto } from "@sapper/app";
+
+  let logout = () => {
+    jwt.set("logout");
+    goto('/space');
+  }
+
 </script>
 
 <style>
@@ -21,7 +29,7 @@
 <div class="content" bp="padding">
   <div>Profile</div>
   <div>
-    <Button color="primary" on:click={() => alert('logout')} variant="raised">
+    <Button color="primary" on:click={logout} variant="raised">
       <Label>Logout</Label>
     </Button>
   </div>
