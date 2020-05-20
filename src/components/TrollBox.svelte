@@ -214,7 +214,7 @@
   }
 
   .comment-username {
-    color: #081e3e;
+    color: rgb(8, 30, 62, 0.7);
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -316,7 +316,7 @@
 
 <div class="trollbox">
   <div class="trollbox-header">
-    <div class="trollbox-header-title">trollfest</div>
+    <div class="trollbox-header-title">trollfeast</div>
   </div>
   <div class="trollbox-scrollable" bind:this={scrollableDiv}>
     {#each comments as comment}

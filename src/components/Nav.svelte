@@ -40,10 +40,12 @@
     top: -3px;
   }
   .available {
+    font-size: 1.1em;
     font-weight: bold;
-    background-color: rgba(180, 230, 0, 0.3);
+    background-color: rgba(23, 150, 110, 0.4);
   }
   .play {
+    font-size: 1.1em;
     font-weight: bold;
     background-color: rgba(255, 0, 0, 0.3);
   }

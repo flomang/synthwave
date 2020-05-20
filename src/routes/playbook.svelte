@@ -55,13 +55,9 @@
 </script>
 
 <style>
-  div {
-    text-align: center;
-    margin: 0 auto;
-  }
-
   .content {
     background-color: #fff;
+    text-align: center;
   }
 
   .left {
@@ -111,13 +107,13 @@
                 <Button
                   color="primary"
                   on:click={() => alert('logout')}
-                  variant="raised">
+                  variant="outlined">
                   <Label>roll dice</Label>
                 </Button>
                 <Button
                   color="secondary"
                   on:click={() => alert('logout')}
-                  variant="raised">
+                  variant="outlined">
                   <Label>bounce</Label>
                 </Button>
               </Cell>

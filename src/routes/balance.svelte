@@ -38,13 +38,9 @@
 </script>
 
 <style>
-  div {
-    text-align: center;
-    margin: 0 auto;
-  }
-
   .content {
     background-color: #fff;
+    text-align: center;
   }
   
   .left {
