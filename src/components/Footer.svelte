@@ -96,7 +96,7 @@
 
 <div bp="grid 1">
   <div bp="6" class="brand">
-    jokii
+    joos
   </div>
   <div bp="3 padding-top--lg padding-bottom--lg">
     <div class="quotes">

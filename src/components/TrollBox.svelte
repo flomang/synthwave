@@ -5,10 +5,9 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import Eliza from "elizabot";
+  import { profileImage, profileName } from "../stores/stores.js";
 
   export let handleAddBet;
-  const profileName = "ace";
-  const profileImage = "aces.png";
   const eliza = new Eliza();
   let comments = [];
   let scrollableDiv;

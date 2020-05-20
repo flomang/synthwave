@@ -7,6 +7,7 @@
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
   import TrollBox from "../components/TrollBox.svelte";
+  import { profileImage } from "../stores/stores.js";
 
   let bets = [
     {
@@ -30,7 +31,6 @@
   let dialog;
   let bet = null;
   let nextID = 3;
-  const profileImage = "aces.png";
 
   // add random comments
   beforeUpdate(() => {

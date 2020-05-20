@@ -1,5 +1,7 @@
 <script>
   import { onMount } from "svelte";
+  import { jwt } from "../stores/stores.js";
+
 
   let pixiComponent;
   //  pixi.js is a client side library. We only load this onMount
@@ -10,4 +12,5 @@
   });
 </script>
 
+<p>The jwt is {$jwt} </p>
 <svelte:component this={pixiComponent}/>
