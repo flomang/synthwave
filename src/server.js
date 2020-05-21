@@ -8,7 +8,6 @@ import * as sapper from '@sapper/server';
 
 const FileStore = sessionFileStore(session);
 
-
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
@@ -22,7 +21,7 @@ polka()
 			maxAge: 31536000
 		},
 		store: new FileStore({
-			path: process.env.NOW ? `/tmp/sessions` : `.sessions`
+			path: '.sessions'
 		})
 	}))
 	.use(
