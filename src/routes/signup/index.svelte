@@ -1,9 +1,19 @@
 <script>
   import { goto, stores } from "@sapper/app";
+  import { getClient, setClient, mutate } from "svelte-apollo";
   import ListErrors from "../_components/ListErrors.svelte";
-  import { Icon as CommonIcon } from "@smui/common";
+  import Icon from "@smui/textfield/icon/index";
+
   import Textfield from "@smui/textfield";
+  import HelperText from "@smui/textfield/helper-text/index";
   import Button, { Label } from "@smui/button";
+  import ApolloClient from "apollo-boost";
+  import { SIGN_UP } from "../_graphql/queries.js";
+
+  let client = new ApolloClient({
+    uri: "http://localhost:8080/graphql"
+  });
+  setClient(client);
 
   const { session } = stores();
 
@@ -12,17 +22,37 @@
   let password = "";
   let errors = null;
 
-  async function submit(event) {
-    //const response = await post(`auth/register`, { username, email, password });
+  $: usernameErrors = "";
+  $: emailErrors = "";
 
-    //// TODO handle network errors
-    //errors = response.errors;
+let handleUsername = () => { usernameErrors = "" };
+let handleEmail = () => { emailErrors = "" };
 
-    //if (response.user) {
-    //$session.user = response.user;
-    $session.user = "flowy";
-    goto("/");
-    //}
+
+  let promise;
+  async function submit() {
+    try {
+      let reponse = await mutate(getClient(), {
+        mutation: SIGN_UP,
+        variables: { email, username, password }
+      });
+
+      const signup = reponse.data.signup;
+      $session.user = signup.username;
+      goto("/");
+    } catch (error) {
+      if (error.message.includes("users_username_key")) {
+        usernameErrors = "username taken";
+        console.log(usernameErrors);
+      } else if (error.message.includes("users_email_key")) {
+        emailErrors = "email already registered";
+        console.log(emailErrors);
+      }
+      console.log("TODO");
+    }
+  }
+  function handleSubmit() {
+    promise = submit();
   }
 </script>
 
@@ -32,6 +62,10 @@
     background-color: #fff;
     text-align: center;
     margin: 0 auto;
+  }
+  .margins {
+    margin: 5px 0 3px;
+    width: 100%;
   }
 </style>
 
@@ -50,49 +84,69 @@
 
         <ListErrors {errors} />
 
-        <div>
-          <Textfield bind:value={username} label="" type="input">
-            <span slot="label">
-              <CommonIcon
-                class="material-icons"
-                style="font-size: 1em; line-height: normal; vertical-align:
-                middle;">
-                face
-              </CommonIcon>
-              username
-            </span>
-          </Textfield>
+        <div class="margins">
+          {#if usernameErrors != ''}
+            <Textfield
+              invalid
+              withLeadingIcon
+              variant="filled"
+              bind:value={username}
+              on:keyup={handleUsername}
+              label="username taken">
+              <Icon class="material-icons">face</Icon>
+            </Textfield>
+          {:else}
+            <Textfield
+              withLeadingIcon
+              variant="filled"
+              bind:value={username}
+              label="username">
+              <Icon class="material-icons">face</Icon>
+            </Textfield>
+          {/if}
         </div>
-        <div>
-          <Textfield bind:value={email} label="" type="email">
-            <span slot="label">
-              <CommonIcon
-                class="material-icons"
-                style="font-size: 1em; line-height: normal; vertical-align:
-                middle;">
-                email
-              </CommonIcon>
-              email
-            </span>
-          </Textfield>
+
+        <div class="margins">
+          {#if emailErrors != ''}
+            <Textfield
+              invalid
+              withLeadingIcon
+              variant="filled"
+              bind:value={email}
+              on:keyup={handleEmail}
+              label="email already registered"
+              type="email">
+              <Icon class="material-icons">email</Icon>
+            </Textfield>
+          {:else}
+            <Textfield
+              withLeadingIcon
+              variant="filled"
+              bind:value={email}
+              type="email"
+              label="email"
+              input$autocomplete="email">
+              <Icon class="material-icons">email</Icon>
+            </Textfield>
+          {/if}
         </div>
-        <div>
-          <Textfield bind:value={password} label="" type="password">
-            <span slot="label">
-              <CommonIcon
-                class="material-icons"
-                style="font-size: 1em; line-height: normal; vertical-align:
-                middle;">
-                lock
-              </CommonIcon>
-              password
-            </span>
+
+        <div class="margins">
+          <Textfield
+            withLeadingIcon
+            variant="filled"
+            bind:value={password}
+            type="password"
+            label="password"
+            input$aria-controls="helper-text-fullwidth-textarea"
+            input$aria-describedby="helper-text-fullwidth-textarea">
+            <Icon class="material-icons">lock</Icon>
           </Textfield>
         </div>
         <Button
           action="submit"
           disabled={!username || !email || !password}
-          on:click={submit}>
+          on:click={handleSubmit}>
           <Label>sign up</Label>
         </Button>
       </div>
