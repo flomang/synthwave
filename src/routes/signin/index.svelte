@@ -55,7 +55,7 @@
                 middle;">
                 email
               </CommonIcon>
-              Email
+              email
             </span>
           </Textfield>
         </div>
@@ -68,7 +68,7 @@
                 middle;">
                 lock
               </CommonIcon>
-              Password
+              password
             </span>
           </Textfield>
         </div>
