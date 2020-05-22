@@ -17,9 +17,8 @@
   let username = "";
   let email = "";
   let password = "";
-
-  $: usernameErrors = "";
-  $: emailErrors = "";
+  let usernameErrors = "";
+  let emailErrors = "";
 
   let handleUsername = () => {
     usernameErrors = "";
@@ -83,7 +82,7 @@
               variant="filled"
               bind:value={username}
               on:keyup={handleUsername}
-              label="username taken">
+              label={usernameErrors}>
               <Icon class="material-icons">face</Icon>
             </Textfield>
           {:else}
@@ -105,7 +104,7 @@
               variant="filled"
               bind:value={email}
               on:keyup={handleEmail}
-              label="email already registered"
+              label={emailErrors}
               type="email">
               <Icon class="material-icons">email</Icon>
             </Textfield>
