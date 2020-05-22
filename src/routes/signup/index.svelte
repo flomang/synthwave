@@ -17,14 +17,18 @@
   let username = "";
   let email = "";
   let password = "";
-  let usernameErrors = "";
-  let emailErrors = "";
+  let usernameLabel = "username";
+  let emailLabel = "email";
+  let invalidUsername = false;
+  let invalidEmail = false;
 
   let handleUsername = () => {
-    usernameErrors = "";
+    usernameLabel = "username";
+    invalidUsername = false;
   };
   let handleEmail = () => {
-    emailErrors = "";
+    emailLabel = "email";
+    invalidEmail = false;
   };
 
   async function submit() {
@@ -39,9 +43,11 @@
       goto("/");
     } catch (error) {
       if (error.message.includes("users_username_key")) {
-        usernameErrors = "username taken";
+        invalidUsername = true;
+        usernameLabel = "username taken";
       } else if (error.message.includes("users_email_key")) {
-        emailErrors = "email already registered";
+        invalidEmail = true;
+        emailLabel = "email already registered";
       }
       console.log("TODO");
     }
@@ -75,50 +81,28 @@
         </p>
 
         <div class="margins">
-          {#if usernameErrors != ''}
-            <Textfield
-              invalid
-              withLeadingIcon
-              variant="filled"
-              bind:value={username}
-              on:keyup={handleUsername}
-              label={usernameErrors}>
-              <Icon class="material-icons">face</Icon>
-            </Textfield>
-          {:else}
-            <Textfield
-              withLeadingIcon
-              variant="filled"
-              bind:value={username}
-              label="username">
-              <Icon class="material-icons">face</Icon>
-            </Textfield>
-          {/if}
+          <Textfield
+            invalid={invalidUsername}
+            withLeadingIcon
+            variant="filled"
+            bind:value={username}
+            on:keyup={handleUsername}
+            label={usernameLabel}>
+            <Icon class="material-icons">face</Icon>
+          </Textfield>
         </div>
 
         <div class="margins">
-          {#if emailErrors != ''}
-            <Textfield
-              invalid
-              withLeadingIcon
-              variant="filled"
-              bind:value={email}
-              on:keyup={handleEmail}
-              label={emailErrors}
-              type="email">
-              <Icon class="material-icons">email</Icon>
-            </Textfield>
-          {:else}
-            <Textfield
-              withLeadingIcon
-              variant="filled"
-              bind:value={email}
-              type="email"
-              label="email"
-              input$autocomplete="email">
-              <Icon class="material-icons">email</Icon>
-            </Textfield>
-          {/if}
+          <Textfield
+            invalid={invalidEmail}
+            withLeadingIcon
+            variant="filled"
+            bind:value={email}
+            on:keyup={handleEmail}
+            label={emailLabel}
+            type="email">
+            <Icon class="material-icons">email</Icon>
+          </Textfield>
         </div>
 
         <div class="margins">
