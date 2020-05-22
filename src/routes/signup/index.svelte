@@ -1,13 +1,10 @@
 <script>
   import { goto, stores } from "@sapper/app";
   import { getClient, setClient, mutate } from "svelte-apollo";
-  import ListErrors from "../_components/ListErrors.svelte";
-  import Icon from "@smui/textfield/icon/index";
-
-  import Textfield from "@smui/textfield";
-  import HelperText from "@smui/textfield/helper-text/index";
-  import Button, { Label } from "@smui/button";
   import ApolloClient from "apollo-boost";
+  import Icon from "@smui/textfield/icon/index";
+  import Textfield from "@smui/textfield";
+  import Button, { Label } from "@smui/button";
   import { SIGN_UP } from "../_graphql/queries.js";
 
   let client = new ApolloClient({
@@ -20,16 +17,17 @@
   let username = "";
   let email = "";
   let password = "";
-  let errors = null;
 
   $: usernameErrors = "";
   $: emailErrors = "";
 
-let handleUsername = () => { usernameErrors = "" };
-let handleEmail = () => { emailErrors = "" };
+  let handleUsername = () => {
+    usernameErrors = "";
+  };
+  let handleEmail = () => {
+    emailErrors = "";
+  };
 
-
-  let promise;
   async function submit() {
     try {
       let reponse = await mutate(getClient(), {
@@ -43,16 +41,11 @@ let handleEmail = () => { emailErrors = "" };
     } catch (error) {
       if (error.message.includes("users_username_key")) {
         usernameErrors = "username taken";
-        console.log(usernameErrors);
       } else if (error.message.includes("users_email_key")) {
         emailErrors = "email already registered";
-        console.log(emailErrors);
       }
       console.log("TODO");
     }
-  }
-  function handleSubmit() {
-    promise = submit();
   }
 </script>
 
@@ -81,8 +74,6 @@ let handleEmail = () => { emailErrors = "" };
         <p class="text-xs-center">
           <a href="/signin">Have an account?</a>
         </p>
-
-        <ListErrors {errors} />
 
         <div class="margins">
           {#if usernameErrors != ''}
@@ -146,7 +137,7 @@ let handleEmail = () => { emailErrors = "" };
         <Button
           action="submit"
           disabled={!username || !email || !password}
-          on:click={handleSubmit}>
+          on:click={submit}>
           <Label>sign up</Label>
         </Button>
       </div>
