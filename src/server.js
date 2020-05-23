@@ -3,13 +3,16 @@ import polka from 'polka';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import sessionFileStore from 'session-file-store';
 import * as sapper from '@sapper/server';
-
-const FileStore = sessionFileStore(session);
+import connectRedis from 'connect-redis';
+import redis from 'redis';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
+
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient({ host: '127.0.0.1', port: 6379 });
+
 
 polka()
 	.use(bodyParser.json())
@@ -20,9 +23,7 @@ polka()
 		cookie: {
 			maxAge: 31536000
 		},
-		store: new FileStore({
-			path: '.sessions'
-		})
+		store: new RedisStore({ client: redisClient })
 	}))
 	.use(
 		compression({ threshold: 0 }),
