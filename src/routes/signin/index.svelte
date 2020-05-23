@@ -3,6 +3,8 @@
   import ListErrors from "../_components/ListErrors.svelte";
   import { Icon as CommonIcon } from "@smui/common";
   import Textfield from "@smui/textfield";
+  import Checkbox from "@smui/checkbox";
+  import FormField from "@smui/form-field";
   import Icon from "@smui/textfield/icon/index";
   import Button, { Label } from "@smui/button";
   import ApolloClient from "apollo-boost";
@@ -17,7 +19,7 @@
   const { session } = stores();
   let email = "";
   let password = "";
-  let remember = true;
+  let remember = false;
   let emailLabel = "email";
   let emailInvalid = false;
   let passwordLabel = "password";
@@ -95,7 +97,7 @@
             <Icon class="material-icons">email</Icon>
           </Textfield>
         </div>
-         <div class="margins">
+        <div class="margins">
           <Textfield
             invalid={passwordInvalid}
             withLeadingIcon
@@ -106,6 +108,12 @@
             type="password">
             <Icon class="material-icons">lock</Icon>
           </Textfield>
+        </div>
+        <div>
+          <FormField>
+            <span slot="label">Remember me.</span>
+            <Checkbox bind:checked={remember} />
+          </FormField>
         </div>
 
         <Button
