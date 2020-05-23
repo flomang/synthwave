@@ -26,48 +26,92 @@
   let passwordInvalid = false;
   let disableSubmit = false;
 
-  let handlePassword = () => {
+  let handleInput = () => {
     passwordLabel = "password";
     passwordInvalid = false;
-  };
-  let handleEmail = () => {
     emailLabel = "email";
     emailInvalid = false;
   };
 
   async function submit() {
-    try {
-      disableSubmit = true;
+    disableSubmit = true;
 
-      let response = await mutate(getClient(), {
-        mutation: SIGN_IN,
-        variables: { email, password, remember }
-      });
-
-      const signin = response.data.signin;
-      $session.jwt = signin.jwt;
-      $session.refresh = signin.refresh;
-      setTimeout(function() {
+    mutate(getClient(), {
+      mutation: SIGN_IN,
+      variables: { email, password, remember }
+    })
+      .then(response => {
+        const signin = response.data.signin;
+        $session.user = { jwt: signin.jwt, refresh: signin.refresh };
+        setTimeout(function() {
+          disableSubmit = false;
+          goto("/");
+        }, 3000);
+      })
+      .catch(error => {
         disableSubmit = false;
-        goto("/");
-      }, 3000);
-    } catch (error) {
-      switch (true) {
-        case error.message.includes("incorrect password/email"):
-          passwordInvalid = true;
-          passwordLabel = "you shall NOT pass!";
-          emailInvalid = true;
-          emailLabel = "nope,";
-          break;
-        case error.message.includes("email account not verified"):
-          emailInvalid = true;
-          emailLabel = "email unverified";
-          break;
-      }
-      disableSubmit = false;
-      console.log("TODO");
-    }
+        switch (true) {
+          case error.message.includes("incorrect password/email"):
+            passwordInvalid = true;
+            passwordLabel = "you shall NOT pass!";
+            emailInvalid = true;
+            emailLabel = "nope,";
+            break;
+          case error.message.includes("email account not verified"):
+            emailInvalid = true;
+            emailLabel = "email unverified";
+            break;
+          default:
+            console.log(error);
+        }
+      });
   }
+
+  // async function submit() {
+  //   try {
+  //     disableSubmit = true;
+
+  //     let response = await mutate(getClient(), {
+  //       mutation: SIGN_IN,
+  //       variables: { email, password, remember }
+  //     });
+
+  //     const signin = response.data.signin;
+  //     $session.user = {jwt: signin.jwt, refresh: signin.refresh};
+
+  //     setTimeout(function() {
+  //       disableSubmit = false;
+  //       goto("/");
+  //     }, 3000);
+  //   } catch (error) {
+  //     switch (true) {
+  //       case error.message.includes("incorrect password/email"):
+  //         passwordInvalid = true;
+  //         passwordLabel = "you shall NOT pass!";
+  //         emailInvalid = true;
+  //         emailLabel = "nope,";
+  //         break;
+  //       case error.message.includes("email account not verified"):
+  //         emailInvalid = true;
+  //         emailLabel = "email unverified";
+  //         break;
+  //     }
+  //     disableSubmit = false;
+  //     console.log("TODO");
+  //   }
+  // }
+
+  // async function submit(event) {
+  //   const response = await post(`auth/signin`, { email, password });
+
+  //   // TODO handle network errors
+  //   errors = response.errors;
+
+  //   if (response.user) {
+  //     $session.user = response.user;
+  //     goto("/");
+  //   }
+  // }
 </script>
 
 <style>
@@ -132,7 +176,7 @@
       withLeadingIcon
       variant="filled"
       bind:value={email}
-      on:keyup={handleEmail}
+      on:keyup={handleInput}
       label={emailLabel}
       type="email">
       <Icon class="material-icons">email</Icon>
@@ -144,7 +188,7 @@
       withLeadingIcon
       variant="filled"
       bind:value={password}
-      on:keyup={handlePassword}
+      on:keyup={handleInput}
       label={passwordLabel}
       type="password">
       <Icon class="material-icons">lock</Icon>

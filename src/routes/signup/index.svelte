@@ -6,6 +6,7 @@
   import Textfield from "@smui/textfield";
   import Button, { Label } from "@smui/button";
   import { SIGN_UP } from "../_graphql/queries.js";
+  import { post } from "utils.js";
 
   let client = new ApolloClient({
     uri: "http://localhost:8080/graphql"
@@ -32,26 +33,52 @@
   };
 
   async function submit() {
-    try {
-      let reponse = await mutate(getClient(), {
-        mutation: SIGN_UP,
-        variables: { email, username, password }
+    mutate(getClient(), {
+      mutation: SIGN_UP,
+      variables: { email, username, password }
+    })
+      .then(response => {
+        const signup = response.data.signup;
+        $session.user = signup;
+        goto("/");
+      })
+      .catch(error => {
+        if (error.message.includes("users_username_key")) {
+          invalidUsername = true;
+          usernameLabel = "username taken";
+        } else if (error.message.includes("users_email_key")) {
+          invalidEmail = true;
+          emailLabel = "email already registered";
+        } else {
+          console.log(error);
+        }
       });
-
-      const signup = reponse.data.signup;
-      $session.user = signup.username;
-      goto("/");
-    } catch (error) {
-      if (error.message.includes("users_username_key")) {
-        invalidUsername = true;
-        usernameLabel = "username taken";
-      } else if (error.message.includes("users_email_key")) {
-        invalidEmail = true;
-        emailLabel = "email already registered";
-      }
-      console.log("TODO");
-    }
   }
+
+  // prototype
+  //async function submit(event) {
+  //  try {
+  //    const response = await post(`auth/signup`, { username, email, password });
+  //    console.log(response);
+
+  //    // TODO handle network errors
+  //    //errors = response.errors;
+
+  //    if (response.user) {
+  //      $session.user = response.user;
+  //      goto("/");
+  //    }
+  //  } catch (error) {
+  //    if (error.message.includes("users_username_key")) {
+  //      invalidUsername = true;
+  //      usernameLabel = "username taken";
+  //    } else if (error.message.includes("users_email_key")) {
+  //      invalidEmail = true;
+  //      emailLabel = "email already registered";
+  //    }
+  //    console.log("TODO");
+  //  }
+  //}
 </script>
 
 <style>

@@ -1,7 +1,10 @@
 <script>
   import Fab, { Label, Icon } from "@smui/fab";
   import Button, { Group, GroupItem } from "@smui/button";
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
+
+  const { session } = stores();
+  console.log($session.user);
 
   let superText = "";
   let items = [

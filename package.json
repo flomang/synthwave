@@ -17,6 +17,7 @@
     "compression": "^1.7.1",
     "connect-redis": "^4.0.4",
     "express-session": "^1.17.1",
+    "node-fetch": "^2.6.0",
     "polka": "next",
     "redis": "^3.0.2",
     "session-file-store": "^1.4.0",
