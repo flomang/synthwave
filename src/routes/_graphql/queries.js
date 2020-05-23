@@ -14,8 +14,16 @@ export const SIGN_UP = gql`
 export const SIGN_IN = gql`
   mutation Signin($email: String!, $password: String!, $remember: Boolean!) {
     signin(email: $email, password: $password, remember: $remember) {
-      jwt
-      refresh
+      user {
+        id 
+        email 
+        emailVerified
+        username 
+      }
+      token {
+        jwt
+        refresh
+      }
     }
   }
 `;

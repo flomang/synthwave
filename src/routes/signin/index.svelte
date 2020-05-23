@@ -9,7 +9,8 @@
   import Button, { Label } from "@smui/button";
   import ApolloClient from "apollo-boost";
   import { getClient, setClient, mutate } from "svelte-apollo";
-  import { SIGN_IN } from "../_graphql/queries.js";
+  import { post } from "utils.js";
+  //  import { SIGN_IN } from "../_graphql/queries.js";
 
   let client = new ApolloClient({
     uri: "http://localhost:8080/graphql"
@@ -68,13 +69,26 @@
   //}
 
   async function submit(event) {
-    const response = await post(`auth/signin`, { email, password });
+    const response = await post(`auth/signin`, { email, password, remember });
 
-    // TODO handle network errors
-    errors = response.errors;
-
-    if (response.user) {
-      $session.user = response.user;
+    if (response.message) {
+      switch (true) {
+        case response.message.includes("incorrect password/email"):
+          passwordInvalid = true;
+          passwordLabel = "you shall NOT pass!";
+          emailInvalid = true;
+          emailLabel = "nope,";
+          break;
+        case response.message.includes("email account not verified"):
+          emailInvalid = true;
+          emailLabel = "email unverified";
+          break;
+        default:
+          console.log(response.message);
+      }
+    } else if (response.signin) {
+      $session.user = response.signin.user;
+      $session.token = response.signin.token;
       goto("/");
     }
   }
