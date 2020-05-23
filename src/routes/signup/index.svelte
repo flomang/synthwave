@@ -32,53 +32,51 @@
     invalidEmail = false;
   };
 
-  async function submit() {
-    mutate(getClient(), {
-      mutation: SIGN_UP,
-      variables: { email, username, password }
-    })
-      .then(response => {
-        const signup = response.data.signup;
-        $session.user = signup;
-        goto("/");
-      })
-      .catch(error => {
-        if (error.message.includes("users_username_key")) {
+  // async function submit() {
+  //   mutate(getClient(), {
+  //     mutation: SIGN_UP,
+  //     variables: { email, username, password }
+  //   })
+  //     .then(response => {
+  //       const signup = response.data.signup;
+  //       $session.user = signup;
+  //       goto("/");
+  //     })
+  //     .catch(error => {
+  //       if (error.message.includes("users_username_key")) {
+  //         invalidUsername = true;
+  //         usernameLabel = "username taken";
+  //       } else if (error.message.includes("users_email_key")) {
+  //         invalidEmail = true;
+  //         emailLabel = "email already registered";
+  //       } else {
+  //         console.log(error);
+  //       }
+  //     });
+  // }
+
+  async function submit(event) {
+    const response = await post(`auth/signup`, { username, email, password });
+
+    if (response.message) {
+      switch (true) {
+        case response.message.includes("users_username_key"):
+          console.log("yep");
           invalidUsername = true;
           usernameLabel = "username taken";
-        } else if (error.message.includes("users_email_key")) {
+          break;
+        case response.message.includes("users_email_key"):
           invalidEmail = true;
           emailLabel = "email already registered";
-        } else {
-          console.log(error);
-        }
-      });
+          break;
+        default:
+          console.log(response.message);
+      }
+    } else if (response.signup) {
+      $session.user = response.signup;
+      goto("/");
+    }
   }
-
-  // prototype
-  //async function submit(event) {
-  //  try {
-  //    const response = await post(`auth/signup`, { username, email, password });
-  //    console.log(response);
-
-  //    // TODO handle network errors
-  //    //errors = response.errors;
-
-  //    if (response.user) {
-  //      $session.user = response.user;
-  //      goto("/");
-  //    }
-  //  } catch (error) {
-  //    if (error.message.includes("users_username_key")) {
-  //      invalidUsername = true;
-  //      usernameLabel = "username taken";
-  //    } else if (error.message.includes("users_email_key")) {
-  //      invalidEmail = true;
-  //      emailLabel = "email already registered";
-  //    }
-  //    console.log("TODO");
-  //  }
-  //}
 </script>
 
 <style>

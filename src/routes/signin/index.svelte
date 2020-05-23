@@ -33,85 +33,51 @@
     emailInvalid = false;
   };
 
-  async function submit() {
-    disableSubmit = true;
+  //async function submit() {
+  //  disableSubmit = true;
 
-    mutate(getClient(), {
-      mutation: SIGN_IN,
-      variables: { email, password, remember }
-    })
-      .then(response => {
-        const signin = response.data.signin;
-        $session.user = { jwt: signin.jwt, refresh: signin.refresh };
-        setTimeout(function() {
-          disableSubmit = false;
-          goto("/");
-        }, 3000);
-      })
-      .catch(error => {
-        disableSubmit = false;
-        switch (true) {
-          case error.message.includes("incorrect password/email"):
-            passwordInvalid = true;
-            passwordLabel = "you shall NOT pass!";
-            emailInvalid = true;
-            emailLabel = "nope,";
-            break;
-          case error.message.includes("email account not verified"):
-            emailInvalid = true;
-            emailLabel = "email unverified";
-            break;
-          default:
-            console.log(error);
-        }
-      });
+  //  mutate(getClient(), {
+  //    mutation: SIGN_IN,
+  //    variables: { email, password, remember }
+  //  })
+  //    .then(response => {
+  //      const signin = response.data.signin;
+  //      $session.user = { jwt: signin.jwt, refresh: signin.refresh };
+  //      setTimeout(function() {
+  //        disableSubmit = false;
+  //        goto("/");
+  //      }, 3000);
+  //    })
+  //    .catch(error => {
+  //      disableSubmit = false;
+  //      switch (true) {
+  //        case error.message.includes("incorrect password/email"):
+  //          passwordInvalid = true;
+  //          passwordLabel = "you shall NOT pass!";
+  //          emailInvalid = true;
+  //          emailLabel = "nope,";
+  //          break;
+  //        case error.message.includes("email account not verified"):
+  //          emailInvalid = true;
+  //          emailLabel = "email unverified";
+  //          break;
+  //        default:
+  //          console.log(error);
+  //      }
+  //    });
+  //}
+
+  async function submit(event) {
+    const response = await post(`auth/signin`, { email, password });
+
+    // TODO handle network errors
+    errors = response.errors;
+
+    if (response.user) {
+      $session.user = response.user;
+      goto("/");
+    }
   }
-
-  // async function submit() {
-  //   try {
-  //     disableSubmit = true;
-
-  //     let response = await mutate(getClient(), {
-  //       mutation: SIGN_IN,
-  //       variables: { email, password, remember }
-  //     });
-
-  //     const signin = response.data.signin;
-  //     $session.user = {jwt: signin.jwt, refresh: signin.refresh};
-
-  //     setTimeout(function() {
-  //       disableSubmit = false;
-  //       goto("/");
-  //     }, 3000);
-  //   } catch (error) {
-  //     switch (true) {
-  //       case error.message.includes("incorrect password/email"):
-  //         passwordInvalid = true;
-  //         passwordLabel = "you shall NOT pass!";
-  //         emailInvalid = true;
-  //         emailLabel = "nope,";
-  //         break;
-  //       case error.message.includes("email account not verified"):
-  //         emailInvalid = true;
-  //         emailLabel = "email unverified";
-  //         break;
-  //     }
-  //     disableSubmit = false;
-  //     console.log("TODO");
-  //   }
-  // }
-
-  // async function submit(event) {
-  //   const response = await post(`auth/signin`, { email, password });
-
-  //   // TODO handle network errors
-  //   errors = response.errors;
-
-  //   if (response.user) {
-  //     $session.user = response.user;
-  //     goto("/");
-  //   }
-  // }
 </script>
 
 <style>
