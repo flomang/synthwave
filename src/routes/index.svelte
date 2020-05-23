@@ -4,8 +4,6 @@
   import { goto, stores } from "@sapper/app";
 
   const { session } = stores();
-  console.log($session.user);
-  console.log($session.token);
 
   let superText = "";
   let items = [

@@ -10,7 +10,6 @@
   import ApolloClient from "apollo-boost";
   import { getClient, setClient, mutate } from "svelte-apollo";
   import { post } from "utils.js";
-  //  import { SIGN_IN } from "../_graphql/queries.js";
 
   let client = new ApolloClient({
     uri: "http://localhost:8080/graphql"
@@ -33,40 +32,6 @@
     emailLabel = "email";
     emailInvalid = false;
   };
-
-  //async function submit() {
-  //  disableSubmit = true;
-
-  //  mutate(getClient(), {
-  //    mutation: SIGN_IN,
-  //    variables: { email, password, remember }
-  //  })
-  //    .then(response => {
-  //      const signin = response.data.signin;
-  //      $session.user = { jwt: signin.jwt, refresh: signin.refresh };
-  //      setTimeout(function() {
-  //        disableSubmit = false;
-  //        goto("/");
-  //      }, 3000);
-  //    })
-  //    .catch(error => {
-  //      disableSubmit = false;
-  //      switch (true) {
-  //        case error.message.includes("incorrect password/email"):
-  //          passwordInvalid = true;
-  //          passwordLabel = "you shall NOT pass!";
-  //          emailInvalid = true;
-  //          emailLabel = "nope,";
-  //          break;
-  //        case error.message.includes("email account not verified"):
-  //          emailInvalid = true;
-  //          emailLabel = "email unverified";
-  //          break;
-  //        default:
-  //          console.log(error);
-  //      }
-  //    });
-  //}
 
   async function submit(event) {
     const response = await post(`auth/signin`, { email, password, remember });
