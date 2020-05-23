@@ -62,8 +62,7 @@
     margin: 0 auto;
   }
   .margins {
-    margin: 5px 0 3px;
-    width: 100%;
+    margin: 5px 0px 3px;
   }
 </style>
 
@@ -72,58 +71,52 @@
 </svelte:head>
 
 <div class="content">
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center">Sign up</h1>
-        <p class="text-xs-center">
-          <a href="/signin">Have an account?</a>
-        </p>
+  <h1 class="text-xs-center">Sign up</h1>
+  <p class="text-xs-center">
+    <a href="/signin">Have an account?</a>
+  </p>
 
-        <div class="margins">
-          <Textfield
-            invalid={invalidUsername}
-            withLeadingIcon
-            variant="filled"
-            bind:value={username}
-            on:keyup={handleUsername}
-            label={usernameLabel}>
-            <Icon class="material-icons">face</Icon>
-          </Textfield>
-        </div>
-
-        <div class="margins">
-          <Textfield
-            invalid={invalidEmail}
-            withLeadingIcon
-            variant="filled"
-            bind:value={email}
-            on:keyup={handleEmail}
-            label={emailLabel}
-            type="email">
-            <Icon class="material-icons">email</Icon>
-          </Textfield>
-        </div>
-
-        <div class="margins">
-          <Textfield
-            withLeadingIcon
-            variant="filled"
-            bind:value={password}
-            type="password"
-            label="password"
-            input$aria-controls="helper-text-fullwidth-textarea"
-            input$aria-describedby="helper-text-fullwidth-textarea">
-            <Icon class="material-icons">lock</Icon>
-          </Textfield>
-        </div>
-        <Button
-          action="submit"
-          disabled={!username || !email || !password}
-          on:click={submit}>
-          <Label>sign up</Label>
-        </Button>
-      </div>
-    </div>
+  <div class="margins">
+    <Textfield
+      invalid={invalidUsername}
+      withLeadingIcon
+      variant="filled"
+      bind:value={username}
+      on:keyup={handleUsername}
+      label={usernameLabel}>
+      <Icon class="material-icons">face</Icon>
+    </Textfield>
   </div>
+
+  <div class="margins">
+    <Textfield
+      invalid={invalidEmail}
+      withLeadingIcon
+      variant="filled"
+      bind:value={email}
+      on:keyup={handleEmail}
+      label={emailLabel}
+      type="email">
+      <Icon class="material-icons">email</Icon>
+    </Textfield>
+  </div>
+
+  <div class="margins">
+    <Textfield
+      withLeadingIcon
+      variant="filled"
+      bind:value={password}
+      type="password"
+      label="password"
+      input$aria-controls="helper-text-fullwidth-textarea"
+      input$aria-describedby="helper-text-fullwidth-textarea">
+      <Icon class="material-icons">lock</Icon>
+    </Textfield>
+  </div>
+  <Button
+    action="submit"
+    disabled={!username || !email || !password}
+    on:click={submit}>
+    <Label>sign up</Label>
+  </Button>
 </div>
