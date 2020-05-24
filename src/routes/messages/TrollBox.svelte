@@ -5,7 +5,7 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import Eliza from "elizabot";
-  import { profileImage, profileName } from "../stores/stores.js";
+  import { profileImage, profileName } from "../../stores/stores.js";
 
   export let handleAddBet;
   const eliza = new Eliza();
