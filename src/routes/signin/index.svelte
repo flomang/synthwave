@@ -47,7 +47,7 @@
     } else if (response.signin) {
       $session.user = response.signin.user;
       $session.token = response.signin.token;
-      goto("/");
+      goto("/messages");
     }
   }
 </script>

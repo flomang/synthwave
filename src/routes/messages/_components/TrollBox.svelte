@@ -5,7 +5,6 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import Eliza from "elizabot";
-  import { profileImage, profileName } from "../../../stores/stores.js";
 
   export let handleAddBet;
   const eliza = new Eliza();
@@ -19,6 +18,7 @@
   let expiration = "";
   let disabled = true;
   let scrollWidth = 0;
+  export let user;
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -52,8 +52,8 @@
     if (event.detail.action == "submit") {
       //  console.log("submit the bet");
       comments = comments.concat({
-        username: profileName,
-        profileImage: profileImage,
+        username: user.username,
+        profileImage: user.avatarURL,
         description: description,
         amount: amount,
         timer: expiration,
@@ -61,8 +61,8 @@
       });
 
       let newBet = {
-        username: profileName,
-        profileImage: profileImage,
+        username: user.username,
+        profileImage: user.avatarURL,
         description: description,
         amount: amount,
         timer: expiration
@@ -80,8 +80,8 @@
       if (!text) return;
 
       comments = comments.concat({
-        username: profileName,
-        profileImage: profileImage,
+        username: user.username,
+        profileImage: user.avatarURL,
         text: text,
         type: "comment"
       });
@@ -340,10 +340,10 @@
   </div>
   <div class="trollbox-input">
     <div>
-      <img class="trollbox-input-profile" alt="" src={profileImage} />
+      <img class="trollbox-input-profile" alt="" src={user.avatarURL} />
     </div>
     <div class="trollbox-input-container">
-      <span class="comment-username">{profileName}</span>
+      <span class="comment-username">{user.username}</span>
       <Textfield
         fullwidth
         bind:value={textInput}

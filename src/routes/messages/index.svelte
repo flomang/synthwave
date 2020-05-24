@@ -22,6 +22,8 @@
   import TrollBox from "./_components/TrollBox.svelte";
   import { profileImage } from "../../stores/stores.js";
 
+  export let user;
+
   let bets = [
     {
       id: 1,
@@ -376,5 +378,5 @@
       {/each}
     </div>
   </div>
-  <TrollBox handleAddBet={addBet} />
+  <TrollBox handleAddBet={addBet} user={user}/>
 </div>

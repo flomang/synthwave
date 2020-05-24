@@ -14,7 +14,6 @@
 <script>
   import { Label } from "@smui/fab";
   import Button from "@smui/button";
-  import { jwt } from "../../stores/stores.js";
   import { goto, stores } from "@sapper/app";
   import { post } from "utils.js";
 

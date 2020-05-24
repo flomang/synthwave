@@ -16,9 +16,10 @@ export const SIGN_IN = gql`
     signin(email: $email, password: $password, remember: $remember) {
       user {
         id 
+        username 
+        avatarURL
         email 
         emailVerified
-        username 
       }
       token {
         jwt
