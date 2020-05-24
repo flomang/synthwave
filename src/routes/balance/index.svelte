@@ -1,14 +1,14 @@
 <script context="module">
   // https://sapper.svelte.dev/docs/#this_redirect
-	export async function preload(page, session) {
-		const { user } = session;
+  export async function preload(page, session) {
+    const { user } = session;
 
-		if (!user) {
-			return this.redirect(302, 'signin');
-		}
+    if (!user) {
+      return this.redirect(302, "signin");
+    }
 
-		return { user };
-	}
+    return { user };
+  }
 </script>
 
 <script>
@@ -16,9 +16,9 @@
   import Button, { Group, GroupItem } from "@smui/button";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
   import Checkbox from "@smui/checkbox";
-  import { goto } from "@sapper/app"
+  import { goto } from "@sapper/app";
 
-  export let user;
+  export const user = "";
   let statement = [
     {
       date: "2020-01-01",
@@ -56,11 +56,10 @@
     background-color: #fff;
     text-align: center;
   }
-  
+
   .left {
     text-align: left;
   }
-
 </style>
 
 <svelte:head>

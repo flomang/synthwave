@@ -4,6 +4,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { onError } from "apollo-link-error";
+//import { WebSocketLink } from "apollo-link-ws";
 
 //export const client = new ApolloClient({
 //  uri: 'http://localhost:8080/graphql'
@@ -16,6 +17,13 @@ export function getClient(req) {
     uri: 'http://localhost:8080/graphql',
     credentials: 'same-origin'
   })
+
+  //const wsLink = new WebSocketLink({
+  //  uri: 'ws://localhost:8080/graphql',
+  //  options: {
+  //    reconnect: true,
+  //  },
+  //});
 
   const authLink = setContext((_, { headers }) => {
     if (req.session.token) {
@@ -66,6 +74,7 @@ export function getClient(req) {
     link: ApolloLink.from([
       errorLink,
       authLink,
+      //wsLink,
       httpLink,
     ]),
     cache: new InMemoryCache()
