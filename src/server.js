@@ -13,9 +13,14 @@ const dev = NODE_ENV === 'development';
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient({ host: '127.0.0.1', port: 6379 });
 
+const logger = (req, res, next) => {
+	console.log(`~> Received ${req.method} on ${req.url}`);
+	next(); // move on
+}
 
 polka()
 	.use(bodyParser.json())
+	.use(logger)
 	.use(session({
 		secret: 'santa',
 		resave: false,
