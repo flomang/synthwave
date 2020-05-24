@@ -1,16 +1,12 @@
 import { SIGN_IN } from "../_graphql/queries.js";
+import { client } from "../_graphql/client.js";
 import { mutate } from "svelte-apollo";
-import ApolloClient from "apollo-boost";
 
 export async function post(req, res) {
   const signin = req.body;
   const email = signin.email;
   const password = signin.password;
   const remember = signin.remember;
-
-  let client = new ApolloClient({
-    uri: "http://localhost:8080/graphql"
-  });
 
   mutate(client, {
     mutation: SIGN_IN,
