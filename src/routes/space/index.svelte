@@ -14,7 +14,7 @@
 <script>
   import { onMount } from "svelte";
 
-  export let user;
+  export const user = "";
   let pixiComponent;
   //  pixi.js is a client side library. We only load this onMount
   // i.e. when the client browser loads this page 

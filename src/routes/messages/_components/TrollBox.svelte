@@ -18,6 +18,7 @@
   let expiration = "";
   let disabled = true;
   let scrollWidth = 0;
+  let defaultAvatar = "aces.png";
   export let user;
 
   let users = [
@@ -53,7 +54,7 @@
       //  console.log("submit the bet");
       comments = comments.concat({
         username: user.username,
-        profileImage: user.avatarURL,
+        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
         description: description,
         amount: amount,
         timer: expiration,
@@ -62,7 +63,7 @@
 
       let newBet = {
         username: user.username,
-        profileImage: user.avatarURL,
+        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
         description: description,
         amount: amount,
         timer: expiration
@@ -81,7 +82,7 @@
 
       comments = comments.concat({
         username: user.username,
-        profileImage: user.avatarURL,
+        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
         text: text,
         type: "comment"
       });
@@ -340,7 +341,7 @@
   </div>
   <div class="trollbox-input">
     <div>
-      <img class="trollbox-input-profile" alt="" src={user.avatarURL} />
+      <img class="trollbox-input-profile" alt="" src={user.avatarURL? user.avatarURL : defaultAvatar} />
     </div>
     <div class="trollbox-input-container">
       <span class="comment-username">{user.username}</span>
