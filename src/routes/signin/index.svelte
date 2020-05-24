@@ -33,9 +33,9 @@
       switch (true) {
         case response.message.includes("incorrect password/email"):
           passwordInvalid = true;
-          passwordLabel = "you shall NOT pass!";
+          passwordLabel = "you cannot pass!";
           emailInvalid = true;
-          emailLabel = "nope,";
+          emailLabel = "email/password incorrect";
           break;
         case response.message.includes("email account not verified"):
           emailInvalid = true;

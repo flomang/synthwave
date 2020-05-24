@@ -50,12 +50,6 @@ export function getClient(req) {
             if (auth && refresh) {
               req.session.token.jwt = auth;
               req.session.token.refresh = refresh;
-              //document.cookie = cookie.serialize('token', auth, {
-              //  maxAge: 24 * 60 * 60 // 1 day
-              //})
-              //document.cookie = cookie.serialize('refresh', refresh, {
-              //  maxAge: 24 * 60 * 60 // 1 day
-              //})
               // Now, pass the original operation to the next link
               // in the chain. This retries it with new tokens
               return forward(operation);
