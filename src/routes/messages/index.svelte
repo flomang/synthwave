@@ -6,7 +6,7 @@
   import orderBy from "lodash/orderBy";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
-  import TrollBox from "./TrollBox.svelte";
+  import TrollBox from "./_components/TrollBox.svelte";
   import { profileImage } from "../../stores/stores.js";
 
   let bets = [
