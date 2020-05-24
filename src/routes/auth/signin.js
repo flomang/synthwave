@@ -3,10 +3,6 @@ import { mutate } from "svelte-apollo";
 import ApolloClient from "apollo-boost";
 
 export async function post(req, res) {
-  if (typeof fetch !== 'function') {
-    global.fetch = require('node-fetch')
-  }
-
   const signin = req.body;
   const email = signin.email;
   const password = signin.password;
