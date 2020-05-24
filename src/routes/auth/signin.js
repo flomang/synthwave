@@ -1,10 +1,10 @@
 import { SIGN_IN } from "../_graphql/queries.js";
-import { client } from "../_graphql/client.js";
+import { getClient } from "../_graphql/client.js";
 import { mutate } from "svelte-apollo";
 
 export async function post(req, res) {
-
   try {
+    const client = getClient(req);
     const signin = req.body;
     const response = await mutate(client, {
       mutation: SIGN_IN,
