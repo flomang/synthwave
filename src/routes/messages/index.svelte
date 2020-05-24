@@ -1,3 +1,16 @@
+<script context="module">
+  // https://sapper.svelte.dev/docs/#this_redirect
+	export async function preload(page, session) {
+		const { user } = session;
+
+		if (!user) {
+			return this.redirect(302, 'signin');
+		}
+
+		return { user };
+	}
+</script>
+
 <script>
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
