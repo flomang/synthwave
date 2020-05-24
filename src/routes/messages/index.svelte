@@ -20,7 +20,6 @@
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
   import TrollBox from "./_components/TrollBox.svelte";
-  import { profileImage } from "../../stores/stores.js";
 
   export let user;
 
@@ -356,7 +355,7 @@
             <span class="comment-bet-username">{bet.username}</span>
             <span class="comment-bet-amount">
               Bet: {bet.amount} sats
-              {#if bet.profileImage != profileImage}
+              {#if bet.username != user.username}
                 <Button
                   color="primary"
                   on:click={() => openConfirm(bet)}

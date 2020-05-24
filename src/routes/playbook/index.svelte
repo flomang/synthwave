@@ -17,6 +17,7 @@
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
   import Checkbox from "@smui/checkbox";
 
+  export let user;
   let superText = "";
   let bets = [
     {

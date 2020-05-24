@@ -315,7 +315,7 @@
 
 <div class="trollbox">
   <div class="trollbox-header">
-    <div class="trollbox-header-title">trollfeast</div>
+    <div class="trollbox-header-title">Troll Feast</div>
   </div>
   <div class="trollbox-scrollable" bind:this={scrollableDiv}>
     {#each comments as comment}

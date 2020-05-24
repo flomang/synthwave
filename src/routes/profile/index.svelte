@@ -18,6 +18,7 @@
   import { post } from "utils.js";
 
   const { session } = stores();
+  export let user;
 
   async function logout() {
     await post(`auth/logout`);
