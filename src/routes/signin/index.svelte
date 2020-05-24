@@ -7,14 +7,7 @@
   import FormField from "@smui/form-field";
   import Icon from "@smui/textfield/icon/index";
   import Button, { Label } from "@smui/button";
-  import ApolloClient from "apollo-boost";
-  import { getClient, setClient, mutate } from "svelte-apollo";
   import { post } from "utils.js";
-
-  let client = new ApolloClient({
-    uri: "http://localhost:8080/graphql"
-  });
-  setClient(client);
 
   const { session } = stores();
   let email = "";

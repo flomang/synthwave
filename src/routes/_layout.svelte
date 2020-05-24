@@ -1,6 +1,13 @@
 <script>
   import Nav from "./_components/Nav.svelte";
   import Footer from "./_components/Footer.svelte";
+  import ApolloClient from "apollo-boost";
+  import { setClient } from "svelte-apollo"
+
+  let client = new ApolloClient({
+    uri: "http://localhost:8080/graphql"
+  });
+  setClient(client);
 
   export let segment;
 </script>

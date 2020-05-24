@@ -1,17 +1,10 @@
 <script>
   import { goto, stores } from "@sapper/app";
-  import { getClient, setClient, mutate } from "svelte-apollo";
-  import ApolloClient from "apollo-boost";
   import Icon from "@smui/textfield/icon/index";
   import Textfield from "@smui/textfield";
   import Button, { Label } from "@smui/button";
   import { SIGN_UP } from "../_graphql/queries.js";
   import { post } from "utils.js";
-
-  let client = new ApolloClient({
-    uri: "http://localhost:8080/graphql"
-  });
-  setClient(client);
 
   const { session } = stores();
 
@@ -31,29 +24,6 @@
     emailLabel = "email";
     invalidEmail = false;
   };
-
-  // async function submit() {
-  //   mutate(getClient(), {
-  //     mutation: SIGN_UP,
-  //     variables: { email, username, password }
-  //   })
-  //     .then(response => {
-  //       const signup = response.data.signup;
-  //       $session.user = signup;
-  //       goto("/");
-  //     })
-  //     .catch(error => {
-  //       if (error.message.includes("users_username_key")) {
-  //         invalidUsername = true;
-  //         usernameLabel = "username taken";
-  //       } else if (error.message.includes("users_email_key")) {
-  //         invalidEmail = true;
-  //         emailLabel = "email already registered";
-  //       } else {
-  //         console.log(error);
-  //       }
-  //     });
-  // }
 
   async function submit(event) {
     const response = await post(`auth/signup`, { username, email, password });
