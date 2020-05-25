@@ -7,7 +7,7 @@ import { onError } from "apollo-link-error";
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
-export function newClient() {
+export function wsClient() {
   const httpLink = createHttpLink({
     uri: 'http://localhost:8080/graphql',
   });
@@ -29,53 +29,8 @@ export function newClient() {
     httpLink,
   );
 
-  const authLink = setContext((_, { headers }) => {
-    if (req.session.token) {
-      const token = req.session.token.jwt;
-      const refresh = req.session.token.refresh;
-      return {
-        headers: {
-          ...headers,
-          authorization: token ? `Bearer ${token}` : '',
-          refresh: refresh ? refresh : '',
-        }
-      }
-    }
-
-    return {
-      headers: {
-        ...headers,
-      }
-    }
-  });
-
-  const errorLink = onError(({ operation, graphQLErrors, forward }) => {
-    if (graphQLErrors) {
-      for (let err of graphQLErrors) {
-        if (err.message == "unauthorized") {
-          const context = operation.getContext();
-          const { response: { headers } } = context;
-          if (headers) {
-            const auth = headers.get('Set-Authorization');
-            const refresh = headers.get('Set-Refresh');
-
-            if (auth && refresh) {
-              req.session.token.jwt = auth;
-              req.session.token.refresh = refresh;
-              // Now, pass the original operation to the next link
-              // in the chain. This retries it with new tokens
-              return forward(operation);
-            }
-          }
-        }
-      }
-    }
-  });
-
   return new ApolloClient({
     link: ApolloLink.from([
-      errorLink,
-      authLink,
       webLink,
     ]),
     cache: new InMemoryCache()

@@ -8,6 +8,9 @@
   import Icon from "@smui/textfield/icon/index";
   import Button, { Label } from "@smui/button";
   import { post } from "utils.js";
+  import { mutate } from "svelte-apollo";
+  import { SIGN_IN } from "../_graphql/queries.js";
+  import { wsClient } from "../_graphql/client.js";
 
   const { session } = stores();
   let email = "";
@@ -27,27 +30,42 @@
   };
 
   async function submit(event) {
-    const response = await post(`auth/signin`, { email, password, remember });
+    try {
+      let response = await mutate(wsClient(), {
+        mutation: SIGN_IN,
+        variables: { email: email, password: password, remember: remember }
+      });
 
-    if (response.message) {
+      if (response.data && response.data.signin) {
+        const signin = response.data.signin;
+
+        // post the user and token to the server session
+        await post(`auth/signin`, { user: signin.user, token: signin.token });
+
+        // update client session
+        $session.user = response.data.signin.user;
+        $session.token = response.data.signin.token;
+      }
+      goto("/messages");
+
+    } catch (error) {
+      const msg = error.message;
+
       switch (true) {
-        case response.message.includes("incorrect password/email"):
+        case msg.includes("incorrect password/email"):
           passwordInvalid = true;
           passwordLabel = "you cannot pass!";
           emailInvalid = true;
           emailLabel = "email/password incorrect";
           break;
-        case response.message.includes("email account not verified"):
+        case msg.includes("email account not verified"):
           emailInvalid = true;
           emailLabel = "email unverified";
           break;
         default:
-          console.log(response.message);
+          console.log(error);
       }
-    } else if (response.signin) {
-      $session.user = response.signin.user;
-      $session.token = response.signin.token;
-      goto("/messages");
+      // TODO
     }
   }
 </script>

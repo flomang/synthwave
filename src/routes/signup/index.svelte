@@ -3,8 +3,9 @@
   import Icon from "@smui/textfield/icon/index";
   import Textfield from "@smui/textfield";
   import Button, { Label } from "@smui/button";
+  import { mutate } from "svelte-apollo";
   import { SIGN_UP } from "../_graphql/queries.js";
-  import { post } from "utils.js";
+  import { wsClient } from "../_graphql/client.js";
 
   const { session } = stores();
 
@@ -26,25 +27,37 @@
   };
 
   async function submit(event) {
-    const response = await post(`auth/signup`, { username, email, password });
+    try {
+      let response = await mutate(wsClient(), {
+        mutation: SIGN_UP,
+        variables: { username: username, email: email, password: password }
+      });
 
-    if (response.message) {
+      if (response.data && response.data.signin) {
+        const signup = response.data.signup;
+
+        // update client session
+        $session.user = response.data.signup.user;
+      }
+
+      // TODO redirect to verify email
+      goto("/messages");
+    } catch (error) {
+      const msg = error.message;
       switch (true) {
-        case response.message.includes("users_username_key"):
+        case msg.includes("users_username_key"):
           console.log("yep");
           invalidUsername = true;
           usernameLabel = "username taken";
           break;
-        case response.message.includes("users_email_key"):
+        case msg.includes("users_email_key"):
           invalidEmail = true;
           emailLabel = "email already registered";
           break;
         default:
           console.log(response.message);
       }
-    } else if (response.signup) {
-      $session.user = response.signup;
-      goto("/");
+      // TODO
     }
   }
 </script>
