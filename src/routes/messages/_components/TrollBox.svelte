@@ -11,19 +11,23 @@
   import { MESSAGE_POSTED } from "../../_graphql/subscriptions.js";
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
+  import { gql } from "apollo-boost";
 
   export let handleAddBet;
   export let user;
 
-  let newMessage;
   const { session } = stores();
+
   onMount(async () => {
-    newMessage = await subscribe(wsClient(session), {
-      query: MESSAGE_POSTED,
-      variables: { user: user.username }
-    });
-    console.log("hello");
-    console.log(newMessage);
+
+    wsClient(session)
+      .subscribe({
+        query: MESSAGE_POSTED,
+        variables: { user: user.username }
+      })
+      .subscribe(result => {
+        console.log(result.data);
+      });
   });
 
   const eliza = new Eliza();
@@ -340,12 +344,6 @@
     </Button>
   </Actions>
 </Dialog>
-
- {#await $newMessage}
-    Waiting for new books...
-  {:then result}
-    New Book: {result}
-  {/await}
 
 <div class="trollbox">
   <div class="trollbox-header">
