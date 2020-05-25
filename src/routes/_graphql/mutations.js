@@ -30,10 +30,11 @@ export const SIGN_IN = gql`
 `;
 
 export const POST_MESSAGE = gql`
-  mutation($user: String!, $text: String!) {
-    postMessage(user: $user, text: $text) {
+  mutation($userID: String!, $username: String!, $text: String!, $avatarURL: String!) {
+    # userID: String! username: String! text: String! type: String! avatarURL: String!
+    postMessage(userID: $userID, username: $username, text: $text, avatarURL: $avatarURL ) {
       id 
-      user 
+      username 
       createdAt
       text
     }

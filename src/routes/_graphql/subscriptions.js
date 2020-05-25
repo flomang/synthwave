@@ -4,7 +4,9 @@ export const MESSAGE_POSTED = gql`
   subscription($user: String!) {
     messagePosted(user: $user) {
       id
-      user
+      username
+      avatarURL
+      type
       text
       createdAt
     }

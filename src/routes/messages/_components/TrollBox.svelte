@@ -18,20 +18,27 @@
 
   const { session } = stores();
 
+  let comments = [];
   onMount(async () => {
-
     wsClient(session)
       .subscribe({
         query: MESSAGE_POSTED,
         variables: { user: user.username }
       })
       .subscribe(result => {
-        console.log(result.data);
+        if (result.data.messagePosted) {
+          const data = result.data.messagePosted;
+          comments = comments.concat({
+            username: data.username,
+            profileImage: data.avatarURL ? data.avatarURL : defaultAvatar,
+            text: data.text,
+            type: "comment"
+          });
+        }
       });
   });
 
   const eliza = new Eliza();
-  let comments = [];
   let scrollableDiv;
   let textInput = "";
   let autoscroll;
@@ -102,36 +109,38 @@
       const text = event.target.value;
       if (!text) return;
 
-      comments = comments.concat({
-        username: user.username,
-        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
-        text: text,
-        type: "comment"
-      });
+      // FOR TEST 
+      // comments = comments.concat({
+      //   username: user.username,
+      //   profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
+      //   text: text,
+      //   type: "comment"
+      // });
 
       mutate(wsClient($session), {
         mutation: POST_MESSAGE,
-        variables: { user: user.username, text: text }
+        variables: {
+          userID: user.id,
+          username: user.username,
+          text: text,
+          avatarURL: user.avatarURL
+        }
       });
-      //subscribe(wsClient(session), {
-      //  query: MESSAGE_POSTED,
-      //  variables: { user: user.username }
-      //});
 
       event.target.value = "";
 
-      setTimeout(() => {
-        const reply = eliza.transform(text);
-        const user = users[Math.floor(Math.random() * users.length)];
-        comments = comments
-          .filter(comment => !comment.placeholder)
-          .concat({
-            username: user.username,
-            text: reply,
-            profileImage: user.profileImage,
-            type: "comment"
-          });
-      }, 500 + Math.random() * 500);
+      //setTimeout(() => {
+      //  const reply = eliza.transform(text);
+      //  const user = users[Math.floor(Math.random() * users.length)];
+      //  comments = comments
+      //    .filter(comment => !comment.placeholder)
+      //    .concat({
+      //      username: user.username,
+      //      text: reply,
+      //      profileImage: user.profileImage,
+      //      type: "comment"
+      //    });
+      //}, 500 + Math.random() * 500);
     }
   };
 
