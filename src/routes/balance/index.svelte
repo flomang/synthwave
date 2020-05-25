@@ -7,7 +7,7 @@
       return this.redirect(302, "signin");
     }
 
-    return { user };
+    return;
   }
 </script>
 
@@ -18,7 +18,6 @@
   import Checkbox from "@smui/checkbox";
   import { goto } from "@sapper/app";
 
-  export const user = "";
   let statement = [
     {
       date: "2020-01-01",

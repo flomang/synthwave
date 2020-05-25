@@ -7,7 +7,7 @@
       return this.redirect(302, "signin");
     }
 
-    return { user };
+    return;
   }
 </script>
 
@@ -18,7 +18,6 @@
   import { post } from "utils.js";
 
   const { session } = stores();
-  export const user = "";
 
   async function logout() {
     await post(`auth/logout`);
