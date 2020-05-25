@@ -1,12 +1,31 @@
 <script>
+  import { stores } from "@sapper/app";
   import { beforeUpdate, afterUpdate } from "svelte";
   import HelperText from "@smui/textfield/helper-text/index";
   import Textfield, { Input, Textarea } from "@smui/textfield";
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import Eliza from "elizabot";
+  import { mutate, subscribe } from "svelte-apollo";
+  import { POST_MESSAGE } from "../../_graphql/mutations.js";
+  import { MESSAGE_POSTED } from "../../_graphql/subscriptions.js";
+  import { wsClient } from "../../_graphql/client.js";
+  import { onMount } from "svelte";
 
   export let handleAddBet;
+  export let user;
+
+  let newMessage;
+  const { session } = stores();
+  onMount(async () => {
+    newMessage = await subscribe(wsClient(session), {
+      query: MESSAGE_POSTED,
+      variables: { user: user.username }
+    });
+    console.log("hello");
+    console.log(newMessage);
+  });
+
   const eliza = new Eliza();
   let comments = [];
   let scrollableDiv;
@@ -19,7 +38,6 @@
   let disabled = true;
   let scrollWidth = 0;
   let defaultAvatar = "aces.png";
-  export let user;
 
   let users = [
     { username: "eliza", profileImage: "great-success.png" },
@@ -54,7 +72,7 @@
       //  console.log("submit the bet");
       comments = comments.concat({
         username: user.username,
-        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
+        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
         description: description,
         amount: amount,
         timer: expiration,
@@ -63,7 +81,7 @@
 
       let newBet = {
         username: user.username,
-        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
+        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
         description: description,
         amount: amount,
         timer: expiration
@@ -82,10 +100,19 @@
 
       comments = comments.concat({
         username: user.username,
-        profileImage: user.avatarURL? user.avatarURL : defaultAvatar,
+        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
         text: text,
         type: "comment"
       });
+
+      mutate(wsClient($session), {
+        mutation: POST_MESSAGE,
+        variables: { user: user.username, text: text }
+      });
+      //subscribe(wsClient(session), {
+      //  query: MESSAGE_POSTED,
+      //  variables: { user: user.username }
+      //});
 
       event.target.value = "";
 
@@ -314,6 +341,12 @@
   </Actions>
 </Dialog>
 
+ {#await $newMessage}
+    Waiting for new books...
+  {:then result}
+    New Book: {result}
+  {/await}
+
 <div class="trollbox">
   <div class="trollbox-header">
     <div class="trollbox-header-title">Troll Feast</div>
@@ -339,9 +372,13 @@
       </div>
     {/each}
   </div>
+
   <div class="trollbox-input">
     <div>
-      <img class="trollbox-input-profile" alt="" src={user.avatarURL? user.avatarURL : defaultAvatar} />
+      <img
+        class="trollbox-input-profile"
+        alt=""
+        src={user.avatarURL ? user.avatarURL : defaultAvatar} />
     </div>
     <div class="trollbox-input-container">
       <span class="comment-username">{user.username}</span>

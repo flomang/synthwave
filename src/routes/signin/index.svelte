@@ -9,7 +9,7 @@
   import Button, { Label } from "@smui/button";
   import { post } from "utils.js";
   import { mutate } from "svelte-apollo";
-  import { SIGN_IN } from "../_graphql/queries.js";
+  import { SIGN_IN } from "../_graphql/mutations.js";
   import { wsClient } from "../_graphql/client.js";
 
   const { session } = stores();
@@ -31,7 +31,7 @@
 
   async function submit(event) {
     try {
-      let response = await mutate(wsClient(), {
+      let response = await mutate(wsClient($session), {
         mutation: SIGN_IN,
         variables: { email: email, password: password, remember: remember }
       });

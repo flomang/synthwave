@@ -4,7 +4,7 @@
   import Textfield from "@smui/textfield";
   import Button, { Label } from "@smui/button";
   import { mutate } from "svelte-apollo";
-  import { SIGN_UP } from "../_graphql/queries.js";
+  import { SIGN_UP } from "../_graphql/mutations.js";
   import { wsClient } from "../_graphql/client.js";
 
   const { session } = stores();
@@ -28,7 +28,7 @@
 
   async function submit(event) {
     try {
-      let response = await mutate(wsClient(), {
+      let response = await mutate(wsClient($session), {
         mutation: SIGN_UP,
         variables: { username: username, email: email, password: password }
       });
