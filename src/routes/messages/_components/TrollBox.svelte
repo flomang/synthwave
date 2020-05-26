@@ -9,6 +9,7 @@
   import { mutate, subscribe } from "svelte-apollo";
   import { POST_MESSAGE } from "../../_graphql/mutations.js";
   import { MESSAGE_POSTED } from "../../_graphql/subscriptions.js";
+  import { MESSAGES } from "../../_graphql/queries.js";
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
   import { gql } from "apollo-boost";
@@ -20,6 +21,21 @@
 
   let comments = [];
   onMount(async () => {
+    let response = await wsClient(session).query({ query: MESSAGES });
+
+    if (response.data && response.data.messages) {
+      const messages = response.data.messages.reverse();
+      
+      messages.forEach(msg => {
+         comments = comments.concat({
+            username: msg.username,
+            profileImage: msg.avatarURL ? msg.avatarURL : defaultAvatar,
+            text: msg.text,
+            type: "comment"
+          });
+      });
+    }
+
     wsClient(session)
       .subscribe({
         query: MESSAGE_POSTED,
@@ -50,33 +66,33 @@
   let scrollWidth = 0;
   let defaultAvatar = "aces.png";
 
-  let users = [
-    { username: "eliza", profileImage: "great-success.png" },
-    { username: "Troll King", profileImage: "troll-king.png" },
-    { username: "jack", profileImage: "joker-cartoon.png" },
-    { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
-    { username: "Satoshi Bum", profileImage: "btc.png" },
-    { username: "porky pig", profileImage: "porky.png" },
-    { username: "pillboi", profileImage: "pill.png" },
-    { username: "doge bot", profileImage: "doge.png" },
-    { username: "joker", profileImage: "joker-card.png" },
-    { username: "luv child", profileImage: "hearts.png" },
-    { username: "cannibis420", profileImage: "cannabis-512.png" }
-  ];
+  // let users = [
+  //   { username: "eliza", profileImage: "great-success.png" },
+  //   { username: "Troll King", profileImage: "troll-king.png" },
+  //   { username: "jack", profileImage: "joker-cartoon.png" },
+  //   { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
+  //   { username: "Satoshi Bum", profileImage: "btc.png" },
+  //   { username: "porky pig", profileImage: "porky.png" },
+  //   { username: "pillboi", profileImage: "pill.png" },
+  //   { username: "doge bot", profileImage: "doge.png" },
+  //   { username: "joker", profileImage: "joker-card.png" },
+  //   { username: "luv child", profileImage: "hearts.png" },
+  //   { username: "cannibis420", profileImage: "cannabis-512.png" }
+  // ];
 
   // add random comments
-  let seed = eliza.getInitial();
-  for (let i = 0; i < 10; ++i) {
-    const user = users[Math.floor(Math.random() * users.length)];
-    comments = comments
-      .filter(comment => !comment.placeholder)
-      .concat({
-        username: user.username,
-        text: eliza.transform(seed),
-        profileImage: user.profileImage,
-        type: "comment-text"
-      });
-  }
+  //let seed = eliza.getInitial();
+  //for (let i = 0; i < 10; ++i) {
+  //  const user = users[Math.floor(Math.random() * users.length)];
+  //  comments = comments
+  //    .filter(comment => !comment.placeholder)
+  //    .concat({
+  //      username: user.username,
+  //      text: eliza.transform(seed),
+  //      profileImage: user.profileImage,
+  //      type: "comment-text"
+  //    });
+  //}
 
   let closeHandler = event => {
     if (event.detail.action == "submit") {
@@ -109,7 +125,7 @@
       const text = event.target.value;
       if (!text) return;
 
-      // FOR TEST 
+      // FOR TEST
       // comments = comments.concat({
       //   username: user.username,
       //   profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,

@@ -1,14 +1,14 @@
 <script context="module">
   // https://sapper.svelte.dev/docs/#this_redirect
-	export async function preload(page, session) {
-		const { user } = session;
+  export async function preload(page, session) {
+    const { user } = session;
 
-		if (!user) {
-			return this.redirect(302, 'signin');
-		}
+    if (!user) {
+      return this.redirect(302, "signin");
+    }
 
-		return { user };
-	}
+    return { user };
+  }
 </script>
 
 <script>
@@ -20,6 +20,7 @@
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
   import TrollBox from "./_components/TrollBox.svelte";
+
 
   export let user;
 
@@ -307,7 +308,9 @@
         <div class="bet-slip">
           <span class="comment-bet-username">{bet.username}</span>
           <span class="comment-bet-amount">Bet: {bet.amount} sats</span>
-          <div bp="margin-top--lg" class="comment-bet-description">{bet.description}</div>
+          <div bp="margin-top--lg" class="comment-bet-description">
+            {bet.description}
+          </div>
         </div>
       </div>
     {/if}
@@ -377,5 +380,5 @@
       {/each}
     </div>
   </div>
-  <TrollBox handleAddBet={addBet} user={user}/>
+  <TrollBox handleAddBet={addBet} {user} />
 </div>
