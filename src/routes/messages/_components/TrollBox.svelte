@@ -25,14 +25,14 @@
 
     if (response.data && response.data.messages) {
       const messages = response.data.messages.reverse();
-      
+
       messages.forEach(msg => {
-         comments = comments.concat({
-            username: msg.username,
-            profileImage: msg.avatarURL ? msg.avatarURL : defaultAvatar,
-            text: msg.text,
-            type: "comment"
-          });
+        comments = comments.concat({
+          username: msg.username,
+          profileImage: msg.avatarURL ? msg.avatarURL : defaultAvatar,
+          text: msg.text,
+          type: "comment"
+        });
       });
     }
 
@@ -132,14 +132,15 @@
       //   text: text,
       //   type: "comment"
       // });
-
       mutate(wsClient($session), {
         mutation: POST_MESSAGE,
         variables: {
-          userID: user.id,
-          username: user.username,
-          text: text,
-          avatarURL: user.avatarURL
+          input: {
+            userID: user.id,
+            username: user.username,
+            text: text,
+            avatarURL: user.avatarURL,
+          }
         }
       });
 
