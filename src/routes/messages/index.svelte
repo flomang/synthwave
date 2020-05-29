@@ -20,7 +20,25 @@
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
   import TrollBox from "./_components/TrollBox.svelte";
+  import Hls from "hls.js";
+  import { onMount } from "svelte";
 
+  onMount(async () => {
+    var video = document.getElementById("video");
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource("http://localhost:8080/media/1/stream/");
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = "http://localhost:8080/media/1/stream/";
+      video.addEventListener("loadedmetadata", function() {
+        video.play();
+      });
+    }
+  });
 
   export let user;
 
@@ -329,7 +347,7 @@
   <div class="channel-content">
     <div class="video-stream">
       <video
-        src="example.mp4"
+        id="video"
         on:mousemove={handleMousemove}
         on:mousedown={handleMousedown}
         bind:currentTime={time}
