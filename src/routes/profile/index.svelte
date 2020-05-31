@@ -16,10 +16,17 @@
   import Button from "@smui/button";
   import { goto, stores } from "@sapper/app";
   import { post } from "utils.js";
+  import { mutate } from "svelte-apollo";
+  import { SIGN_OUT } from "../_graphql/mutations.js";
+  import { wsClient } from "../_graphql/client.js"
 
   const { session } = stores();
 
   async function logout() {
+    mutate(wsClient($session), {
+      mutation: SIGN_OUT,
+      variables: { selector: $session.token.refresh }
+    });
     await post(`auth/logout`);
     $session.user = null;
     goto("/");

@@ -29,6 +29,12 @@ export const SIGN_IN = gql`
   }
 `;
 
+export const SIGN_OUT = gql`
+  mutation($selector: String!) {
+    signout(selector: $selector) 
+  }
+`;
+
 export const POST_MESSAGE = gql`
   mutation($input: MessageInput) {
     postMessage(input: $input) {
