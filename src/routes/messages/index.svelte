@@ -158,10 +158,10 @@
   .bets {
     width: 100%;
     text-align: left;
-    background-color: #fff;
+    background-color: rgb(9, 9, 9);
     border-style: solid;
     border-width: 1px;
-    border-color: #e3e3e3;
+    border-color: rgb(15, 15, 15);
     position: relative;
   }
 
@@ -169,9 +169,10 @@
     display: flex;
     border-style: solid;
     border-width: 1px;
-    border-color: #e3e3e3;
+    border-color: rgb(15, 15, 15);
     width: 100%;
     position: relative;
+    color: #fff;
   }
   .bet-take-container {
     display: flex;
@@ -197,7 +198,7 @@
   }
 
   .comment-bet-username {
-    color: #081e3e;
+    color: rgb(255, 237, 54);
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -205,7 +206,7 @@
   .comment-bet-amount {
     float: right;
     padding-right: 0.3em;
-    color: #081e3e;
+    color: rgb(255, 237, 54);
     font-weight: bold;
   }
 
@@ -219,7 +220,7 @@
 
   .comment-bet-description {
     padding-left: 1em;
-    color: #000;
+    color: #fff;
   }
 
   .dice-img {
@@ -380,7 +381,7 @@
                 <Button
                   color="primary"
                   on:click={() => openConfirm(bet)}
-                  variant="outlined">
+                  variant="raised">
                   <Label>Take it!</Label>
                 </Button>
               {:else}

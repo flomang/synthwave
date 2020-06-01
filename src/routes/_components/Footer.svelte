@@ -74,7 +74,7 @@
   footer {
     color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: #081e3e;
+    background-color: rgb(9, 9, 9);
     height: 46px;
     line-height: 46px;
     font-size: 13px;
@@ -85,19 +85,20 @@
   }
   .quotes {
     font-size: 9px;
+    color: #fff;
   }
   .brand {
     text-align: center;
     font-size: 80px;
-    color: #081e3e;
+    color: rgb(255, 237, 54);
   }
-
+  .content {
+    background-color: rgb(15, 15, 15);
+  }
 </style>
 
-<div bp="grid 1">
-  <div bp="6" class="brand">
-    joos
-  </div>
+<div bp="grid 1" class="content">
+  <div bp="6" class="brand">joos</div>
   <div bp="3 padding-top--lg padding-bottom--lg">
     <div class="quotes">
       {#if visible}

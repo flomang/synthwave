@@ -18,7 +18,7 @@
   import { post } from "utils.js";
   import { mutate } from "svelte-apollo";
   import { SIGN_OUT } from "../_graphql/mutations.js";
-  import { wsClient } from "../_graphql/client.js"
+  import { wsClient } from "../_graphql/client.js";
 
   const { session } = stores();
 
@@ -40,7 +40,8 @@
   }
 
   .content {
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
   }
 </style>
 

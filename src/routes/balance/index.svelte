@@ -52,7 +52,8 @@
 
 <style>
   .content {
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
     text-align: center;
   }
 
@@ -65,7 +66,7 @@
   <title>Activity</title>
 </svelte:head>
 
-<div class="content" bp="padding">
+<div class="content">
   <h3>activity</h3>
   <div class="left" bp="full-width hide@sm hide@md show@lg">
     <DataTable>

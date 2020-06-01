@@ -10,15 +10,13 @@
 <style>
   nav {
     color: #fff;
-    background-color: #081e3e;
+    background-color: rgb(9, 9, 9);
     height: 46px;
     padding-left: 20px;
   }
 
   div {
-    color: #fff;
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background-color: #081e3e;
     height: 46px;
     line-height: 46px;
     font-size: 13px;

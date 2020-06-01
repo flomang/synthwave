@@ -69,7 +69,8 @@
 
 <style>
   .content {
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
     text-align: center;
   }
 
@@ -120,11 +121,11 @@
                 <Button
                   color="primary"
                   on:click={() => alert('logout')}
-                  variant="outlined">
+                  variant="raised">
                   <Label>roll dice</Label>
                 </Button>
                 <Button
-                  color="secondary"
+                  color="primary"
                   on:click={() => alert('logout')}
                   variant="outlined">
                   <Label>bounce</Label>
