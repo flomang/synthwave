@@ -46,8 +46,11 @@
         $session.user = response.data.signin.user;
         $session.token = response.data.signin.token;
       }
-      goto("/messages");
 
+      disableSubmit = true;
+      setTimeout(function() {
+        goto("/messages");
+      }, 2000);
     } catch (error) {
       const msg = error.message;
 
@@ -73,7 +76,8 @@
 <style>
   .content {
     width: 300px;
-    background-color: #fff;
+    color: #fff;
+    background-color: rgb(22, 22, 22);
     text-align: center;
     margin: 0 auto;
   }
@@ -89,10 +93,10 @@
     position: absolute;
     width: 30px;
     height: 30px;
-    border: 4px solid #081e3e;
+    border: 2px solid #fff;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #081e3e transparent transparent transparent;
+    border-color: #fff transparent transparent transparent;
   }
   .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;
@@ -162,7 +166,8 @@
       <Button
         action="submit"
         disabled={!email || !password || passwordInvalid || emailInvalid}
-        on:click={submit}>
+        on:click={submit}
+        variant="raised">
         <Label>sign in</Label>
       </Button>
     </div>

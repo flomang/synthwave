@@ -65,7 +65,8 @@
 <style>
   .content {
     width: 300px;
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
     text-align: center;
     margin: 0 auto;
   }
@@ -124,7 +125,8 @@
   <Button
     action="submit"
     disabled={!username || !email || !password}
-    on:click={submit}>
+    on:click={submit}
+    variant="raised">
     <Label>sign up</Label>
   </Button>
 </div>
