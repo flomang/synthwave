@@ -1,16 +1,3 @@
-<script context="module">
-  // https://sapper.svelte.dev/docs/#this_redirect
-  export async function preload(page, session) {
-    const { user } = session;
-
-    if (!user) {
-      return this.redirect(302, "signin");
-    }
-
-    return { user };
-  }
-</script>
-
 <script>
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
@@ -19,26 +6,7 @@
   import orderBy from "lodash/orderBy";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
-  import TrollBox from "./_components/TrollBox.svelte";
   import Hls from "hls.js";
-  import { onMount } from "svelte";
-
-  onMount(async () => {
-    var video = document.getElementById("video");
-    if (Hls.isSupported()) {
-      var hls = new Hls();
-      hls.loadSource("http://localhost:8080/media/1/stream/");
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function() {
-        video.play();
-      });
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = "http://localhost:8080/media/1/stream/";
-      video.addEventListener("loadedmetadata", function() {
-        video.play();
-      });
-    }
-  });
 
   export let user;
 
@@ -99,56 +67,6 @@
     bets = bets.concat(bet);
     nextID++;
   };
-
-  let time = 0;
-  let duration;
-  let paused = true;
-
-  let showControls = true;
-  let showControlsTimeout;
-
-  function handleMousemove(e) {
-    // Make the controls visible, but fade out after
-    // 2.5 seconds of inactivity
-    clearTimeout(showControlsTimeout);
-    showControlsTimeout = setTimeout(() => (showControls = false), 2500);
-    showControls = true;
-
-    if (!(e.buttons & 1)) return; // mouse not down
-    if (!duration) return; // video not loaded yet
-
-    const { left, right } = this.getBoundingClientRect();
-    time = (duration * (e.clientX - left)) / (right - left);
-  }
-
-  function handleMousedown(e) {
-    // we can't rely on the built-in click event, because it fires
-    // after a drag — we have to listen for clicks ourselves
-
-    function handleMouseup() {
-      if (paused) e.target.play();
-      else e.target.pause();
-      cancel();
-    }
-
-    function cancel() {
-      e.target.removeEventListener("mouseup", handleMouseup);
-    }
-
-    e.target.addEventListener("mouseup", handleMouseup);
-
-    setTimeout(cancel, 200);
-  }
-
-  function format(seconds) {
-    if (isNaN(seconds)) return "...";
-
-    const minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds % 60);
-    if (seconds < 10) seconds = "0" + seconds;
-
-    return `${minutes}:${seconds}`;
-  }
 </script>
 
 <style>

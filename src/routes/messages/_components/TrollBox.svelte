@@ -94,6 +94,25 @@
   //    });
   //}
 
+  let openConfirm = b => {
+    bet = b;
+    dialog.open();
+  };
+
+  let confirm = () => {
+    remove(bets, function(b) {
+      return b.id == bet.id;
+    });
+    bet = null;
+  };
+
+  let removeBet = bet => {
+    remove(bets, function(b) {
+      return b.id == bet.id;
+    });
+    bets = bets;
+  };
+
   let closeHandler = event => {
     if (event.detail.action == "submit") {
       //  console.log("submit the bet");
@@ -144,7 +163,9 @@
         }
       });
 
+      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight)
       event.target.value = "";
+      textInput = "";
 
       //setTimeout(() => {
       //  const reply = eliza.transform(text);
@@ -180,21 +201,35 @@
 
   beforeUpdate(() => {
     autoscroll =
+      scroll || 
       scrollableDiv &&
       scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
         scrollableDiv.scrollHeight - 10;
   });
 
   afterUpdate(() => {
-    if (autoscroll) scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
+    if (autoscroll && scrollableDiv) {
+      scroll = false;
+      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
+    }
   });
+
+  let selected = "trollbox";
+  let scroll = false;
+  let handleSelection = (selection) => {
+    selected = selection;
+
+    if (selected == "trollbox") {
+      scroll = true; 
+    }
+  }
 </script>
 
 <style>
   .trollbox {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 100%;
     text-align: left;
     height: 700px;
     background-color: rgb(9, 9, 9);
@@ -320,6 +355,10 @@
     top: 9px;
     margin-right: 0.3em;
   }
+
+  .selected {
+    color: rgb(255, 237, 54);
+  }
 </style>
 
 <Dialog
@@ -375,56 +414,77 @@
 
 <div class="trollbox">
   <div class="trollbox-header">
-    <div class="trollbox-header-title">Troll Feast</div>
+    <span
+      class="trollbox-header-title {selected == "trollbox" ? "selected": ""}"
+      on:click={() => handleSelection("trollbox")}>
+      trollbox
+    </span>
+    <span
+      class="trollbox-header-title {selected == "bets" ? "selected" : ""}"
+      on:click={() => handleSelection("bets")}>
+      bets
+    </span>
   </div>
-  <div class="trollbox-scrollable" bind:this={scrollableDiv}>
-    {#each comments as comment}
-      <div class="comment-container">
-        <div>
-          <img class="comment-avatar" alt="" src={comment.profileImage} />
+  <div>
+    {#if selected == "bets"}
+      <div class="bets" />
+    {:else if selected == "trollbox"}
+      <div>
+        <div class="trollbox-scrollable" bind:this={scrollableDiv}>
+          {#each comments as comment}
+            <div class="comment-container">
+              <div>
+                <img class="comment-avatar" alt="" src={comment.profileImage} />
+              </div>
+              {#if comment.type == 'bet'}
+                <div class="comment-bet">
+                  <span class="comment-bet-username">{comment.username}</span>
+                  <span class="comment-bet-amount">
+                    Bet: {comment.amount} sats
+                  </span>
+                  <div class="comment-bet-description">
+                    {comment.description}
+                  </div>
+                </div>
+              {:else}
+                <div class="comment-text">
+                  <span class="comment-username">{comment.username}</span>
+                  <span>{comment.text}</span>
+                </div>
+              {/if}
+            </div>
+          {/each}
         </div>
-        {#if comment.type == 'bet'}
-          <div class="comment-bet">
-            <span class="comment-bet-username">{comment.username}</span>
-            <span class="comment-bet-amount">Bet: {comment.amount} sats</span>
-            <div class="comment-bet-description">{comment.description}</div>
-          </div>
-        {:else}
-          <div class="comment-text">
-            <span class="comment-username">{comment.username}</span>
-            <span>{comment.text}</span>
-          </div>
-        {/if}
-      </div>
-    {/each}
-  </div>
 
-  <div class="trollbox-input">
-    <div>
-      <img
-        class="trollbox-input-profile"
-        alt=""
-        src={user.avatarURL ? user.avatarURL : defaultAvatar} />
-    </div>
-    <div class="trollbox-input-container">
-      <span class="comment-username">{user.username}</span>
-      <Textfield
-        fullwidth
-        bind:value={textInput}
-        on:keydown={handleKeydown}
-        label="Say something..."
-        input$aria-controls="helper-text-standard-a"
-        input$aria-describedby="helper-text-standard-a" />
-      <img
-        class="trollbox-input-btn"
-        on:click={handleOpenDialog}
-        alt=""
-        src="btc-btn.png" />
-      <img
-        class="trollbox-input-btn"
-        on:click={() => alert('insert emojiis')}
-        alt=""
-        src="emojii-joker.png" />
-    </div>
+        <div class="trollbox-input">
+          <div>
+            <img
+              class="trollbox-input-profile"
+              alt=""
+              src={user.avatarURL ? user.avatarURL : defaultAvatar} />
+          </div>
+          <div class="trollbox-input-container">
+            <span class="comment-username">{user.username}</span>
+            <Textfield
+              fullwidth
+              bind:value={textInput}
+              on:keydown={handleKeydown}
+              label="Say something..."
+              input$aria-controls="helper-text-standard-a"
+              input$aria-describedby="helper-text-standard-a" />
+            <img
+              class="trollbox-input-btn"
+              on:click={handleOpenDialog}
+              alt=""
+              src="btc-btn.png" />
+            <img
+              class="trollbox-input-btn"
+              on:click={() => alert('insert emojiis')}
+              alt=""
+              src="emojii-joker.png" />
+          </div>
+        </div>
+      </div>
+    {/if}
   </div>
 </div>
