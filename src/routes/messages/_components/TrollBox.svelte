@@ -6,6 +6,9 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import Eliza from "elizabot";
+  import { fade } from "svelte/transition";
+  import orderBy from "lodash/orderBy";
+  import sortBy from "lodash/sortBy";
   import { mutate, subscribe } from "svelte-apollo";
   import { POST_MESSAGE } from "../../_graphql/mutations.js";
   import { MESSAGE_POSTED } from "../../_graphql/subscriptions.js";
@@ -54,11 +57,34 @@
       });
   });
 
+  let bets = [
+    {
+      id: 1,
+      username: "dodge bot",
+      profileImage: "doge.png",
+      description: "Mike Tyson is a modern day ass kicker!",
+      amount: 420,
+      timer: "90:00:01"
+    },
+    {
+      id: 2,
+      username: "porky pig",
+      profileImage: "porky.png",
+      description:
+        "I am going to go all the way with this. It will become the largest casino in the world. I AM a warrior. I do not quit. 1000 worthy souls. I will be kind to everyone. I am humble, calm, and in control at all times.",
+      amount: 300000000000,
+      timer: "90:00:01"
+    }
+  ];
+  let confirmBet;
+  let bet = null;
+  let nextID = 3;
+
   const eliza = new Eliza();
   let scrollableDiv;
   let textInput = "";
   let autoscroll;
-  let dialog;
+  let placeBet;
   let description = "";
   let amount = "";
   let expiration = "";
@@ -96,7 +122,7 @@
 
   let openConfirm = b => {
     bet = b;
-    dialog.open();
+    confirmBet.open();
   };
 
   let confirm = () => {
@@ -163,7 +189,7 @@
         }
       });
 
-      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight)
+      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
       event.target.value = "";
       textInput = "";
 
@@ -184,7 +210,7 @@
 
   let handleOpenDialog = event => {
     disabled = true;
-    dialog.open();
+    placeBet.open();
   };
 
   let handleInput = event => {
@@ -200,11 +226,17 @@
   };
 
   beforeUpdate(() => {
+    bets = sortBy(bets, [
+      function(b) {
+        return parseInt(b.amount);
+      }
+    ]).reverse();
+
     autoscroll =
-      scroll || 
-      scrollableDiv &&
-      scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
-        scrollableDiv.scrollHeight - 10;
+      scroll ||
+      (scrollableDiv &&
+        scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
+          scrollableDiv.scrollHeight - 10);
   });
 
   afterUpdate(() => {
@@ -216,13 +248,13 @@
 
   let selected = "trollbox";
   let scroll = false;
-  let handleSelection = (selection) => {
+  let handleSelection = selection => {
     selected = selection;
 
     if (selected == "trollbox") {
-      scroll = true; 
+      scroll = true;
     }
-  }
+  };
 </script>
 
 <style>
@@ -359,10 +391,106 @@
   .selected {
     color: rgb(255, 237, 54);
   }
+
+   .bets {
+    width: 100%;
+    text-align: left;
+    background-color: rgb(9, 9, 9);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(15, 15, 15);
+    position: relative;
+  }
+
+  .bet-container {
+    display: flex;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(15, 15, 15);
+    width: 100%;
+    position: relative;
+    color: #fff;
+  }
+  .bet-take-container {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+
+  .bet-avatar {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: -3px;
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+  }
+
+  .bet-slip {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    width: 100%;
+    position: relative;
+  }
+
+  .comment-bet-username {
+    color: rgb(255, 237, 54);
+    font-weight: bold;
+    padding-right: 0.3em;
+  }
+
+  .comment-bet-amount {
+    float: right;
+    padding-right: 0.3em;
+    color: rgb(255, 237, 54);
+    font-weight: bold;
+  }
+
+  .comment-bet-description {
+    padding-left: 1em;
+    color: #fff;
+  }
 </style>
 
 <Dialog
-  bind:this={dialog}
+  bind:this={confirmBet}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-content">
+  <Title id="dialog-title">
+    <span>
+      <img class="dice-img" alt="" src="dice.png" />
+      Take this bet?
+    </span>
+  </Title>
+  <Content id="dialog-content">
+    {#if bet != null}
+      <div class="bet-take-container" transition:fade>
+        <div>
+          <img class="bet-avatar" alt="" src={bet.profileImage} />
+        </div>
+        <div class="bet-slip">
+          <span class="comment-bet-username">{bet.username}</span>
+          <span class="comment-bet-amount">Bet: {bet.amount} sats</span>
+          <div bp="margin-top--lg" class="comment-bet-description">
+            {bet.description}
+          </div>
+        </div>
+      </div>
+    {/if}
+  </Content>
+  <Actions>
+    <Button>
+      <Label>Cancel</Label>
+    </Button>
+    <Button on:click={confirm} action="submit">
+      <Label>Take it!</Label>
+    </Button>
+  </Actions>
+</Dialog>
+
+<Dialog
+  bind:this={placeBet}
   on:MDCDialog:closed={closeHandler}
   aria-labelledby="dialog-title"
   aria-describedby="dialog-content">
@@ -415,21 +543,51 @@
 <div class="trollbox">
   <div class="trollbox-header">
     <span
-      class="trollbox-header-title {selected == "trollbox" ? "selected": ""}"
-      on:click={() => handleSelection("trollbox")}>
+      class="trollbox-header-title {selected == 'trollbox' ? 'selected' : ''}"
+      on:click={() => handleSelection('trollbox')}>
       trollbox
     </span>
     <span
-      class="trollbox-header-title {selected == "bets" ? "selected" : ""}"
-      on:click={() => handleSelection("bets")}>
+      class="trollbox-header-title {selected == 'bets' ? 'selected' : ''}"
+      on:click={() => handleSelection('bets')}>
       bets
     </span>
   </div>
   <div>
-    {#if selected == "bets"}
-      <div class="bets" />
-    {:else if selected == "trollbox"}
-      <div>
+    {#if selected == 'bets'}
+      <div class="bets" transition:fade>
+        {#each bets as bet (bet.id)}
+          <div class="bet-container" transition:fade>
+            <div>
+              <img class="bet-avatar" alt="" src={bet.profileImage} />
+            </div>
+            <div class="bet-slip">
+              <span class="comment-bet-username">{bet.username}</span>
+              <span class="comment-bet-amount">
+                Bet: {bet.amount} sats
+                {#if bet.username != user.username}
+                  <Button
+                    color="primary"
+                    on:click={() => openConfirm(bet)}
+                    variant="raised">
+                    <Label>Take it!</Label>
+                  </Button>
+                {:else}
+                  <Button
+                    color="secondary"
+                    on:click={() => removeBet(bet)}
+                    variant="outlined">
+                    <Label>Bounce</Label>
+                  </Button>
+                {/if}
+              </span>
+              <div class="comment-bet-description">{bet.description}</div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {:else if selected == 'trollbox'}
+      <div transition:fade>
         <div class="trollbox-scrollable" bind:this={scrollableDiv}>
           {#each comments as comment}
             <div class="comment-container">
