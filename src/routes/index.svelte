@@ -79,7 +79,8 @@
     margin: 1em auto;
   }
   .content {
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
   }
 
   @media (min-width: 480px) {
@@ -95,10 +96,16 @@
 
 <div class="content" bp="padding">
   <div bp="grid 3">
-    <div><h3>Bookie</h3></div>
-    <div><h3>Description</h3></div>
-    <div><h3>Amount</h3></div>
-    <div></div>
+    <div>
+      <h3>Bookie</h3>
+    </div>
+    <div>
+      <h3>Description</h3>
+    </div>
+    <div>
+      <h3>Amount</h3>
+    </div>
+    <div />
     {#each items as item}
       <div>{item.user}</div>
       <div>{item.description}</div>

@@ -38,13 +38,13 @@
   }
 
   .content {
-    background-color: #fff;
+    background-color: rgb(22, 22, 22);
+    color: #fff;
   }
   
   .left {
     text-align: left;
   }
-
 </style>
 
 <svelte:head>
