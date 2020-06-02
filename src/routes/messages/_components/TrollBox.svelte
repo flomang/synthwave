@@ -139,7 +139,7 @@
             userID: user.id,
             username: user.username,
             text: text,
-            avatarURL: user.avatarURL,
+            avatarURL: user.avatarURL
           }
         }
       });
@@ -200,7 +200,7 @@
     background-color: rgb(9, 9, 9);
     border-style: solid;
     border-width: 1px;
-    border-color: rgb(0,0,0);
+    border-color: rgb(0, 0, 0);
     position: relative;
   }
 
@@ -276,7 +276,7 @@
     padding-right: 0.3em;
   }
   .comment-bet-username {
-    color: #081e3e;
+    color: #888;
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -287,7 +287,8 @@
   }
 
   .comment-bet {
-    background-color: rgba(24, 150, 110, 0.05);
+    background-color: rgba(30, 30, 30);
+    color: #fff;
     margin-bottom: 0.5em;
     width: 100%;
     position: relative;
@@ -296,7 +297,7 @@
   .comment-bet-amount {
     float: right;
     padding-right: 0.3em;
-    color: #081e3e;
+    color: rgb(255, 237, 54);
     font-weight: bold;
   }
 
