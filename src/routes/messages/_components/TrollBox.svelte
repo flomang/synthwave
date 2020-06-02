@@ -197,17 +197,17 @@
     width: 50%;
     text-align: left;
     height: 700px;
-    background-color: #f9f9f9;
+    background-color: rgb(9, 9, 9);
     border-style: solid;
     border-width: 1px;
-    border-color: #e3e3e3;
+    border-color: rgb(0,0,0);
     position: relative;
   }
 
   .trollbox-header {
     color: #888;
     font-weight: bold;
-    background-color: #fff;
+    background-color: rgb(0, 0, 0);
     height: 50px;
     line-height: 50px;
   }
@@ -228,7 +228,7 @@
   }
 
   .trollbox-input {
-    background-color: #fff;
+    background-color: rgb(0, 0, 0);
     height: 200px;
     position: absolute;
     bottom: 0;
@@ -271,7 +271,7 @@
   }
 
   .comment-username {
-    color: rgb(8, 30, 62, 0.7);
+    color: #888;
     font-weight: bold;
     padding-right: 0.3em;
   }
@@ -283,6 +283,7 @@
 
   .comment-text {
     margin-bottom: 1em;
+    color: #fff;
   }
 
   .comment-bet {
