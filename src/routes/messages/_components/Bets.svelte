@@ -3,10 +3,8 @@
   import Button, { Label } from "@smui/button";
   import { beforeUpdate, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
-  import orderBy from "lodash/orderBy";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
-  import Hls from "hls.js";
 
   export let user;
 
@@ -35,7 +33,6 @@
 
   // add random comments
   beforeUpdate(() => {
-    //bets = orderBy(bets, ['amount'], ['desc']);
     bets = sortBy(bets, [
       function(b) {
         return parseInt(b.amount);

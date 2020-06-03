@@ -5,7 +5,7 @@
   import Textfield, { Input, Textarea } from "@smui/textfield";
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
-  import Eliza from "elizabot";
+  //import Eliza from "elizabot";
   import { fade } from "svelte/transition";
   import orderBy from "lodash/orderBy";
   import sortBy from "lodash/sortBy";
@@ -15,7 +15,6 @@
   import { MESSAGES } from "../../_graphql/queries.js";
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
-  import { gql } from "apollo-boost";
 
   export let user;
 
@@ -61,7 +60,7 @@
   let bet = null;
   let nextID = 3;
 
-  const eliza = new Eliza();
+  //const eliza = new Eliza();
   let scrollableDiv;
   let textInput = "";
   let autoscroll;
