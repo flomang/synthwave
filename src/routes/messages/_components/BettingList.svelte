@@ -70,9 +70,14 @@
 </script>
 
 <style>
-  .content {
-    display: flex;
+  .dice-img {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    top: 9px;
+    margin-right: 0.3em;
   }
+
   .bets {
     width: 100%;
     text-align: left;
@@ -128,102 +133,14 @@
     font-weight: bold;
   }
 
-  .dice-img-bet-slip {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: 9px;
-    margin-right: 0.3em;
-  }
-
   .comment-bet-description {
     padding-left: 1em;
     color: #fff;
   }
-
-  .dice-img {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: 9px;
-    margin-right: 0.3em;
-  }
-
-  .bet-username {
-    color: #888;
-    font-weight: bold;
-    padding-right: 0.3em;
-  }
-
-  .confirm-bet-avatar {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: -10px;
-    margin-left: 0.5em;
-    margin-top: 0.5em;
-    margin-right: 0.5em;
-  }
-
-  .video-stream {
-    position: relative;
-  }
-
-  .controls {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    transition: opacity 1s;
-  }
-
-  .info {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .controls .info span {
-    padding: 0.2em 0.5em;
-    color: white;
-    text-shadow: 0 0 8px black;
-    font-size: 1.4em;
-    opacity: 0.7;
-  }
-
-  .time {
-    width: 3em;
-  }
-
-  .time:last-child {
-    text-align: right;
-  }
-
-  progress {
-    display: block;
-    width: 100%;
-    height: 10px;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  progress::-webkit-progress-bar {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-
-  progress::-webkit-progress-value {
-    background-color: rgba(255, 255, 255, 0.6);
-  }
-
-  video {
-    width: 100%;
-  }
-  .channel-content {
-    width: 100%;
-  }
 </style>
 
 <svelte:head>
-  <title>trollfeast</title>
+  <title>bets</title>
 </svelte:head>
 
 <Dialog
@@ -262,29 +179,34 @@
   </Actions>
 </Dialog>
 
-<div class="content">
-  <div class="channel-content">
-    <div class="video-stream">
-      <video
-        id="video"
-        on:mousemove={handleMousemove}
-        on:mousedown={handleMousedown}
-        bind:currentTime={time}
-        bind:duration
-        bind:paused />
-
-      <div class="controls" style="opacity: {duration && showControls ? 1 : 0}">
-        <progress value={time / duration || 0} />
-
-        <div class="info">
-          <span class="time">{format(time)}</span>
-          <span>
-            click anywhere to {paused ? 'play' : 'pause'} / drag to seek
-          </span>
-          <span class="time">{format(duration)}</span>
-        </div>
+<div class="bets" transition:fade>
+  {#each bets as bet (bet.id)}
+    <div class="bet-container" transition:fade>
+      <div>
+        <img class="bet-avatar" alt="" src={bet.profileImage} />
+      </div>
+      <div class="bet-slip">
+        <span class="comment-bet-username">{bet.username}</span>
+        <span class="comment-bet-amount">
+          Bet: {bet.amount} sats
+          {#if bet.username != user.username}
+            <Button
+              color="primary"
+              on:click={() => openConfirm(bet)}
+              variant="raised">
+              <Label>Take it!</Label>
+            </Button>
+          {:else}
+            <Button
+              color="secondary"
+              on:click={() => removeBet(bet)}
+              variant="outlined">
+              <Label>Bounce</Label>
+            </Button>
+          {/if}
+        </span>
+        <div class="comment-bet-description">{bet.description}</div>
       </div>
     </div>
-    <TrollBox handleAddBet={addBet} {user} />
-  </div>
+  {/each}
 </div>

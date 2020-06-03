@@ -16,6 +16,7 @@
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
   import { gql } from "apollo-boost";
+  import BettingList from "./BettingList.svelte";
 
   export let handleAddBet;
   export let user;
@@ -57,26 +58,6 @@
       });
   });
 
-  let bets = [
-    {
-      id: 1,
-      username: "dodge bot",
-      profileImage: "doge.png",
-      description: "Mike Tyson is a modern day ass kicker!",
-      amount: 420,
-      timer: "90:00:01"
-    },
-    {
-      id: 2,
-      username: "porky pig",
-      profileImage: "porky.png",
-      description:
-        "I am going to go all the way with this. It will become the largest casino in the world. I AM a warrior. I do not quit. 1000 worthy souls. I will be kind to everyone. I am humble, calm, and in control at all times.",
-      amount: 300000000000,
-      timer: "90:00:01"
-    }
-  ];
-  let confirmBet;
   let bet = null;
   let nextID = 3;
 
@@ -226,12 +207,6 @@
   };
 
   beforeUpdate(() => {
-    bets = sortBy(bets, [
-      function(b) {
-        return parseInt(b.amount);
-      }
-    ]).reverse();
-
     autoscroll =
       scroll ||
       (scrollableDiv &&
@@ -392,7 +367,7 @@
     color: rgb(255, 237, 54);
   }
 
-   .bets {
+  .bets {
     width: 100%;
     text-align: left;
     background-color: rgb(9, 9, 9);
@@ -452,42 +427,6 @@
     color: #fff;
   }
 </style>
-
-<Dialog
-  bind:this={confirmBet}
-  aria-labelledby="dialog-title"
-  aria-describedby="dialog-content">
-  <Title id="dialog-title">
-    <span>
-      <img class="dice-img" alt="" src="dice.png" />
-      Take this bet?
-    </span>
-  </Title>
-  <Content id="dialog-content">
-    {#if bet != null}
-      <div class="bet-take-container" transition:fade>
-        <div>
-          <img class="bet-avatar" alt="" src={bet.profileImage} />
-        </div>
-        <div class="bet-slip">
-          <span class="comment-bet-username">{bet.username}</span>
-          <span class="comment-bet-amount">Bet: {bet.amount} sats</span>
-          <div bp="margin-top--lg" class="comment-bet-description">
-            {bet.description}
-          </div>
-        </div>
-      </div>
-    {/if}
-  </Content>
-  <Actions>
-    <Button>
-      <Label>Cancel</Label>
-    </Button>
-    <Button on:click={confirm} action="submit">
-      <Label>Take it!</Label>
-    </Button>
-  </Actions>
-</Dialog>
 
 <Dialog
   bind:this={placeBet}
@@ -555,37 +494,7 @@
   </div>
   <div>
     {#if selected == 'bets'}
-      <div class="bets" transition:fade>
-        {#each bets as bet (bet.id)}
-          <div class="bet-container" transition:fade>
-            <div>
-              <img class="bet-avatar" alt="" src={bet.profileImage} />
-            </div>
-            <div class="bet-slip">
-              <span class="comment-bet-username">{bet.username}</span>
-              <span class="comment-bet-amount">
-                Bet: {bet.amount} sats
-                {#if bet.username != user.username}
-                  <Button
-                    color="primary"
-                    on:click={() => openConfirm(bet)}
-                    variant="raised">
-                    <Label>Take it!</Label>
-                  </Button>
-                {:else}
-                  <Button
-                    color="secondary"
-                    on:click={() => removeBet(bet)}
-                    variant="outlined">
-                    <Label>Bounce</Label>
-                  </Button>
-                {/if}
-              </span>
-              <div class="comment-bet-description">{bet.description}</div>
-            </div>
-          </div>
-        {/each}
-      </div>
+      <BettingList {user}/>
     {:else if selected == 'trollbox'}
       <div transition:fade>
         <div class="trollbox-scrollable" bind:this={scrollableDiv}>
