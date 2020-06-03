@@ -396,6 +396,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>trolling</title>
+</svelte:head>
+
 <Dialog
   bind:this={placeBet}
   on:MDCDialog:closed={closeHandler}
