@@ -1,5 +1,5 @@
 <script>
-  import BettingList from "./BettingList.svelte";
+  import Bets from "./Bets.svelte";
   import Chat from "./Chat.svelte";
 
   export let user;
@@ -62,7 +62,7 @@
   </div>
   <div>
     {#if selected == 'bets'}
-      <BettingList {user} />
+      <Bets {user} />
     {:else if selected == 'trollbox'}
       <Chat {user} />
     {/if}

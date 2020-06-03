@@ -19,7 +19,7 @@
   import orderBy from "lodash/orderBy";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
-  import TrollBox from "./_components/TrollBox.svelte";
+  import Tabs from "./_components/Tabs.svelte";
   import Hls from "hls.js";
   import { onMount } from "svelte";
 
@@ -367,6 +367,6 @@
         </div>
       </div>
     </div>
-    <TrollBox handleAddBet={addBet} {user} />
+    <Tabs {user} />
   </div>
 </div>

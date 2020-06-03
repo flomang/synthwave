@@ -16,9 +16,7 @@
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
   import { gql } from "apollo-boost";
-  import BettingList from "./BettingList.svelte";
 
-  export let handleAddBet;
   export let user;
 
   const { session } = stores();
