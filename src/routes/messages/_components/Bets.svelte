@@ -11,9 +11,12 @@
   export let user;
   let scrollableDiv;
   let disabled = true;
-  let placeBet;
+  let createBetDialog;
+  let takeBetDialog;
   let description = "";
   let amount = "";
+  let bet = null;
+  let nextID = 3;
 
   let bets = [
     {
@@ -34,43 +37,15 @@
       timer: "90:00:01"
     }
   ];
-  let dialog;
-  let bet = null;
-  let nextID = 3;
 
-  // add random comments
   beforeUpdate(() => {
+    // sort the bets by desc amount
     bets = sortBy(bets, [
       function(b) {
         return parseInt(b.amount);
       }
     ]).reverse();
   });
-
-  let openConfirm = b => {
-    bet = b;
-    dialog.open();
-  };
-
-  let confirm = () => {
-    remove(bets, function(b) {
-      return b.id == bet.id;
-    });
-    bet = null;
-  };
-
-  let removeBet = bet => {
-    remove(bets, function(b) {
-      return b.id == bet.id;
-    });
-    bets = bets;
-  };
-
-  let addBet = bet => {
-    bet.id = nextID;
-    bets = bets.concat(bet);
-    nextID++;
-  };
 
   let handleInput = event => {
     if (isNaN(amount) || description == "") {
@@ -84,27 +59,48 @@
     }
   };
 
-  let closeHandler = event => {
+  let handleOpenCreate = event => {
+    disabled = true;
+    createBetDialog.open();
+  };
+
+  let handleCloseCreate = event => {
     if (event.detail.action == "submit") {
       console.log("submit the bet");
 
       let newBet = {
+        id: nextID,
         username: user.username,
         profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
         description: description,
-        amount: amount,
+        amount: amount
         //timer: expiration
       };
-      addBet(newBet);
+      bets = bets.concat(newBet);
+      nextID++;
     }
 
     amount = NaN;
     description = "";
   };
 
-  let handleOpenDialog = event => {
-    disabled = true;
-    placeBet.open();
+  let handleOpenBet = wager => {
+    bet = wager;
+    takeBetDialog.open();
+  };
+
+  let handleTakeBet = () => {
+    remove(bets, function(b) {
+      return b.id == bet.id;
+    });
+    bet = null;
+  };
+
+  let handleCancelBet = wager => {
+    remove(bets, function(b) {
+      return b.id == wager.id;
+    });
+    bets = bets;
   };
 </script>
 
@@ -216,8 +212,8 @@
 </svelte:head>
 
 <Dialog
-  bind:this={placeBet}
-  on:MDCDialog:closed={closeHandler}
+  bind:this={createBetDialog}
+  on:MDCDialog:closed={handleCloseCreate}
   aria-labelledby="dialog-title"
   aria-describedby="dialog-content">
   <Title id="dialog-title">
@@ -267,7 +263,7 @@
 </Dialog>
 
 <Dialog
-  bind:this={dialog}
+  bind:this={takeBetDialog}
   aria-labelledby="dialog-title"
   aria-describedby="dialog-content">
   <Title id="dialog-title">
@@ -296,7 +292,7 @@
     <Button>
       <Label>Cancel</Label>
     </Button>
-    <Button on:click={confirm} action="submit">
+    <Button on:click={handleTakeBet} action="submit">
       <Label>Take it!</Label>
     </Button>
   </Actions>
@@ -316,14 +312,14 @@
             {#if bet.username != user.username}
               <Button
                 color="primary"
-                on:click={() => openConfirm(bet)}
+                on:click={() => handleOpenBet(bet)}
                 variant="raised">
                 <Label>Take it!</Label>
               </Button>
             {:else}
               <Button
                 color="secondary"
-                on:click={() => removeBet(bet)}
+                on:click={() => handleCancelBet(bet)}
                 variant="outlined">
                 <Label>Bounce</Label>
               </Button>
@@ -338,7 +334,7 @@
     <div class="trollbox-input-container">
       <img
         class="trollbox-input-btn"
-        on:click={handleOpenDialog}
+        on:click={handleOpenCreate}
         alt=""
         src="btc-btn.png" />
     </div>
