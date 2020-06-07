@@ -491,11 +491,6 @@
         input$aria-describedby="helper-text-standard-a" />
       <img
         class="trollbox-input-btn"
-        on:click={handleOpenDialog}
-        alt=""
-        src="btc-btn.png" />
-      <img
-        class="trollbox-input-btn"
         on:click={() => alert('insert emojiis')}
         alt=""
         src="emojii-joker.png" />

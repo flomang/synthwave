@@ -1,12 +1,19 @@
 <script>
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
+  import HelperText from "@smui/textfield/helper-text/index";
   import { beforeUpdate, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
+  import Textfield, { Input, Textarea } from "@smui/textfield";
 
   export let user;
+  let scrollableDiv;
+  let disabled = true;
+  let placeBet;
+  let description = "";
+  let amount = "";
 
   let bets = [
     {
@@ -63,6 +70,25 @@
     bet.id = nextID;
     bets = bets.concat(bet);
     nextID++;
+  };
+
+  let handleInput = event => {
+    if (isNaN(amount) || description == "") {
+      disabled = true;
+    } else if (!isNaN(amount) && description != "") {
+      disabled = false;
+    }
+
+    if (isNaN(amount) || amount < 100) {
+      disabled = true;
+    }
+  };
+
+  let closeHandler = event => {};
+
+  let handleOpenDialog = event => {
+    disabled = true;
+    placeBet.open();
   };
 </script>
 
@@ -134,11 +160,95 @@
     padding-left: 1em;
     color: #fff;
   }
+  .trollbox-input {
+    background-color: rgb(0, 0, 0);
+    height: 200px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    align-items: left;
+    display: flex;
+  }
+
+  .trollbox-input-container {
+    width: 100%;
+    padding-top: 25px;
+  }
+
+  .trollbox-input-btn {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 16px;
+  }
+
+  .trollbox-scrollable {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    margin: 0 0 0.5em 0;
+    padding-left: 30px;
+    overflow-y: auto;
+    height: 450px;
+  }
 </style>
 
 <svelte:head>
   <title>bets</title>
 </svelte:head>
+
+<Dialog
+  bind:this={placeBet}
+  on:MDCDialog:closed={closeHandler}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-content">
+  <Title id="dialog-title">
+    <span>
+      <img class="dice-img" alt="" src="dice.png" />
+      What are you betting on?
+    </span>
+  </Title>
+  <Content id="dialog-content">
+    <div bp="padding-top--sm">
+      <div bp="margin-bottom--sm">
+        <div class="margins">
+          <Textfield
+            fullwidth
+            textarea
+            on:keyup={handleInput}
+            bind:value={description}
+            label="Description"
+            input$aria-controls="helper-text-fullwidth-textarea"
+            input$aria-describedby="helper-text-fullwidth-textarea" />
+          <HelperText id="helper-text-manual-d">describe your bet</HelperText>
+        </div>
+      </div>
+      <div bp="grid 6 margin-bottom--sm">
+        <div>
+          <Textfield
+            variant="outlined"
+            bind:value={amount}
+            on:keyup={handleInput}
+            label="100 minimum"
+            type="number"
+            input$aria-controls="helper-text-outlined-a"
+            input$aria-describedby="helper-text-outlined-a" />
+          <HelperText id="helper-text-manual-d">satoshi</HelperText>
+        </div>
+      </div>
+    </div>
+  </Content>
+  <Actions>
+    <Button>
+      <Label>Cancel</Label>
+    </Button>
+    <Button action="submit" {disabled}>
+      <Label>Post it!</Label>
+    </Button>
+  </Actions>
+</Dialog>
 
 <Dialog
   bind:this={dialog}
@@ -176,34 +286,45 @@
   </Actions>
 </Dialog>
 
-<div class="bets" transition:fade>
-  {#each bets as bet (bet.id)}
-    <div class="bet-container" transition:fade>
-      <div>
-        <img class="bet-avatar" alt="" src={bet.profileImage} />
+<div transition:fade>
+  <div class="trollbox-scrollable" bind:this={scrollableDiv}>
+    {#each bets as bet (bet.id)}
+      <div class="bet-container" transition:fade>
+        <div>
+          <img class="bet-avatar" alt="" src={bet.profileImage} />
+        </div>
+        <div class="bet-slip">
+          <span class="comment-bet-username">{bet.username}</span>
+          <span class="comment-bet-amount">
+            Bet: {bet.amount} sats
+            {#if bet.username != user.username}
+              <Button
+                color="primary"
+                on:click={() => openConfirm(bet)}
+                variant="raised">
+                <Label>Take it!</Label>
+              </Button>
+            {:else}
+              <Button
+                color="secondary"
+                on:click={() => removeBet(bet)}
+                variant="outlined">
+                <Label>Bounce</Label>
+              </Button>
+            {/if}
+          </span>
+          <div class="comment-bet-description">{bet.description}</div>
+        </div>
       </div>
-      <div class="bet-slip">
-        <span class="comment-bet-username">{bet.username}</span>
-        <span class="comment-bet-amount">
-          Bet: {bet.amount} sats
-          {#if bet.username != user.username}
-            <Button
-              color="primary"
-              on:click={() => openConfirm(bet)}
-              variant="raised">
-              <Label>Take it!</Label>
-            </Button>
-          {:else}
-            <Button
-              color="secondary"
-              on:click={() => removeBet(bet)}
-              variant="outlined">
-              <Label>Bounce</Label>
-            </Button>
-          {/if}
-        </span>
-        <div class="comment-bet-description">{bet.description}</div>
-      </div>
+    {/each}
+  </div>
+  <div class="trollbox-input">
+    <div class="trollbox-input-container">
+      <img
+        class="trollbox-input-btn"
+        on:click={handleOpenDialog}
+        alt=""
+        src="btc-btn.png" />
     </div>
-  {/each}
+  </div>
 </div>
