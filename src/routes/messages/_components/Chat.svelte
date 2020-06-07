@@ -1,11 +1,7 @@
 <script>
   import { stores } from "@sapper/app";
   import { beforeUpdate, afterUpdate } from "svelte";
-  import HelperText from "@smui/textfield/helper-text/index";
-  import Textfield, { Input, Textarea } from "@smui/textfield";
-  import Dialog, { Title, Content, Actions } from "@smui/dialog";
-  import Button, { Label } from "@smui/button";
-  //import Eliza from "elizabot";
+  import Textfield from "@smui/textfield";
   import { fade } from "svelte/transition";
   import { mutate, subscribe } from "svelte-apollo";
   import { POST_MESSAGE } from "../../_graphql/mutations.js";
@@ -13,6 +9,7 @@
   import { MESSAGES } from "../../_graphql/queries.js";
   import { wsClient } from "../../_graphql/client.js";
   import { onMount } from "svelte";
+  //import Eliza from "elizabot";
 
   export let user;
 
