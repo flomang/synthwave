@@ -7,8 +7,6 @@
   import Button, { Label } from "@smui/button";
   //import Eliza from "elizabot";
   import { fade } from "svelte/transition";
-  import orderBy from "lodash/orderBy";
-  import sortBy from "lodash/sortBy";
   import { mutate, subscribe } from "svelte-apollo";
   import { POST_MESSAGE } from "../../_graphql/mutations.js";
   import { MESSAGE_POSTED } from "../../_graphql/subscriptions.js";
@@ -57,18 +55,10 @@
       });
   });
 
-  let bet = null;
-  let nextID = 3;
-
   //const eliza = new Eliza();
   let scrollableDiv;
   let textInput = "";
   let autoscroll;
-  let placeBet;
-  let description = "";
-  let amount = "";
-  let expiration = "";
-  let disabled = true;
   let scrollWidth = 0;
   let defaultAvatar = "aces.png";
 
@@ -99,32 +89,6 @@
   //      type: "comment-text"
   //    });
   //}
-  let closeHandler = event => {
-    if (event.detail.action == "submit") {
-      //  console.log("submit the bet");
-      comments = comments.concat({
-        username: user.username,
-        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
-        description: description,
-        amount: amount,
-        timer: expiration,
-        type: "bet"
-      });
-
-      let newBet = {
-        username: user.username,
-        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
-        description: description,
-        amount: amount,
-        timer: expiration
-      };
-      handleAddBet(newBet);
-    }
-
-    amount = NaN;
-    description = "";
-  };
-
   let handleKeydown = event => {
     if (event.key === "Enter") {
       const text = event.target.value;
@@ -165,23 +129,6 @@
       //      type: "comment"
       //    });
       //}, 500 + Math.random() * 500);
-    }
-  };
-
-  let handleOpenDialog = event => {
-    disabled = true;
-    placeBet.open();
-  };
-
-  let handleInput = event => {
-    if (isNaN(amount) || description == "") {
-      disabled = true;
-    } else if (!isNaN(amount) && description != "") {
-      disabled = false;
-    }
-
-    if (isNaN(amount) || amount < 100) {
-      disabled = true;
     }
   };
 
@@ -398,57 +345,6 @@
 <svelte:head>
   <title>trolling</title>
 </svelte:head>
-
-<Dialog
-  bind:this={placeBet}
-  on:MDCDialog:closed={closeHandler}
-  aria-labelledby="dialog-title"
-  aria-describedby="dialog-content">
-  <Title id="dialog-title">
-    <span>
-      <img class="dice-img" alt="" src="dice.png" />
-      What are you betting on?
-    </span>
-  </Title>
-  <Content id="dialog-content">
-    <div bp="padding-top--sm">
-      <div bp="margin-bottom--sm">
-        <div class="margins">
-          <Textfield
-            fullwidth
-            textarea
-            on:keyup={handleInput}
-            bind:value={description}
-            label="Description"
-            input$aria-controls="helper-text-fullwidth-textarea"
-            input$aria-describedby="helper-text-fullwidth-textarea" />
-          <HelperText id="helper-text-manual-d">describe your bet</HelperText>
-        </div>
-      </div>
-      <div bp="grid 6 margin-bottom--sm">
-        <div>
-          <Textfield
-            variant="outlined"
-            bind:value={amount}
-            on:keyup={handleInput}
-            label="100 minimum"
-            type="number"
-            input$aria-controls="helper-text-outlined-a"
-            input$aria-describedby="helper-text-outlined-a" />
-          <HelperText id="helper-text-manual-d">satoshi</HelperText>
-        </div>
-      </div>
-    </div>
-  </Content>
-  <Actions>
-    <Button>
-      <Label>Cancel</Label>
-    </Button>
-    <Button action="submit" {disabled}>
-      <Label>Post it!</Label>
-    </Button>
-  </Actions>
-</Dialog>
 
 <div transition:fade>
   <div class="trollbox-scrollable" bind:this={scrollableDiv}>

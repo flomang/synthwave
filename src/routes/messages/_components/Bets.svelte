@@ -84,7 +84,23 @@
     }
   };
 
-  let closeHandler = event => {};
+  let closeHandler = event => {
+    if (event.detail.action == "submit") {
+      console.log("submit the bet");
+
+      let newBet = {
+        username: user.username,
+        profileImage: user.avatarURL ? user.avatarURL : defaultAvatar,
+        description: description,
+        amount: amount,
+        //timer: expiration
+      };
+      addBet(newBet);
+    }
+
+    amount = NaN;
+    description = "";
+  };
 
   let handleOpenDialog = event => {
     disabled = true;
