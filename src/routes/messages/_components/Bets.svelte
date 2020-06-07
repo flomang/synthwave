@@ -2,11 +2,11 @@
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Button, { Label } from "@smui/button";
   import HelperText from "@smui/textfield/helper-text/index";
+  import Textfield, { Input, Textarea } from "@smui/textfield";
   import { beforeUpdate, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
   import sortBy from "lodash/sortBy";
   import remove from "lodash/remove";
-  import Textfield, { Input, Textarea } from "@smui/textfield";
 
   export let user;
   let scrollableDiv;
@@ -111,16 +111,6 @@
     position: relative;
     top: 9px;
     margin-right: 0.3em;
-  }
-
-  .bets {
-    width: 100%;
-    text-align: left;
-    background-color: rgb(9, 9, 9);
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(15, 15, 15);
-    position: relative;
   }
 
   .bet-container {
