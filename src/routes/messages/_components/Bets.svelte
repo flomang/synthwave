@@ -105,14 +105,6 @@
 </script>
 
 <style>
-  .dice-img {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: 9px;
-    margin-right: 0.3em;
-  }
-
   .bet-container {
     display: flex;
     border-style: solid;
@@ -145,20 +137,20 @@
     position: relative;
   }
 
-  .comment-bet-username {
+  .bet-username {
     color: rgb(255, 237, 54);
     font-weight: bold;
     padding-right: 0.3em;
   }
 
-  .comment-bet-amount {
+  .bet-amount {
     float: right;
     padding-right: 0.3em;
     color: rgb(255, 237, 54);
     font-weight: bold;
   }
 
-  .comment-bet-description {
+  .bet-description {
     padding-left: 1em;
     color: #fff;
   }
@@ -186,7 +178,7 @@
     margin-top: 16px;
   }
 
-  .trollbox-scrollable {
+  .scrollable-bets {
     width: 100%;
     position: absolute;
     top: 50px;
@@ -208,7 +200,6 @@
   aria-describedby="dialog-content">
   <Title id="dialog-title">
     <span>
-      <img class="dice-img" alt="" src="dice.png" />
       What are you betting on?
     </span>
   </Title>
@@ -258,7 +249,6 @@
   aria-describedby="dialog-content">
   <Title id="dialog-title">
     <span>
-      <img class="dice-img" alt="" src="dice.png" />
       Take this bet?
     </span>
   </Title>
@@ -269,9 +259,9 @@
           <img class="bet-avatar" alt="" src={bet.profileImage} />
         </div>
         <div class="bet-slip">
-          <span class="comment-bet-username">{bet.username}</span>
-          <span class="comment-bet-amount">Bet: {bet.amount} sats</span>
-          <div bp="margin-top--lg" class="comment-bet-description">
+          <span class="bet-username">{bet.username}</span>
+          <span class="bet-amount">Bet: {bet.amount} sats</span>
+          <div bp="margin-top--lg" class="bet-description">
             {bet.description}
           </div>
         </div>
@@ -289,15 +279,15 @@
 </Dialog>
 
 <div transition:fade>
-  <div class="trollbox-scrollable" bind:this={scrollableDiv}>
+  <div class="scrollable-bets" bind:this={scrollableDiv}>
     {#each bets as bet (bet.id)}
       <div class="bet-container" transition:fade>
         <div>
           <img class="bet-avatar" alt="" src={bet.profileImage} />
         </div>
         <div class="bet-slip">
-          <span class="comment-bet-username">{bet.username}</span>
-          <span class="comment-bet-amount">
+          <span class="bet-username">{bet.username}</span>
+          <span class="bet-amount">
             Bet: {bet.amount} sats
             {#if bet.username != user.username}
               <Button
@@ -308,14 +298,14 @@
               </Button>
             {:else}
               <Button
-                color="secondary"
+                color="primary"
                 on:click={() => handleCancelBet(bet)}
                 variant="outlined">
                 <Label>Bounce</Label>
               </Button>
             {/if}
           </span>
-          <div class="comment-bet-description">{bet.description}</div>
+          <div class="bet-description">{bet.description}</div>
         </div>
       </div>
     {/each}
