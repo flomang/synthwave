@@ -17,8 +17,43 @@
   export let user;
 
   const { session } = stores();
+  //const eliza = new Eliza();
 
   let comments = [];
+  let scrollableDiv;
+  let textInput = "";
+  let autoscroll;
+  let scrollWidth = 0;
+  let defaultAvatar = "aces.png";
+
+  // let users = [
+  //   { username: "eliza", profileImage: "great-success.png" },
+  //   { username: "Troll King", profileImage: "troll-king.png" },
+  //   { username: "jack", profileImage: "joker-cartoon.png" },
+  //   { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
+  //   { username: "Satoshi Bum", profileImage: "btc.png" },
+  //   { username: "porky pig", profileImage: "porky.png" },
+  //   { username: "pillboi", profileImage: "pill.png" },
+  //   { username: "doge bot", profileImage: "doge.png" },
+  //   { username: "joker", profileImage: "joker-card.png" },
+  //   { username: "luv child", profileImage: "hearts.png" },
+  //   { username: "cannibis420", profileImage: "cannabis-512.png" }
+  // ];
+
+  // add random comments
+  //let seed = eliza.getInitial();
+  //for (let i = 0; i < 10; ++i) {
+  //  const user = users[Math.floor(Math.random() * users.length)];
+  //  comments = comments
+  //    .filter(comment => !comment.placeholder)
+  //    .concat({
+  //      username: user.username,
+  //      text: eliza.transform(seed),
+  //      profileImage: user.profileImage,
+  //      type: "comment-text"
+  //    });
+  //}
+
   onMount(async () => {
     // get all messages
     let response = await wsClient(session).query({ query: MESSAGES });
@@ -55,40 +90,19 @@
       });
   });
 
-  //const eliza = new Eliza();
-  let scrollableDiv;
-  let textInput = "";
-  let autoscroll;
-  let scrollWidth = 0;
-  let defaultAvatar = "aces.png";
+  beforeUpdate(() => {
+    autoscroll =
+      scrollableDiv &&
+      scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
+        scrollableDiv.scrollHeight - 10;
+  });
 
-  // let users = [
-  //   { username: "eliza", profileImage: "great-success.png" },
-  //   { username: "Troll King", profileImage: "troll-king.png" },
-  //   { username: "jack", profileImage: "joker-cartoon.png" },
-  //   { username: "9 of Hearts", profileImage: "card-9-hearts.png" },
-  //   { username: "Satoshi Bum", profileImage: "btc.png" },
-  //   { username: "porky pig", profileImage: "porky.png" },
-  //   { username: "pillboi", profileImage: "pill.png" },
-  //   { username: "doge bot", profileImage: "doge.png" },
-  //   { username: "joker", profileImage: "joker-card.png" },
-  //   { username: "luv child", profileImage: "hearts.png" },
-  //   { username: "cannibis420", profileImage: "cannabis-512.png" }
-  // ];
+  afterUpdate(() => {
+    if (autoscroll && scrollableDiv) {
+      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
+    }
+  });
 
-  // add random comments
-  //let seed = eliza.getInitial();
-  //for (let i = 0; i < 10; ++i) {
-  //  const user = users[Math.floor(Math.random() * users.length)];
-  //  comments = comments
-  //    .filter(comment => !comment.placeholder)
-  //    .concat({
-  //      username: user.username,
-  //      text: eliza.transform(seed),
-  //      profileImage: user.profileImage,
-  //      type: "comment-text"
-  //    });
-  //}
   let handleKeydown = event => {
     if (event.key === "Enter") {
       const text = event.target.value;
@@ -131,19 +145,6 @@
       //}, 500 + Math.random() * 500);
     }
   };
-
-  beforeUpdate(() => {
-    autoscroll =
-      scrollableDiv &&
-      scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
-        scrollableDiv.scrollHeight - 10;
-  });
-
-  afterUpdate(() => {
-    if (autoscroll && scrollableDiv) {
-      scrollableDiv.scrollTo(0, scrollableDiv.scrollHeight);
-    }
-  });
 </script>
 
 <style>
