@@ -134,9 +134,9 @@
 
   beforeUpdate(() => {
     autoscroll =
-      (scrollableDiv &&
-        scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
-          scrollableDiv.scrollHeight - 10);
+      scrollableDiv &&
+      scrollableDiv.offsetHeight + scrollableDiv.scrollTop >
+        scrollableDiv.scrollHeight - 10;
   });
 
   afterUpdate(() => {
@@ -147,32 +147,6 @@
 </script>
 
 <style>
-  .trollbox {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    text-align: left;
-    height: 700px;
-    background-color: rgb(9, 9, 9);
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(0, 0, 0);
-    position: relative;
-  }
-
-  .trollbox-header {
-    color: #888;
-    font-weight: bold;
-    background-color: rgb(0, 0, 0);
-    height: 50px;
-    line-height: 50px;
-  }
-
-  .trollbox-header-title {
-    margin-left: 1em;
-    margin-right: 1em;
-  }
-
   .trollbox-scrollable {
     width: 100%;
     position: absolute;
@@ -231,113 +205,9 @@
     font-weight: bold;
     padding-right: 0.3em;
   }
-  .comment-bet-username {
-    color: #888;
-    font-weight: bold;
-    padding-right: 0.3em;
-  }
 
   .comment-text {
     margin-bottom: 1em;
-    color: #fff;
-  }
-
-  .comment-bet {
-    background-color: rgba(30, 30, 30);
-    color: #fff;
-    margin-bottom: 0.5em;
-    width: 100%;
-    position: relative;
-  }
-
-  .comment-bet-amount {
-    float: right;
-    padding-right: 0.3em;
-    color: rgb(255, 237, 54);
-    font-weight: bold;
-  }
-
-  .comment-bet-description {
-    padding-left: 1em;
-  }
-
-  .dice-img {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: 9px;
-    margin-right: 0.3em;
-  }
-
-  .dice-img-bet-slip {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: 9px;
-    margin-right: 0.3em;
-  }
-
-  .selected {
-    color: rgb(255, 237, 54);
-  }
-
-  .bets {
-    width: 100%;
-    text-align: left;
-    background-color: rgb(9, 9, 9);
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(15, 15, 15);
-    position: relative;
-  }
-
-  .bet-container {
-    display: flex;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(15, 15, 15);
-    width: 100%;
-    position: relative;
-    color: #fff;
-  }
-  .bet-take-container {
-    display: flex;
-    width: 100%;
-    position: relative;
-  }
-
-  .bet-avatar {
-    height: 30px;
-    width: 30px;
-    position: relative;
-    top: -3px;
-    margin-left: 0.5em;
-    margin-top: 0.5em;
-    margin-right: 0.5em;
-  }
-
-  .bet-slip {
-    margin-top: 0.5em;
-    margin-bottom: 1em;
-    width: 100%;
-    position: relative;
-  }
-
-  .comment-bet-username {
-    color: rgb(255, 237, 54);
-    font-weight: bold;
-    padding-right: 0.3em;
-  }
-
-  .comment-bet-amount {
-    float: right;
-    padding-right: 0.3em;
-    color: rgb(255, 237, 54);
-    font-weight: bold;
-  }
-
-  .comment-bet-description {
-    padding-left: 1em;
     color: #fff;
   }
 </style>
@@ -353,18 +223,10 @@
         <div>
           <img class="comment-avatar" alt="" src={comment.profileImage} />
         </div>
-        {#if comment.type == 'bet'}
-          <div class="comment-bet">
-            <span class="comment-bet-username">{comment.username}</span>
-            <span class="comment-bet-amount">Bet: {comment.amount} sats</span>
-            <div class="comment-bet-description">{comment.description}</div>
-          </div>
-        {:else}
-          <div class="comment-text">
-            <span class="comment-username">{comment.username}</span>
-            <span>{comment.text}</span>
-          </div>
-        {/if}
+        <div class="comment-text">
+          <span class="comment-username">{comment.username}</span>
+          <span>{comment.text}</span>
+        </div>
       </div>
     {/each}
   </div>
