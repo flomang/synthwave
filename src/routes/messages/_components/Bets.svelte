@@ -154,28 +154,23 @@
     padding-left: 1em;
     color: #fff;
   }
-  .trollbox-input {
+
+  .bet-input-container {
     background-color: rgb(0, 0, 0);
-    height: 200px;
+    height: 60px;
     position: absolute;
     bottom: 0;
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
+    padding-top: 15px;
     align-items: left;
     display: flex;
   }
 
-  .trollbox-input-container {
-    width: 100%;
-    padding-top: 25px;
-  }
-
-  .trollbox-input-btn {
+  .bet-input-btn {
     height: 30px;
     width: 30px;
-    margin-right: 10px;
-    margin-top: 16px;
   }
 
   .scrollable-bets {
@@ -310,13 +305,11 @@
       </div>
     {/each}
   </div>
-  <div class="trollbox-input">
-    <div class="trollbox-input-container">
+    <div class="bet-input-container">
       <img
-        class="trollbox-input-btn"
+        class="bet-input-btn"
         on:click={handleOpenCreate}
         alt=""
         src="btc-btn.png" />
     </div>
-  </div>
 </div>
