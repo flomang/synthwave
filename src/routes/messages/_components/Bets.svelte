@@ -106,6 +106,10 @@
     border-style: solid;
     border-width: 1px;
     border-color: rgb(15, 15, 15);
+    background: rgb(25, 25, 25);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
     width: 100%;
     position: relative;
     color: #fff;
@@ -174,7 +178,6 @@
     position: absolute;
     top: 50px;
     margin: 0 0 0.5em 0;
-    padding-left: 30px;
     overflow-y: auto;
     height: 450px;
   }
