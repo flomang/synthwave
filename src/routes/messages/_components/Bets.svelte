@@ -48,13 +48,9 @@
   });
 
   let handleInput = event => {
-    if (isNaN(amount) || description == "") {
-      disabled = true;
-    } else if (!isNaN(amount) && description != "") {
+    if (amount > 100 && description != "") {
       disabled = false;
-    }
-
-    if (isNaN(amount) || amount < 100) {
+    } else {
       disabled = true;
     }
   };
@@ -80,7 +76,7 @@
       nextID++;
     }
 
-    amount = NaN;
+    amount = ""; 
     description = "";
   };
 
