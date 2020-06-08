@@ -114,6 +114,7 @@
     position: relative;
     color: #fff;
   }
+
   .bet-take-container {
     display: flex;
     width: 100%;
@@ -137,17 +138,21 @@
     position: relative;
   }
 
-  .bet-username {
+  .bet-header-left {
     color: rgb(255, 237, 54);
     font-weight: bold;
     padding-right: 0.3em;
   }
 
-  .bet-amount {
+  .bet-header-right {
     float: right;
     padding-right: 0.3em;
     color: rgb(255, 237, 54);
     font-weight: bold;
+  }
+
+  .bet-amount {
+    padding-right: 0.3em;
   }
 
   .bet-description {
@@ -280,9 +285,9 @@
           <img class="bet-avatar" alt="" src={bet.profileImage} />
         </div>
         <div class="bet-slip">
-          <span class="bet-username">{bet.username}</span>
-          <span class="bet-amount">
-            Bet: {bet.amount} sats
+          <span class="bet-header-left">{bet.username}</span>
+          <span class="bet-header-right">
+            <span class="bet-amount">Bet: {bet.amount} sats</span>
             {#if bet.username != user.username}
               <Button
                 color="primary"
