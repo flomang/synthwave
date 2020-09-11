@@ -17,6 +17,19 @@
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
   import Checkbox from "@smui/checkbox";
   import { goto } from "@sapper/app";
+  import QRCode from "qrcode";
+
+  // With promises
+  QRCode.toDataURL("12FdCBxRv7PAnW8vosDVjmeGs2LLYqG4Yt")
+    .then(url => {
+      var img = document.getElementById("image");
+      img.src = url;
+
+      console.log(url);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 
   let statement = [
     {
@@ -68,6 +81,7 @@
 
 <div class="content">
   <h3>activity</h3>
+  <img id="image" />
   <div class="left" bp="full-width hide@sm hide@md show@lg">
     <DataTable>
       <Head>
