@@ -19,10 +19,11 @@
   import { goto } from "@sapper/app";
   import QRCode from "qrcode";
 
+  let address = "12FdCBxRv7PAnW8vosDVjmeGs2LLYqG4Yt";
   // With promises
-  QRCode.toDataURL("12FdCBxRv7PAnW8vosDVjmeGs2LLYqG4Yt")
+  QRCode.toDataURL(address)
     .then(url => {
-      var img = document.getElementById("image");
+      var img = document.getElementById("qrcode");
       img.src = url;
 
       console.log(url);
@@ -80,8 +81,12 @@
 </svelte:head>
 
 <div class="content">
-  <h3>activity</h3>
-  <img id="image" />
+  <div>
+    <img id="qrcode" alt="" />
+    <div>Deposit Address: {address}</div>
+  </div>
+  <br />
+  <div>history</div>
   <div class="left" bp="full-width hide@sm hide@md show@lg">
     <DataTable>
       <Head>
