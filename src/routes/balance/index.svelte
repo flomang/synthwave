@@ -69,6 +69,7 @@
     background-color: rgb(22, 22, 22);
     color: #fff;
     text-align: center;
+    display: flex;
   }
 
   .left {
@@ -82,77 +83,52 @@
 
 <div class="content">
   <div>
+    <div class="left" bp="full-width hide@sm hide@md show@lg">
+      <DataTable>
+        <Body>
+          {#each statement as txn}
+            <Row>
+              <Cell>{txn.date}</Cell>
+              <Cell>{txn.description}</Cell>
+              <Cell>{txn.type}</Cell>
+              <Cell>{txn.amount}</Cell>
+              <Cell>{txn.balance}</Cell>
+            </Row>
+          {/each}
+        </Body>
+      </DataTable>
+    </div>
+    <div class="left" bp="full-width hide@sm show@md hide@lg">
+      <DataTable>
+        <Body>
+          {#each statement as txn}
+            <Row>
+              <Cell>{txn.date}</Cell>
+              <Cell>{txn.type}</Cell>
+              <Cell>{txn.amount}</Cell>
+              <Cell>{txn.balance}</Cell>
+            </Row>
+          {/each}
+        </Body>
+      </DataTable>
+    </div>
+    <div class="left" bp="full-width show@sm hide@md hide@lg">
+      <DataTable>
+        <Body>
+          {#each statement as txn}
+            <Row>
+              <Cell>{txn.date}</Cell>
+              <Cell>{txn.type}</Cell>
+              <Cell>{txn.amount}</Cell>
+              <Cell>{txn.balance}</Cell>
+            </Row>
+          {/each}
+        </Body>
+      </DataTable>
+    </div>
+  </div>
+    <div>
     <img id="qrcode" alt="" />
     <div>Deposit Address: {address}</div>
-  </div>
-  <br />
-  <div>history</div>
-  <div class="left" bp="full-width hide@sm hide@md show@lg">
-    <DataTable>
-      <Head>
-        <Row>
-          <Cell>Date</Cell>
-          <Cell>Description</Cell>
-          <Cell>Type</Cell>
-          <Cell>Amount</Cell>
-          <Cell>Balance</Cell>
-        </Row>
-      </Head>
-      <Body>
-        {#each statement as txn}
-          <Row>
-            <Cell>{txn.date}</Cell>
-            <Cell>{txn.description}</Cell>
-            <Cell>{txn.type}</Cell>
-            <Cell>{txn.amount}</Cell>
-            <Cell>{txn.balance}</Cell>
-          </Row>
-        {/each}
-      </Body>
-    </DataTable>
-  </div>
-  <div class="left" bp="full-width hide@sm show@md hide@lg">
-    <DataTable>
-      <Head>
-        <Row>
-          <Cell>Date</Cell>
-          <Cell>Type</Cell>
-          <Cell>Amount</Cell>
-          <Cell>Balance</Cell>
-        </Row>
-      </Head>
-      <Body>
-        {#each statement as txn}
-          <Row>
-            <Cell>{txn.date}</Cell>
-            <Cell>{txn.type}</Cell>
-            <Cell>{txn.amount}</Cell>
-            <Cell>{txn.balance}</Cell>
-          </Row>
-        {/each}
-      </Body>
-    </DataTable>
-  </div>
-  <div class="left" bp="full-width show@sm hide@md hide@lg">
-    <DataTable>
-      <Head>
-        <Row>
-          <Cell>Date</Cell>
-          <Cell>Type</Cell>
-          <Cell>Amount</Cell>
-          <Cell>Balance</Cell>
-        </Row>
-      </Head>
-      <Body>
-        {#each statement as txn}
-          <Row>
-            <Cell>{txn.date}</Cell>
-            <Cell>{txn.type}</Cell>
-            <Cell>{txn.amount}</Cell>
-            <Cell>{txn.balance}</Cell>
-          </Row>
-        {/each}
-      </Body>
-    </DataTable>
   </div>
 </div>
