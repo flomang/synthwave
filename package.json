@@ -19,6 +19,7 @@
     "express-session": "^1.17.1",
     "node-fetch": "^2.6.0",
     "polka": "next",
+    "qrcode": "^1.4.4",
     "redis": "^3.0.2",
     "sirv": "^0.4.0",
     "subscriptions-transport-ws": "^0.9.16"

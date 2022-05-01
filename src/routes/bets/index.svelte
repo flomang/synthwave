@@ -80,14 +80,14 @@
 </style>
 
 <svelte:head>
-  <title>Playbook</title>
+  <title>bets</title>
 </svelte:head>
 
 <div class="content" bp="padding">
-  <h3>playbook</h3>
+  <h3>Bets</h3>
   <div>
     <Button color="primary" on:click={() => alert('logout')} variant="raised">
-      <Label>New Play</Label>
+      <Label>New Bet</Label>
     </Button>
   </div>
   <div class="left" bp="full-width hide@sm hide@md show@lg">

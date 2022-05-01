@@ -59,7 +59,7 @@
   {#if $session.user}
     <div bp="4">
       <div bp="grid 6">
-        <div on:click={() => goto('/space')}>grink</div>
+        <div on:click={() => goto('/space')}>bitkido</div>
       </div>
     </div>
     <div bp="8">
@@ -67,14 +67,14 @@
         <div
           bp="1@sm 2@md offset-10@sm offset-7@md offset-7@lg"
           class="outline available"
-          on:click={() => goto('/balance')}>
+          on:click={() => goto('/balances')}>
           <img class="btc-symbol" alt="" src="btc_symbol.png" />
           <span class="balance">10.1983230</span>
         </div>
         <div
           bp="1@sm 2@md"
           class="outline play"
-          on:click={() => goto('/playbook')}>
+          on:click={() => goto('/bets')}>
           <img class="btc-symbol" alt="" src="btc_symbol.png" />
           <span class="balance">0.00031233</span>
         </div>
