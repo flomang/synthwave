@@ -42,11 +42,6 @@
       description: "Fabricio Werdum KO, TKO, or Submission",
       amount: "0.00000900 btc"
     },
-    {
-      user: "tokio",
-      description: "Racing Esports draw",
-      amount: "0.00000300 btc"
-    }
   ];
 </script>
 
